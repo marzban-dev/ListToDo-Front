@@ -1,0 +1,15 @@
+@mixin reset_input() {
+  background: none;
+  border: none;
+  outline: none;
+  &:focus {
+    background: none;
+    border: none;
+    outline: none;
+  }
+}
+
+@mixin reset_list {
+  list-style: none;
+  padding: 0;
+}

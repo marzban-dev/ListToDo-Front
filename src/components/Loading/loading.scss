@@ -1,0 +1,15 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.loading-spinner {
+  width: 100%;
+  height: 100vh;
+  background-color: darken($color: $second-white, $amount: 10%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-size: 50px;
+    color: $primary;
+  }
+}

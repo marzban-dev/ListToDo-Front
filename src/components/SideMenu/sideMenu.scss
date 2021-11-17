@@ -1,0 +1,60 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.side-menu {
+  background-color: $second-white;
+  height: 100vh;
+
+  .side-menu-logo {
+    color: $text;
+    padding: 1rem 2rem;
+  }
+
+  .side-menu-sections {
+    @include reset_list();
+    .side-menu-sections-1,
+    .side-menu-sections-2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 1rem;
+
+      a {
+        border-radius: 25px;
+        text-decoration: none;
+        color: $icon;
+        padding: 0.75rem 1rem;
+        margin-top: 1rem;
+        width: 100%;
+        transition: background-color 0.25s;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: transparentize(
+            $color: $primary,
+            $amount: 0.9
+          ) !important;
+        }
+
+        .section-icon {
+          color: $icon;
+          padding-right: 1.5rem;
+          font-size: 20px;
+          transition: color 0.25s;
+        }
+
+        .section-text {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .side-menu-section-active {
+    background-color: transparentize($color: $primary, $amount: 0.8) !important;
+    .section-icon {
+      color: $primary !important;
+    }
+  }
+}

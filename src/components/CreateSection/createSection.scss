@@ -1,0 +1,54 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.create-section {
+  width: 350px;
+  margin: 2rem 4rem 0 2rem;
+  padding: 1rem 0;
+
+  .create-section-input {
+    transition: background-color 0.25s;
+    padding: 0.9rem 1rem;
+    background-color: transparentize($color: $second-white, $amount: 0.5);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    &:hover,
+    &:focus-within {
+      background-color: $second-white;
+    }
+
+    input {
+      @include reset_input();
+      color: $icon;
+      margin-left: 0.5rem;
+      padding: 0.5rem 0 0.25rem 0;
+      font-size: 18px;
+    }
+
+    button {
+      @include reset_input();
+      padding: 0.5rem 1rem 0.25rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:disabled {
+        pointer-events: none;
+      }
+
+      &:hover {
+        span {
+          color: $primary;
+        }
+      }
+      span {
+        color: $icon;
+        font-size: 22px;
+        transition: color 0.25s;
+      }
+    }
+  }
+}

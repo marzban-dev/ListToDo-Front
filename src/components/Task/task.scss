@@ -1,0 +1,84 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.task {
+  background-color: $second-white;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+
+  .task-input {
+    padding-right: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .tasks-draggable-icon {
+      cursor: move;
+      padding: 1em;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $second-white;
+
+      span {
+        transition: color 0.25s;
+        color: transparentize($color: $icon, $amount: 0.3);
+        font-size: 20px;
+      }
+      &:hover {
+        span {
+          color: $primary;
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      @include reset_input();
+      margin: 1rem;
+    }
+  }
+  .task-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 0.75rem;
+    color: transparentize($color: $text, $amount: 0.5);
+
+    .task-info-comments {
+      padding: 0 0.35rem;
+      cursor: pointer;
+      &:hover {
+        span {
+          color: $primary;
+        }
+      }
+      .comments-count {
+        padding-left: 0.25rem;
+      }
+    }
+
+    .task-info-sub-tasks {
+      padding: 0 0.35rem;
+      cursor: pointer;
+      &:hover {
+        span {
+          color: $primary;
+        }
+      }
+      .sub-tasks-count {
+        padding-left: 0.25rem;
+      }
+    }
+
+    .task-info-priority {
+      padding: 0 0.35rem;
+      color: $red;
+    }
+  }
+}

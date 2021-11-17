@@ -1,0 +1,55 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.modal-content {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px !important;
+  padding: 1rem;
+
+  .labels {
+    .labels-item {
+    }
+  }
+
+  .new-task-priority {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .priority-item {
+      label {
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $second-white;
+        transition: background-color 0.25s;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin: 0.5rem 0.5rem 0 0;
+
+        &:hover {
+          background-color: lighten($color: $white, $amount: 5%);
+        }
+        span {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .priority-item-red {
+    color: $red;
+  }
+  .priority-item-blue {
+    color: $blue;
+  }
+  .priority-item-green {
+    color: $green;
+  }
+}
