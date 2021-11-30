@@ -75,38 +75,3 @@
     }
   }
 }
-
-.create-new-task-modal {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  .title-input {
-    @include reset_input();
-    background-color: lighten($color: $white, $amount: 4%);
-    padding: 0.5rem 0 0.5rem 1rem;
-    border-radius: 15px;
-    transition: background-color 0.25s;
-    color: $text;
-    width: 90%;
-    &:focus,
-    &:hover {
-      background-color: $white;
-    }
-  }
-
-  .description-input {
-    @include reset_input();
-    margin-top: 1rem;
-    background-color: lighten($color: $white, $amount: 5%);
-    padding: 0.5rem 0 0.5rem 1rem;
-    border-radius: 15px;
-    transition: background-color 0.25s;
-    color: $text;
-    width: 90%;
-    &:focus,
-    &:hover {
-      background-color: $white;
-    }
-  }
-}

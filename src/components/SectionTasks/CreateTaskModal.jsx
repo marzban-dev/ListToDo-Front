@@ -1,31 +1,89 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { createTask } from "store/actions/Tasks.actions";
+import { refreshInboxData } from "store/actions/Inbox.actions";
+import SelectLabels from "./ModalSections/SelectLabels";
+import SelectPriority from "./ModalSections/SelectPriority";
+import SelectAssignee from "./ModalSections/SelectAssignee";
+import SelectSchedule from "./ModalSections/SelectSchedule";
+import SelectColor from "./ModalSections/SelectColor";
 import "./createTaskModal.scss";
 
-export const CreateTaskModal = ({ isModalOpen, setIsModalOpen }) => {
-  const [priority, setPriority] = useState(1);
-  const labels = useSelector((state) => state.inbox.labels);
-  const matchedLabels = useState([]);
+export const CreateTaskModal = ({ sectionId, isModalOpen, setIsModalOpen }) => {
+  const dispatch = useDispatch();
+
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskPriority, setTaskPriority] = useState(1);
+  const [taskLabels, setTaskLabels] = useState([]);
+  const [taskColor, setTaskColor] = useState("");
+  const [taskSchedule, setTaskSchedule] = useState(null);
+  const [taskAssignee, setTaskAssignee] = useState(null);
+
+  const [isPriorityListOpen, setIsPriorityListOpen] = useState(false);
+  const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
+
+  const toastifyOptions = {
+    autoClose: 2000,
+    closeOnClick: true,
+    position: "top-center",
+    pauseOnHover: false,
+    hideProgressBar: true,
+  };
 
   useEffect(() => {
     Modal.setAppElement("body");
   }, []);
 
-  const onPriorityChanged = (e) => {
-    if (e.target.checked) {
-      setPriority(Number(e.target.value));
-    }
+  const onModalClosed = () => {
+    setIsModalOpen(false);
   };
 
-  const selectMatchedLabel = () => {
-    return <div className="labels-select-menu"></div>;
+  const onTitleChanged = (e) => setTaskTitle(e.target.value);
+  const onDescriptionChanged = (e) => setTaskDescription(e.target.value);
+
+  const onCreateTaskClicked = async () => {
+    setIsCreateButtonDisabled(true);
+
+    const alertId = toast.loading("Creating Task", toastifyOptions);
+
+    try {
+      await dispatch(
+        createTask(sectionId, {
+          title: taskTitle,
+          description: taskDescription,
+          labels: taskLabels.map((label) => label.id),
+          priority: taskPriority,
+          color: taskColor,
+          assignee: taskAssignee,
+          schedule: taskSchedule,
+        })
+      );
+
+      await dispatch(refreshInboxData());
+
+      setIsCreateButtonDisabled(false);
+      toast.update(alertId, {
+        render: "Task Created",
+        type: "success",
+        isLoading: false,
+      });
+    } catch (error) {
+      setIsCreateButtonDisabled(false);
+      toast.update(alertId, {
+        render: "Create Task Failed",
+        type: "error",
+        isLoading: false,
+      });
+    }
   };
 
   return (
     <Modal
       isOpen={isModalOpen}
-      onRequestClose={() => setIsModalOpen(false)}
+      onRequestClose={onModalClosed}
       style={{
         overlay: {
           backgroundColor: "#17171796",
@@ -34,78 +92,46 @@ export const CreateTaskModal = ({ isModalOpen, setIsModalOpen }) => {
       className="modal-content"
     >
       <div className="create-new-task-modal">
-        <input type="text" placeholder="Title" className="title-input" />
+        <div className="create-new-task-head-wrapper col-12">
+          <input
+            type="text"
+            placeholder="Title"
+            className="title-input col-5"
+            onChange={onTitleChanged}
+          />
+          <div className="head-wrapper-separator col-2">
+            <SelectColor
+              isPriorityListOpen={isPriorityListOpen}
+              taskColor={taskColor}
+              setTaskColor={setTaskColor}
+            />
+            <SelectPriority
+              isPriorityListOpen={isPriorityListOpen}
+              setIsPriorityListOpen={setIsPriorityListOpen}
+              taskPriority={taskPriority}
+              setTaskPriority={setTaskPriority}
+            />
+          </div>
+        </div>
         <textarea
           rows="4"
           placeholder="Description"
           className="description-input"
+          onChange={onDescriptionChanged}
         ></textarea>
-        <div className="labels">
-          {matchedLabels.length !== 0 ? selectMatchedLabel : null}
-          {labels.map((label, index) => {
-            return (
-              <li className="labels-item" key={label.id}>
-                {label.title}
-              </li>
-            );
-          })}
-        </div>
-        <div className="new-task-priority">
-          <div className="priority-item">
-            <input
-              type="radio"
-              id="radio-x"
-              name="r"
-              hidden
-              value="1"
-              onChange={onPriorityChanged}
-            />
-            <label htmlFor="radio-x">
-              <span
-                className={[
-                  "priority-item-red",
-                  priority === 1 ? "fa fa-flag" : "far fa-flag",
-                ].join(" ")}
-              ></span>
-            </label>
-          </div>
-
-          <div className="priority-item">
-            <input
-              type="radio"
-              id="radio-y"
-              name="r"
-              hidden
-              value="2"
-              onChange={onPriorityChanged}
-            />
-            <label htmlFor="radio-y">
-              <span
-                className={[
-                  "priority-item-green",
-                  priority === 2 ? "fa fa-flag" : "far fa-flag",
-                ].join(" ")}
-              ></span>
-            </label>
-          </div>
-          <div className="priority-item">
-            <input
-              type="radio"
-              id="radio-z"
-              name="r"
-              hidden
-              value="3"
-              onChange={onPriorityChanged}
-            />
-            <label htmlFor="radio-z">
-              <span
-                className={[
-                  "priority-item-blue",
-                  priority === 3 ? "fa fa-flag" : "far fa-flag",
-                ].join(" ")}
-              ></span>
-            </label>
-          </div>
+        <SelectLabels taskLabels={taskLabels} setTaskLabels={setTaskLabels} />
+        <SelectAssignee />
+        <div className="create-new-task-save col-12">
+          <SelectSchedule
+            taskSchedule={taskSchedule}
+            setTaskSchedule={setTaskSchedule}
+          />
+          <button
+            className="create-new-task-submit-button col-2"
+            onClick={!isCreateButtonDisabled ? onCreateTaskClicked : null}
+          >
+            <span className="far fa-check"></span>
+          </button>
         </div>
       </div>
     </Modal>

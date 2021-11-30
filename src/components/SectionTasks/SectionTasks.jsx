@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import CreateTaskModal from "./CreateTaskModal";
 import "./sectionTasks.scss";
 
-const SectionTasks = ({ title, tasks }) => {
+const SectionTasks = ({ sectionId, title, tasks }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const renderTasks = () => {
-    return tasks.map(({ title, color }, index) => {
-      return <Task key={index} title={title} color={color} />;
+    return tasks.map(({ id, title, color, completed }, index) => {
+      return !completed ? (
+        <Task key={index} taskId={id} title={title} color={color} />
+      ) : null;
     });
   };
 
@@ -31,6 +34,7 @@ const SectionTasks = ({ title, tasks }) => {
       </div>
 
       <CreateTaskModal
+        sectionId={sectionId}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />

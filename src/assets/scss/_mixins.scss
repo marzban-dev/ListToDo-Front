@@ -12,4 +12,13 @@
 @mixin reset_list {
   list-style: none;
   padding: 0;
+  margin: 0;
+}
+
+@mixin reset_scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

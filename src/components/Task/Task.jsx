@@ -1,6 +1,9 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateTask } from "store/actions/Tasks.actions";
+import { toast } from "react-toastify";
 import "./task.scss";
+import { refreshInboxData } from "store/actions/Inbox.actions";
 
 // const DragHandle = SortableHandle(() => {
 //   return (
@@ -10,15 +13,40 @@ import "./task.scss";
 //   );
 // });
 
-const Task = ({ title, color }) => {
+const Task = ({ taskId, title, color }) => {
+  const dispatch = useDispatch();
+  const [isTaskChecked, setIsTaskChecked] = useState(false);
 
-  const labels = useSelector(state=> state.inbox.labels);
+  const toastifyOptions = {
+    autoClose: 2000,
+    closeOnClick: true,
+    position: "top-center",
+    pauseOnHover: false,
+    hideProgressBar: true,
+  };
+
+  const onCheckBoxChanged = async (e) => {
+    setIsTaskChecked(true);
+
+    try {
+      await dispatch(updateTask(taskId, { completed: true }));
+      toast.success("Task Updated", toastifyOptions);
+    } catch (error) {
+      setIsTaskChecked(false);
+      toast.error("Update Task Failed", toastifyOptions);
+    }
+  };
 
   return (
     <div className="task">
       <div className="task-input" style={{ backgroundColor: color }}>
         {/* <DragHandle /> */}
-        <input type="checkbox" id="task-radio-btn" />
+        <input
+          type="checkbox"
+          id="task-radio-btn"
+          onChange={onCheckBoxChanged}
+          disabled={isTaskChecked}
+        />
         <label htmlFor="task-radio-btn">{title}</label>
       </div>
       <div className="task-info">

@@ -21,11 +21,9 @@ export const refreshInboxDataFailed = () => ({
 export const startFetchInboxData = () => ({ type: START_FETCH_INBOX_DATA });
 export const finishFetchInboxData = () => ({ type: FINISH_FETCH_INBOX_DATA });
 export const fetchInboxDataFailed = () => ({ type: FETCH_INBOX_DATA_FAILED });
-export const setInboxData = (sections, labels, project) => ({
+export const setInboxData = (inboxData) => ({
   type: SET_INBOX_DATA,
-  sections,
-  project,
-  labels,
+  ...inboxData,
 });
 
 export const refreshInboxData = () => {
@@ -40,16 +38,20 @@ export const refreshInboxData = () => {
       );
 
       inboxSections.data.results.forEach((section) => {
-        sections[section.title] = [];
+        sections[section.title] = { id: section.id, tasks: [] };
       });
 
-      const allTasks = await axios.get("/tasks/");
+      const tasks = await axios.get("/tasks/");
 
-      allTasks.data.results.forEach((task) => {
-        sections[task.section.title].push(task);
+      tasks.data.results.forEach((task) => {
+        sections[task.section.title].tasks.push(task);
       });
 
-      dispatch(setInboxData(sections));
+      dispatch(
+        setInboxData({
+          sections,
+        })
+      );
       dispatch(finishRefreshInboxData());
     } catch (err) {
       dispatch(refreshInboxDataFailed());
@@ -63,8 +65,10 @@ export const fetchInboxData = () => {
     try {
       dispatch(startFetchInboxData());
 
-      const inboxProject = await axios.get("/projects/?title=inbox");
-      const inboxProjectId = inboxProject.data.results[0].id;
+      let inboxProject = await axios.get("/projects/?project__title=inbox");
+
+      inboxProject = inboxProject.data.results[0];
+      const inboxProjectId = inboxProject.project.id;
 
       const sections = {};
 
@@ -73,28 +77,41 @@ export const fetchInboxData = () => {
       );
 
       inboxSections.data.results.forEach((section) => {
-        sections[section.title] = [];
+        sections[section.title] = { id: section.id, tasks: [] };
       });
 
       const allTasks = await axios.get("/tasks/");
 
       allTasks.data.results.forEach((task) => {
-        sections[task.section.title].push(task);
+        sections[task.section.title].tasks.push(task);
       });
 
       const allLabels = await axios.get("/labels");
 
+      const allColors = await axios.get("/colors/");
+
       dispatch(
-        setInboxData(
+        setInboxData({
           sections,
-          allLabels.data.results,
-          inboxProject.data.results[0]
-        )
+          labels: allLabels.data.results,
+          project: inboxProject.project,
+          colors: allColors.data.results,
+        })
       );
       dispatch(finishFetchInboxData());
-    } catch (err) {
-      dispatch(fetchInboxDataFailed());
-      throw new Error(err);
+    } catch (error) {
+      if (error.toJSON().message === "Network Error") {
+        const cachedDataInLocalStorage = localStorage.getItem("CACHED_OFFLINE");
+
+        if (cachedDataInLocalStorage) {
+          dispatch(setInboxData(JSON.parse(cachedDataInLocalStorage)));
+        }
+
+        dispatch(finishFetchInboxData());
+      } else {
+        dispatch(fetchInboxDataFailed());
+        throw error;
+      }
     }
   };
 };

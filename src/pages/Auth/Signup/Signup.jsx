@@ -19,6 +19,7 @@ const signup = () => {
   } = useForm({ mode: "onChange" });
 
   const handleSignup = (data) => {
+    console.log(data);
     dispatch(signupUser(data.username, data.email, data.password)).then(
       (res) => {
         if (res) {

@@ -10,7 +10,6 @@ import Loading from "components/Loading/Loading";
 import InternalServerError from "components/InternalServerError/InternalServerError";
 import SectionTasks from "components/SectionTasks/SectionTasks";
 import CreateSection from "components/CreateSection/CreateSection";
-import axios from "AxiosInstance";
 import "./tasks.scss";
 
 const Tasks = () => {
@@ -28,6 +27,19 @@ const Tasks = () => {
 
   const [serverError, setServerError] = useState(false);
 
+  useEffect(() => {
+    dispatch(checkUser()).then(() => {
+      if (isUserAuthenticate !== null) {
+        dispatch(fetchInboxData()).catch((err) => {
+          console.log(err);
+          setServerError(true);
+        });
+      }
+    });
+  }, []);
+
+  const sectionTitleInputRef = useRef(null);
+
   const toastifyOptions = {
     autoClose: 2000,
     closeOnClick: true,
@@ -36,35 +48,32 @@ const Tasks = () => {
     hideProgressBar: true,
   };
 
-  useEffect(() => {
-    dispatch(checkUser()).then(() => {
-      if (isUserAuthenticate !== null) {
-        dispatch(fetchInboxData()).catch((err) => setServerError(true));
-      }
-    });
-  }, []);
-
-  const sectionTitleInputRef = useRef(null);
-
-  const onClickHandler = () => {
+  const onClickHandler = async () => {
     setIsCreateButtonDisabled(true);
-    dispatch(
-      createSection(inboxProject.id, {
-        title: sectionTitleInputRef.current.value,
-      })
-    )
-      .then(() => {
-        toast.promise(
-          dispatch(refreshInboxData()),
-          {
-            success: "Section Created",
-            error: "Create Section Failed",
-            pending: "Creating Section",
-          },
-          toastifyOptions
-        );
-      })
-      .catch((err) => toast.error("Create Section Failed", toastifyOptions));
+
+    const alertId = toast.loading("Creating Section", toastifyOptions);
+    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
+    try {
+      await dispatch(
+        createSection(inboxProject.id, {
+          title: sectionTitleInputRef.current.value,
+        })
+      );
+
+      await dispatch(refreshInboxData());
+
+      toast.update(alertId, {
+        render: "Section Created",
+        type: "success",
+        isLoading: false,
+      });
+    } catch (error) {
+      toast.update(alertId, {
+        render: "Create Section Failed",
+        type: "error",
+        isLoading: false,
+      });
+    }
   };
 
   const renderSectionTasks = () => {
@@ -78,11 +87,18 @@ const Tasks = () => {
               disabled={isCreateButtonDisabled}
             />
             <section className="sections">
-              {Object.keys(sections).map((section) => {
-                return (
-                  <SectionTasks title={section} tasks={sections[section]} />
-                );
-              })}
+              {sections !== null
+                ? Object.keys(sections).map((section) => {
+                    return (
+                      <SectionTasks
+                        key={sections[section].id}
+                        sectionId={sections[section].id}
+                        title={section}
+                        tasks={sections[section].tasks}
+                      />
+                    );
+                  })
+                : null}
             </section>
 
             <FloatButton float="r" iconClass="far fa-plus" />
