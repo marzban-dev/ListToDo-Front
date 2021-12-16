@@ -2,6 +2,10 @@
 @import "../../../assets/scss/mixins";
 
 .colors {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   .colors-list {
     display: flex;
     justify-content: center;
@@ -9,28 +13,31 @@
     position: absolute;
     z-index: 70;
     background-color: $second-white;
-    padding-bottom: 0.5rem;
     border-radius: 15px;
     right: 65px;
+    height: 100%;
 
     .colors-item {
+      margin: 0.15rem 0 0 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 3px;
+      height: 100%;
       label {
         border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         background-color: $second-white;
         transition: background-color 0.25s;
         cursor: pointer;
-        margin: 0.15rem 0 0 0.5rem;
+
         &:hover {
           background-color: lighten($color: $white, $amount: 5%);
         }
 
         div {
           background-color: $icon;
-          width: 21px;
-          height: 21px;
+          width: 17px;
+          height: 17px;
           border-radius: 50%;
         }
       }

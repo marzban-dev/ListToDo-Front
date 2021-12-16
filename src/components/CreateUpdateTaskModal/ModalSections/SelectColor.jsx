@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Transition, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import "./selectColor.scss";
 
 const SelectColor = ({ taskColor, setTaskColor, isPriorityListOpen }) => {
-  const colors = useSelector((state) => state.inbox.colors);
+  const colors = useSelector((state) => state.main.colors);
   const [isColorListOpen, setIsColorListOpen] = useState(false);
 
   const Color = ({ id, hex }) => {
@@ -49,11 +49,11 @@ const SelectColor = ({ taskColor, setTaskColor, isPriorityListOpen }) => {
         }}
         unmountOnExit
       >
-        <span className="colors-list" ref={nodeRef}>
+        <div className="colors-list" ref={nodeRef}>
           {colors.map((color, index) => (
-            <Color id={index} hex={color.title} />
+            <Color key={index} id={index} hex={color.title} />
           ))}
-        </span>
+        </div>
       </CSSTransition>
       <button
         className={[
@@ -64,7 +64,7 @@ const SelectColor = ({ taskColor, setTaskColor, isPriorityListOpen }) => {
       >
         <span
           style={{
-            backgroundColor: taskColor.toLowerCase(),
+            backgroundColor: taskColor ? taskColor.toLowerCase() : 'black',
           }}
         ></span>
       </button>

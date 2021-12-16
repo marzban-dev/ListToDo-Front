@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { checkUser } from "store/actions/Auth.actions";
-import { fetchInboxData, refreshInboxData } from "store/actions/Inbox.actions";
-import { createSection } from "store/actions/Tasks.actions";
-import { toast } from "react-toastify";
+import React, {useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Outlet} from "react-router-dom";
+import {checkUser} from "store/actions/Auth.actions";
+import {setData} from "store/actions/Main.actions";
+import {createSection, fetchSections} from "store/actions/ApiCalls.actions";
+import {toast} from "react-toastify";
 import Header from "components/Header/Header";
 import FloatButton from "components/UI/FloatButton/FloatButton";
 import Loading from "components/Loading/Loading";
@@ -13,111 +14,131 @@ import CreateSection from "components/CreateSection/CreateSection";
 import "./tasks.scss";
 
 const Tasks = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
+    const [isCreateButtonDisabled, setIsCreateButtonDisabled] = useState(false);
 
-  const sections = useSelector((state) => state.inbox.sections);
-  const inboxProject = useSelector((state) => state.inbox.project);
-  const isRefreshing = useSelector((state) => state.inbox.isRefreshing);
-  const isInboxLoading = useSelector((state) => state.inbox.isLoading);
+    const projectInbox = useSelector((state) =>
+        state.main.projects.find(prj => prj.position === -1)
+    );
 
-  const isUserAuthenticate = useSelector((state) => state.auth.user);
-  const isUserAuthLoading = useSelector((state) => state.auth.isLoading);
+    const isRefreshing = useSelector((state) => state.main.isRefreshing);
+    const isMainAppLoading = useSelector((state) => state.main.isLoading);
 
-  const [serverError, setServerError] = useState(false);
+    const isUserAuthLoading = useSelector((state) => state.auth.isLoading);
 
-  useEffect(() => {
-    dispatch(checkUser()).then(() => {
-      if (isUserAuthenticate !== null) {
-        dispatch(fetchInboxData()).catch((err) => {
-          console.log(err);
-          setServerError(true);
-        });
-      }
-    });
-  }, []);
+    const [serverError, setServerError] = useState(false);
 
-  const sectionTitleInputRef = useRef(null);
+    useEffect(() => {
+        console.log('render')
+        async function fn() {
+            try {
+                await dispatch(checkUser());
 
-  const toastifyOptions = {
-    autoClose: 2000,
-    closeOnClick: true,
-    position: "top-center",
-    pauseOnHover: false,
-    hideProgressBar: true,
-  };
+                if (projectInbox.sections === null) {
+                    const result = await dispatch(fetchSections({project: projectInbox.id}));
 
-  const onClickHandler = async () => {
-    setIsCreateButtonDisabled(true);
+                    dispatch(setData({
+                        modify: {
+                            type: 'project',
+                            part: 'projects',
+                            id: projectInbox.id,
+                            key: 'id',
+                            data: {sections: result},
+                            nestedProperties: ['projects']
+                        }
+                    }));
+                }
+            } catch (error) {
+                console.log(error)
+                setServerError(true);
+            }
+        }
 
-    const alertId = toast.loading("Creating Section", toastifyOptions);
-    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
-    try {
-      await dispatch(
-        createSection(inboxProject.id, {
-          title: sectionTitleInputRef.current.value,
-        })
-      );
+        fn();
+    }, []);
 
-      await dispatch(refreshInboxData());
+    const sectionTitleInputRef = useRef(null);
 
-      toast.update(alertId, {
-        render: "Section Created",
-        type: "success",
-        isLoading: false,
-      });
-    } catch (error) {
-      toast.update(alertId, {
-        render: "Create Section Failed",
-        type: "error",
-        isLoading: false,
-      });
-    }
-  };
+    const toastifyOptions = {
+        autoClose: 2000,
+        closeOnClick: true,
+        position: "top-center",
+        pauseOnHover: false,
+        hideProgressBar: true,
+    };
 
-  const renderSectionTasks = () => {
-    if (!isInboxLoading && !isUserAuthLoading) {
-      if (!serverError) {
-        return (
-          <main className="sections-container col-12">
-            <CreateSection
-              onClick={!isRefreshing ? onClickHandler : null}
-              inputRef={sectionTitleInputRef}
-              disabled={isCreateButtonDisabled}
-            />
-            <section className="sections">
-              {sections !== null
-                ? Object.keys(sections).map((section) => {
-                    return (
-                      <SectionTasks
-                        key={sections[section].id}
-                        sectionId={sections[section].id}
-                        title={section}
-                        tasks={sections[section].tasks}
-                      />
-                    );
-                  })
-                : null}
-            </section>
+    const onClickHandler = async () => {
+        setIsCreateButtonDisabled(true);
 
-            <FloatButton float="r" iconClass="far fa-plus" />
-          </main>
-        );
-      } else {
-        return <InternalServerError />;
-      }
-    } else {
-      return <Loading />;
-    }
-  };
+        const alertId = toast.loading("Creating Section", toastifyOptions);
 
-  return (
-    <div className="col-10">
-      <Header title="Tasks" />
-      {renderSectionTasks()}
-    </div>
-  );
+        try {
+            const createdSection = await dispatch(
+                createSection(projectInbox.id, {
+                    title: sectionTitleInputRef.current.value,
+                })
+            );
+
+            dispatch(setData({
+                modify: {
+                    type: 'project',
+                    part: 'projects',
+                    id: projectInbox.id,
+                    key: 'id',
+                    data: {sections: createdSection},
+                    nestedProperties: ['projects']
+                }
+            }));
+
+            toast.update(alertId, {
+                render: "Section Created",
+                type: "success",
+                isLoading: false,
+            });
+        } catch (error) {
+            console.log(error)
+            toast.update(alertId, {
+                render: "Create Section Failed",
+                type: "error",
+                isLoading: false,
+            });
+        }
+    };
+
+    const renderSectionTasks = () => {
+        if (!isMainAppLoading && !isUserAuthLoading) {
+            if (!serverError) {
+                return (
+                    <main className="sections-container col-12">
+                        <CreateSection
+                            onClick={!isRefreshing ? onClickHandler : null}
+                            inputRef={sectionTitleInputRef}
+                            disabled={isCreateButtonDisabled}
+                        />
+                        <section className="sections">
+                            {projectInbox.sections ? projectInbox.sections.map((section) => {
+                                return <SectionTasks key={section.id} section={section}/>
+                            }) : "loading"}
+                        </section>
+                        <FloatButton float="r" iconClass="far fa-plus"/>
+                    </main>
+                );
+            } else {
+                return <InternalServerError/>;
+            }
+        } else {
+            return <Loading/>;
+        }
+    };
+
+    return (
+        <div className="col-10">
+            <Header title="Tasks"/>
+            {renderSectionTasks()}
+            <Outlet/>
+        </div>
+    );
 };
 
 export default Tasks;

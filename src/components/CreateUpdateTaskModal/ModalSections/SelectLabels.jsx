@@ -6,7 +6,7 @@ import "./selectLabels.scss";
 const SelectLabels = ({ taskLabels, setTaskLabels }) => {
   const [matchedLabels, setMatchedLabels] = useState([]);
   const [isMatchedLabelsListOpen, setIsMatchedLabelsListOpen] = useState(false);
-  const labels = useSelector((state) => state.inbox.labels);
+  const labels = useSelector((state) => state.main.labels);
 
   const SelectedLabels = () => {
     return taskLabels.length !== 0 ? (
@@ -55,7 +55,7 @@ const SelectLabels = ({ taskLabels, setTaskLabels }) => {
       });
 
       return filteredLabels.length !== 0 ? (
-        filteredLabels.map((label, index) => {
+        filteredLabels.map((label) => {
           return (
             <li
               onClick={addSelectedLabel}

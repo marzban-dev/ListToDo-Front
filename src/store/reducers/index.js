@@ -2,6 +2,6 @@ import { combineReducers } from "redux";
 
 import auth from "./Auth.reducer";
 import projects from "./Projects.reducer";
-import inbox from "./Inbox.reducer";
+import main from "./Main.reducer";
 
-export default combineReducers({ auth, projects, inbox });
+export default combineReducers({ auth, projects, main });

@@ -1,0 +1,33 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.modal-content {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px !important;
+  padding: 1rem;
+  background-color: $second-white !important;
+  border: none !important;
+  border-radius: 15px !important;
+}
+
+.show-tasks-modal {
+
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 100ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}

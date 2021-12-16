@@ -12,7 +12,7 @@
   margin-top: 1rem;
 
   .task-input {
-    padding-right: 3rem;
+    padding: 0.75rem 3rem 0.6rem 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,6 +31,7 @@
         color: transparentize($color: $icon, $amount: 0.3);
         font-size: 20px;
       }
+
       &:hover {
         span {
           color: $primary;
@@ -38,47 +39,111 @@
       }
     }
 
-    input[type="checkbox"] {
-      @include reset_input();
-      margin: 1rem;
+    .task-input-title {
+      width: 110px;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-left: 0.75rem;
     }
+
+    .task-input-checkbox-label {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: transparentize($color: $icon, $amount: 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.25s, transform 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: transparentize($color: $primary, $amount: 0.8);
+
+        span {
+          color: transparentize($color: $primary, $amount: 0.4);
+        }
+      }
+
+      span {
+        color: transparentize($color: $icon, $amount: 0.3);
+        font-size: 15px;
+        transform: translateY(1px);
+        transition: color 0.25s;
+      }
+    }
+
+    .task-input-checkbox-label-active {
+      background-color: $primary !important;
+
+      span {
+        color: $white !important;
+      }
+    }
+
+    .task-input-checkbox-label-mouse-down {
+      transform: scale(0.85);
+    }
+
   }
+
   .task-info {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-right: 0.75rem;
-    color: transparentize($color: $text, $amount: 0.5);
+    white-space: nowrap;
+
+    button, span {
+      color: transparentize($color: $text, $amount: 0.5);
+    }
 
     .task-info-comments {
       padding: 0 0.35rem;
       cursor: pointer;
+
       &:hover {
         span {
           color: $primary;
         }
       }
+
       .comments-count {
         padding-left: 0.25rem;
+        font-size: 14px;
       }
     }
 
     .task-info-sub-tasks {
       padding: 0 0.35rem;
       cursor: pointer;
+
       &:hover {
         span {
           color: $primary;
         }
       }
+
       .sub-tasks-count {
         padding-left: 0.25rem;
+        font-size: 14px;
       }
     }
 
     .task-info-priority {
       padding: 0 0.35rem;
       color: $red;
+    }
+
+    .task-info-modify {
+      @include reset_input();
+      padding: 0 0.35rem;
+
+      &:hover {
+        span {
+          color: $primary;
+        }
+      }
     }
   }
 }
