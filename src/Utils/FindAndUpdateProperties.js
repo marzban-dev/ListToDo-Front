@@ -1,11 +1,5 @@
 import _ from "lodash";
 
-const falsyCheck = (value) => {
-    if (Array.isArray(value)) return value.length === 0;
-    if (value && typeof value === "object") return Object.keys(value).length === 0;
-    return value;
-}
-
 const findAndUpdateProperties = (type, id, key, propertiesToSet, nestedProperties) => {
     return obj => {
         let objType = "";
@@ -16,7 +10,7 @@ const findAndUpdateProperties = (type, id, key, propertiesToSet, nestedPropertie
 
         if (objType === type && obj[key] === id) {
             Object.keys(propertiesToSet).forEach(property => {
-                if (obj.hasOwnProperty(property) && !falsyCheck(obj[property]) && Array.isArray(obj[property])) {
+                if (obj.hasOwnProperty(property) && Array.isArray(obj[property])) {
                     obj[property] = _.values(
                         _.merge(
                             _.keyBy(obj[property] === null ? [] : obj[property], 'id'),
