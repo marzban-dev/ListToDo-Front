@@ -33,8 +33,8 @@ const AppRoutes = () => {
         }
       >
           <Route path="modify/:taskId" element={<CreateUpdateTaskModal mode={'modify'}/>}/>
-          <Route path="create/:sectionId" element={<CreateUpdateTaskModal mode={'create'}/>}/>
-          <Route path="subtasks/:taskID" element={<ShowSubTasks/>}/>
+          <Route path="create" element={<CreateUpdateTaskModal mode={'create'}/>}/>
+          <Route path="subtasks" element={<ShowSubTasks/>}/>
       </Route>
       <Route path="/404" element={<NotFound />} />
       <Route path="*" element={<Navigate to="/404" replace />} />
