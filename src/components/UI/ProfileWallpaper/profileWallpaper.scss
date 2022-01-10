@@ -1,0 +1,16 @@
+.profile-wallpaper {
+  background: black;
+  width: 100%;
+  height: 100%;
+
+  .profile-wallpaper-image {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+}

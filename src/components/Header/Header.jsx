@@ -67,11 +67,17 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                     }
 
                     <div className="header-profile">
-                        <ProfilePicture profilePicture={user ? user.setting.profile : null} style={{
-                            width: "40px",
-                            height: "40px",
-                            marginRight: "0.75rem"
-                        }}/>
+
+                        <ProfilePicture
+                            profilePicture={user ? user.setting.profile : null}
+                            style={{
+                                width: "40px",
+                                height: "40px",
+                                marginRight: "0.75rem"
+                            }}
+                            preloaderStyle={{width: 40, height: 40}}
+                        />
+
                         <span>{user ? user.username : "Please Login"}</span>
                     </div>
                 </div>

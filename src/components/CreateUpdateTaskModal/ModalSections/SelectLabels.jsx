@@ -26,7 +26,7 @@ const SelectLabels = ({ taskLabels, setTaskLabels }) => {
         })}
       </ul>
     ) : (
-      <p className="no-label-selected">No labels selected</p>
+      <p className="no-label-selected">No label selected</p>
     );
   };
 

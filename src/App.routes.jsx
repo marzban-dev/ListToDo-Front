@@ -37,11 +37,11 @@ const AppRoutes = () => {
                 </React.Fragment>,
             isPrivate: true
         },
-        {
-            path: '/projects',
-            element: <Projects/>,
-            isPrivate: true
-        },
+        // {
+        //     path: '/projects',
+        //     element: <Projects/>,
+        //     isPrivate: true
+        // },
         {
             path: '/settings',
             element: <Settings/>,

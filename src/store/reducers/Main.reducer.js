@@ -25,12 +25,6 @@ const reducer = (state = initState, action) => {
             return {...state, isLoading: false};
         case Acts.SET_DATA:
             return setDataReducer(state, action);
-        case Acts.START_REFRESH_DATA:
-            return {...state, isRefreshing: true};
-        case Acts.FINISH_REFRESH_DATA:
-            return {...state, isRefreshing: false};
-        case Acts.REFRESH_DATA_FAILED:
-            return {...state, isRefreshing: false};
         case Acts.SET_APP_THEME:
             let theme;
 

@@ -5,20 +5,15 @@
   position: relative;
   padding: 1rem;
   height: 180px;
-  background-color: black;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
 
-  .profile-background-image {
+  .profile-background-image-loader {
     position: absolute;
     z-index: 100;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.6;
   }
 
   .profile-picture-container {
@@ -30,54 +25,15 @@
     margin-left: 1rem;
     z-index: 200;
 
-
-    .profile {
-      position: relative;
-      padding: 1rem;
-      height: 180px;
-      background-color: black;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-end;
-
-      .profile-background-image {
-        position: absolute;
-        z-index: 100;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.6;
-      }
-
-      .profile-picture-container {
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        transform: translateY(35px);
-        margin-left: 1rem;
-        z-index: 200;
-
-        .profile-name {
-          font-size: 18px;
-          color: var(--color-text);
-          margin-left: 1rem;
-        }
-      }
-    }
-
     .profile-name {
       font-size: 18px;
-      color: var(--color-text);
+      color: $second-white;
       margin-left: 1rem;
     }
   }
 }
 
 .upload-picture-modal {
-
   .upload-picture-modal-inputs {
     display: flex;
     justify-content: center;
@@ -97,19 +53,13 @@
         width: 100%;
         height: 100%;
 
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 15px 15px 0 0;
-        }
-
         label {
           button {
             position: absolute;
             bottom: 0;
             right: 0;
             margin: 0 0.5rem 0.5rem 0;
+            z-index: 200;
 
             span {
               font-size: 13px;
@@ -124,10 +74,7 @@
         align-items: center;
         flex-direction: column;
         transform: translateY(60px);
-
-        .profile-picture {
-
-        }
+        z-index: 200;
 
         .upload-input-label {
           button {

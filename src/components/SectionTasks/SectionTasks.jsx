@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {arrayMoveImmutable} from "array-move";
 import {useDispatch} from "react-redux";
 import {SortableContainer} from "react-sortable-hoc";
 import {produce} from "immer";
@@ -9,10 +8,9 @@ import Task from "components/Task/Task";
 import {deleteSection, fetchTasks} from "../../store/actions/ApiCalls.actions";
 import {changePosition, setData} from "../../store/actions/Main.actions";
 import SkeletonLoader from "../UI/SkeletonLoader/SkeletonLoader";
-import {setProjects, updateProjectPosition} from "../../store/actions/Projects.actions";
-import "./sectionTasks.scss";
 import Button from "../UI/Button/Button";
 import {TOASTIFY_OPTIONS} from "config";
+import "./sectionTasks.scss";
 
 
 const SectionTasks = ({section}) => {
@@ -88,20 +86,20 @@ const SectionTasks = ({section}) => {
             changePosition('section', 'task', section.id, oldIndex, newIndex, section.tasks)
         );
 
-        const Undo = ({onUndo, closeToast}) => {
-            const handleClick = () => {
-                onUndo();
-                closeToast();
-            };
-
-            return (
-                <div>
-                    <h3>
-                        Row Deleted <button onClick={handleClick}>UNDO</button>
-                    </h3>
-                </div>
-            );
-        };
+        // const Undo = ({onUndo, closeToast}) => {
+        //     const handleClick = () => {
+        //         onUndo();
+        //         closeToast();
+        //     };
+        //
+        //     return (
+        //         <div>
+        //             <h3>
+        //                 Row Deleted <button onClick={handleClick}>UNDO</button>
+        //             </h3>
+        //         </div>
+        //     );
+        // };
 
         const DeleteSection = async () => {
             const alertId = toast.loading("Deleting Section", TOASTIFY_OPTIONS);

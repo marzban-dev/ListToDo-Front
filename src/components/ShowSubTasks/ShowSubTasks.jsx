@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "react-modal";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {produce} from "immer";
 import Task from "../Task/Task";
@@ -9,11 +9,13 @@ import {FindAndReturnProperties} from "../../Utils/HelperFunctionsForObjects";
 import Button from "components/UI/Button/Button";
 import {REACT_MODAL_OPTIONS} from "config";
 import EmptySign from "../UI/EmptySign/EmptySign";
+import {changePosition} from "../../store/actions/Main.actions";
 import "./ShowSubTasks.scss";
 
 const ShowSubTasks = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const subTasks = useSelector(state => {
         return FindAndReturnProperties(
             state.main.projects,
@@ -32,7 +34,7 @@ const ShowSubTasks = () => {
     const RenderSubTasks = SortableContainer(() => {
         const sortedTasksList = () => {
             if (subTasks.tasks.length === 0) {
-                return <EmptySign text="Empty" style={{padding:"1.5rem 0"}}/>;
+                return <EmptySign text="Empty" style={{padding: "1.5rem 0"}}/>;
             } else {
                 return produce(subTasks.tasks, draft => {
                     draft.sort((a, b) => a.position > b.position)
@@ -49,7 +51,12 @@ const ShowSubTasks = () => {
         )
     });
 
-    const onSortEnd = ({oldIndex, newIndex}) => {};
+    const onSortEnd = ({oldIndex, newIndex}) => {
+        console.log(location.state.parentTask.id, subTasks);
+        dispatch(
+            changePosition('task', 'task', location.state.parentTask.id, oldIndex, newIndex, subTasks.tasks)
+        )
+    };
 
     const [isModalOpen, setIsModalOpen] = useState(true);
     const closeModal = () => {

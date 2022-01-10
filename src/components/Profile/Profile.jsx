@@ -7,20 +7,23 @@ import Button from "../UI/Button/Button";
 import {updateUserSettings} from "../../store/actions/Auth.actions";
 import {toast} from "react-toastify";
 import "./profile.scss";
+import ProfileWallpaper from "../UI/ProfileWallpaper/ProfileWallpaper";
 
 const Profile = () => {
 
     const dispatch = useDispatch();
-    const user = useSelector(state => state.auth.user);
+    const username = useSelector(state => state.auth.user.username);
+    const wallpaper = useSelector(state => state.auth.user.setting.header);
+    const profile = useSelector(state => state.auth.user.setting.profile);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [userWallpaperPreview, setUserWallpaperPreview] = useState(user.setting.header);
-    const [userPicturePreview, setUserPicturePreview] = useState(user.setting.profile);
+    const [userWallpaperPreview, setUserWallpaperPreview] = useState(wallpaper);
+    const [userPicturePreview, setUserPicturePreview] = useState(profile);
     const [userWallpaper, setUserWallpaper] = useState(null);
     const [userPicture, setUserPicture] = useState(null);
 
-    const [userName, setUserName] = useState(user.username);
+    const [userName, setUserName] = useState(username);
 
     const setNewPicture = (e) => {
         if (e.target.files.length > 0) {
@@ -43,19 +46,18 @@ const Profile = () => {
     }
 
     const saveChanges = async () => {
-
         const alertId = toast.loading("Updating Profile", {
             ...TOASTIFY_OPTIONS,
-            hideProgressBar: false,
             progressStyle: {backgroundColor: "var(--color-primary)"},
         });
 
         try {
             const settingsToUpdate = new FormData();
+
             if (userPicture) settingsToUpdate.append('profile', userPicture, userPicture.name);
             if (userWallpaper) settingsToUpdate.append('header', userWallpaper, userWallpaper.name);
-            if (userName !== user.username) settingsToUpdate.append("username", userName)
-            if (!userPicture && !userWallpaper && userName === user.username) {
+            if (userName !== username) settingsToUpdate.append("username", userName)
+            if (!userPicture && !userWallpaper && userName === username) {
                 toast.info("All things are the same.", {...TOASTIFY_OPTIONS, autoClose: 2000})
             } else {
 
@@ -67,12 +69,6 @@ const Profile = () => {
                 }
 
                 await dispatch(updateUserSettings(settingsToUpdate, uploadProgressHandler));
-
-                toast.update(alertId, {
-                    render: "Profile Updated",
-                    type: "success",
-                    isLoading: false,
-                });
             }
         } catch (error) {
             toast.update(alertId, {
@@ -85,17 +81,17 @@ const Profile = () => {
 
     return (
         <div className="profile">
-            <img className="profile-background-image" src={user.setting.header} alt="bg"/>
+            <ProfileWallpaper wallpaperPicture={wallpaper} className="profile-background-image-loader"/>
             <div className="profile-picture-container">
                 <ProfilePicture
                     shadow
-                    profilePicture={user.setting.profile}
+                    profilePicture={profile}
                     withEditButton
                     editButtonHandler={() => setIsModalOpen(true)}
                 />
 
                 <div className="profile-name">
-                    {user ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : 'Please Login'}
+                    {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Please Login'}
                 </div>
             </div>
 
@@ -108,7 +104,10 @@ const Profile = () => {
                     <div className="upload-picture-modal-inputs">
                         <div className="upload-picture-modal-inputs-wallpaper">
                             <div className="upload-picture-modal-wallpaper-preview">
-                                <img src={userWallpaperPreview} alt="bg"/>
+                                <ProfileWallpaper
+                                    wallpaperPicture={userWallpaperPreview}
+                                    className="profile-background-image-loader"
+                                />
                                 <label className="upload-input-label" htmlFor="user-wallpaper-picture">
                                     <Button
                                         onClick={() => document.getElementById('user-wallpaper-picture').click()}
@@ -163,7 +162,6 @@ const Profile = () => {
                     </div>
                 </div>
             </Modal>
-
         </div>
     );
 };
