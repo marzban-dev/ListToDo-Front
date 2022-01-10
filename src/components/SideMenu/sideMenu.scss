@@ -1,60 +1,116 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
-.side-menu {
-  background-color: $second-white;
-  height: 100vh;
+.side-menu-active {
+  left: 0 !important;
+  opacity: 1 !important;
 
-  .side-menu-logo {
-    color: $text;
-    padding: 1rem 2rem;
+  .side-menu-container {
+    opacity: 1 !important;
+    left: 0 !important;
+  }
+}
+
+.side-menu-link-disabled {
+  cursor: default;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.side-menu {
+  background-color: var(--color-secondary);
+  height: 100vh;
+  width: 250px;
+  transition: opacity 0.3s;
+
+  @media screen and (max-width: 768px) {
+    opacity: 0;
+    background-color: var(--color-react-modal-overlay);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 300;
   }
 
-  .side-menu-sections {
-    @include reset_list();
-    .side-menu-sections-1,
-    .side-menu-sections-2 {
+  .side-menu-container {
+    cursor: default;
+    transition: opacity 0.3s, left 0.3s;
+
+    @media screen and (max-width: 768px) {
+      background-color: var(--color-secondary);
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -100%;
+    }
+
+    .side-menu-logo {
+      color: var(--color-text);
+      padding: 1rem 2rem;
+    }
+
+    .side-menu-links {
+      @include reset_list();
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       flex-direction: column;
-      padding: 1rem;
+      margin-top: 3rem;
 
-      a {
-        border-radius: 25px;
-        text-decoration: none;
-        color: $icon;
-        padding: 0.75rem 1rem;
-        margin-top: 1rem;
+      .side-menu-links-divider {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 0 1rem;
         width: 100%;
-        transition: background-color 0.25s;
-        white-space: nowrap;
 
-        &:hover {
-          background-color: transparentize(
-            $color: $primary,
-            $amount: 0.9
-          ) !important;
-        }
+        a {
+          border-radius: 25px;
+          text-decoration: none;
+          color: var(--color-icon);
+          padding: 0.75rem 1rem;
+          margin-top: 1rem;
+          width: 100%;
+          transition: background-color 0.25s;
+          white-space: nowrap;
 
-        .section-icon {
-          color: $icon;
-          padding-right: 1.5rem;
-          font-size: 20px;
-          transition: color 0.25s;
-        }
+          &:hover {
+            background-color: var(--color-sidemenu-item-bg-hover);
+          }
 
-        .section-text {
-          font-size: 18px;
+          .link-icon {
+            color: var(--color-icon);
+            //padding-right: 1.5rem;
+            width: 45px;
+            font-size: 20px;
+            transition: color 0.25s;
+            transform: translateY(0);
+          }
+
+          .link-text {
+            font-size: 18px;
+          }
         }
       }
-    }
-  }
 
-  .side-menu-section-active {
-    background-color: transparentize($color: $primary, $amount: 0.8) !important;
-    .section-icon {
-      color: $primary !important;
+      .side-menu-links-divider:nth-child(2) {
+        margin-top: 1.5rem;
+      }
+    }
+
+    .side-menu-link-active {
+      background-color: var(--color-sidemenu-item-bg-active);
+
+      .link-icon {
+        color: var(--color-primary) !important;
+      }
     }
   }
 }

@@ -2,10 +2,11 @@
 @import "../../assets/scss/mixins";
 
 .task {
-  background-color: $second-white;
+  background-color: var(--color-secondary);
   border-radius: 15px;
   overflow: hidden;
-  width: 350px;
+  width: 100%;
+  height: 45px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,54 +20,55 @@
 
     .tasks-draggable-icon {
       cursor: move;
-      padding: 1em;
       height: 100%;
+      padding-right: 0.75rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: $second-white;
 
       span {
         transition: color 0.25s;
-        color: transparentize($color: $icon, $amount: 0.3);
+        color: var(--color-icon-lighten);
         font-size: 20px;
       }
 
       &:hover {
         span {
-          color: $primary;
+          color: var(--color-primary);
         }
       }
     }
 
     .task-input-title {
-      width: 110px;
+      width: 80px;
       white-space: nowrap;
       overflow: hidden;
       margin-left: 0.75rem;
+      color: var(--color-text)
     }
 
     .task-input-checkbox-label {
-      width: 25px;
-      height: 25px;
+      width: 23px;
+      height: 23px;
       border-radius: 50%;
-      background-color: transparentize($color: $icon, $amount: 0.7);
+      background-color: var(--color-task-checkbox);
       display: flex;
       justify-content: center;
       align-items: center;
       transition: background-color 0.25s, transform 0.1s;
       cursor: pointer;
+      border: 3px solid var(--color-task-checkbox-border);
 
       &:hover {
         background-color: transparentize($color: $primary, $amount: 0.8);
 
         span {
-          color: transparentize($color: $primary, $amount: 0.4);
+          color: var(--color-task-checkbox-hover);
         }
       }
 
       span {
-        color: transparentize($color: $icon, $amount: 0.3);
+        opacity: 0;
         font-size: 15px;
         transform: translateY(1px);
         transition: color 0.25s;
@@ -74,15 +76,17 @@
     }
 
     .task-input-checkbox-label-active {
-      background-color: $primary !important;
+      background-color: var(--color-primary) !important;
+      border-color: transparent;
 
       span {
-        color: $white !important;
+        color: var(--color-secondary-complement) !important;
+        opacity: 1;
       }
     }
 
     .task-input-checkbox-label-mouse-down {
-      transform: scale(0.85);
+      transform: scale(0.95);
     }
 
   }
@@ -95,7 +99,7 @@
     white-space: nowrap;
 
     button, span {
-      color: transparentize($color: $text, $amount: 0.5);
+      color: var(--color-icon);
     }
 
     .task-info-comments {
@@ -108,26 +112,14 @@
         }
       }
 
-      .comments-count {
+      span:nth-child(2) {
         padding-left: 0.25rem;
         font-size: 14px;
       }
     }
 
     .task-info-sub-tasks {
-      padding: 0 0.35rem;
-      cursor: pointer;
-
-      &:hover {
-        span {
-          color: $primary;
-        }
-      }
-
-      .sub-tasks-count {
-        padding-left: 0.25rem;
-        font-size: 14px;
-      }
+      @extend .task-info-comments;
     }
 
     .task-info-priority {
@@ -137,13 +129,12 @@
 
     .task-info-modify {
       @include reset_input();
-      padding: 0 0.35rem;
+      @extend .task-info-comments;
+    }
 
-      &:hover {
-        span {
-          color: $primary;
-        }
-      }
+    .task-info-delete {
+      @include reset_input();
+      @extend .task-info-comments;
     }
   }
 }

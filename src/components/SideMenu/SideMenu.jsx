@@ -1,56 +1,72 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
 import "./sideMenu.scss";
 
-const MenuLink = ({ to, iconClass, children }) => {
-  const location = useLocation();
-  return (
-    <NavLink
-      to={to}
-      className={
-        location.pathname.includes(to) ? "side-menu-section-active" : null
-      }
-    >
-      <span className={["section-icon", iconClass].join(" ")}></span>
-      <span className="section-text">{children}</span>
-    </NavLink>
-  );
-};
+const SideMenu = ({isOpen, setIsOpen}) => {
+    const isPreAuthLoading = useSelector(state => state.auth.isPreAuthLoading);
 
-const SideMenu = () => {
-  return (
-    <aside className="side-menu col-2">
-      <h1 className="side-menu-logo">Logo</h1>
-      <ul className="side-menu-sections">
-        <div className="side-menu-sections-1">
-          <MenuLink to="/tasks" iconClass="far fa-tasks">
-            Tasks
-          </MenuLink>
+    const MenuLink = ({to, iconClass, children}) => {
+        const location = useLocation();
 
-          <MenuLink to="/projects" iconClass="far fa-briefcase">
-            Projects
-          </MenuLink>
+        const linkClickHandler = (e) => {
+            if (!isPreAuthLoading) {
+                setIsOpen(false)
+            } else {
+                e.preventDefault();
+            }
+        }
 
-          <MenuLink to="/sections" iconClass="far fa-archive">
-            Archive
-          </MenuLink>
+        return (
+            <NavLink
+                to={to}
+                onClick={linkClickHandler}
+                className={[
+                    !isPreAuthLoading ? (location.pathname.includes(to) ? "side-menu-link-active" : null) : null,
+                    isPreAuthLoading ? "side-menu-link-disabled" : null
+                ].join(' ')}
+            >
+                <span className={["link-icon", iconClass].join(" ")}></span>
+                <span className="link-text">{children}</span>
+            </NavLink>
+        );
+    };
 
-          <MenuLink to="/labels" iconClass="far fa-tags">
-            Labels
-          </MenuLink>
-        </div>
-        <div className="side-menu-sections-2">
-          <MenuLink to="/notifications" iconClass="far fa-bell">
-            Notifications
-          </MenuLink>
+    return (
+        <aside className={["side-menu", isOpen ? "side-menu-active" : null].join(' ')} onClick={() => setIsOpen(false)}>
+            <div className="side-menu-container" onClick={(e) => e.stopPropagation()}>
+                <h1 className="side-menu-logo">Logo</h1>
+                <ul className="side-menu-links">
+                    <div className="side-menu-links-divider">
+                        <MenuLink to="/tasks" iconClass="far fa-tasks">
+                            Tasks
+                        </MenuLink>
 
-          <MenuLink to="/settings" iconClass="far fa-cog">
-            Settings
-          </MenuLink>
-        </div>
-      </ul>
-    </aside>
-  );
+                        <MenuLink to="/projects" iconClass="far fa-briefcase">
+                            Projects
+                        </MenuLink>
+
+                        <MenuLink to="/sections" iconClass="far fa-archive">
+                            Archive
+                        </MenuLink>
+
+                        <MenuLink to="/labels" iconClass="far fa-tags">
+                            Labels
+                        </MenuLink>
+                    </div>
+                    <div className="side-menu-links-divider">
+                        <MenuLink to="/notifications" iconClass="far fa-bell">
+                            Notifications
+                        </MenuLink>
+
+                        <MenuLink to="/settings" iconClass="far fa-cog">
+                            Settings
+                        </MenuLink>
+                    </div>
+                </ul>
+            </div>
+        </aside>
+    );
 };
 
 export default SideMenu;

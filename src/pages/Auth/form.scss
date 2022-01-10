@@ -40,6 +40,7 @@ form {
     align-items: center;
     opacity: 0;
     transition: top 0.5s, opacity 0.5s;
+
     span {
       font-size: 60px;
       color: #eeeeee;
@@ -53,6 +54,7 @@ form {
 
   .form-input-container {
     margin-top: 2rem;
+
     .form-input {
       .form-input-box {
         display: flex;
@@ -102,9 +104,23 @@ form {
 
   .form-request-error-box {
     padding-top: 2rem;
+
     p {
       padding: 0;
       color: #b64a4a;
+    }
+
+    .form-request-error-box-list {
+      @include reset_list();
+
+      li {
+        color: $red;
+        padding-bottom: 1rem;
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
     }
   }
 
@@ -116,6 +132,7 @@ form {
     padding: 1rem;
     border-radius: 30px;
     transition: background-color 0.25s;
+
     &:hover {
       background-color: #10969d;
     }
@@ -140,10 +157,12 @@ form {
       justify-content: center;
       align-items: center;
       padding: 2rem 0 1.5rem 0;
+
       span {
         color: #eeeeee;
         padding: 0 0.5rem;
       }
+
       div {
         margin-top: 2px;
         width: 120px;
@@ -171,9 +190,11 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+
     p {
       font-size: 14px;
       color: #eeeeee;
+
       a {
         text-decoration: none;
         color: #00adb5;

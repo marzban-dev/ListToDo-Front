@@ -12,30 +12,30 @@
     align-items: center;
     position: absolute;
     z-index: 70;
-    background-color: $second-white;
+    background-color: var(--color-secondary-complement);
     border-radius: 15px;
     right: 65px;
-    height: 100%;
+    height: 40px;
 
     .colors-item {
-      margin: 0.15rem 0 0 0.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 3px;
-      height: 100%;
+      height: 35px;
+      width: 35px;
+
       label {
         border-radius: 50%;
-        background-color: $second-white;
+        background-color: var(--color-secondary);
         transition: background-color 0.25s;
         cursor: pointer;
 
         &:hover {
-          background-color: lighten($color: $white, $amount: 5%);
+          background-color: var(--color-secondary-complement-light);
         }
 
         div {
-          background-color: $icon;
+          background-color: var(--color-icon);
           width: 17px;
           height: 17px;
           border-radius: 50%;
@@ -52,11 +52,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $second-white;
+    background-color: var(--color-secondary);
     transition: background-color 0.25s;
     cursor: pointer;
-    // margin: 0.5rem 0.5rem 0 0;
-    // padding-bottom: 0.5rem;
 
     &:hover {
       span {
@@ -65,11 +63,11 @@
     }
 
     span {
-      background-color: $icon;
+      background-color: var(--color-icon);
       width: 23px;
       height: 23px;
       border-radius: 50%;
-      border: 3px solid lighten($color: $icon, $amount: 20%);
+      border: 3px solid var(--color-icon);
       opacity: 0.8;
       transition: opacity 0.25s;
     }

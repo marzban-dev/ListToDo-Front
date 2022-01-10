@@ -1,33 +1,47 @@
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
 
-.modal-content {
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 400px !important;
+.sub-tasks {
   padding: 1rem;
-  background-color: $second-white !important;
-  border: none !important;
-  border-radius: 15px !important;
-}
 
-.show-tasks-modal {
+  .sub-tasks-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
 
-}
+    .sub-tasks-head-title {
+      color: var(--color-text);
+      background-color: var(--color-sidemenu-item-bg-active);
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 15px;
+    }
 
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 100ms ease-in-out;
-}
+    .sub-tasks-head-menu {
+      color: var(--color-primary);
 
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
+      span {
+        font-size: 22px;
+      }
+    }
+  }
 
-.ReactModal__Overlay--before-close {
-  opacity: 0;
+  .sub-tasks-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .task {
+      background-color: var(--color-secondary-complement);
+    }
+  }
+
+  .sub-tasks-add-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

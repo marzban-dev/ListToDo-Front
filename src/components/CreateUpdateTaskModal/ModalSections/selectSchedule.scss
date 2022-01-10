@@ -8,31 +8,32 @@
   padding: 0.5rem 1rem;
   border-radius: 15px;
   transition: background-color 0.25s;
-  background-color: lighten($color: $white, $amount: 5%);
+  background-color: var(--color-modal-input-bg);
 
   &:focus,
   &:hover {
-    background-color: var(--color-input-hover);
+    background-color: var(--color-modal-input-bg-hover);
   }
 
   .schedule-input {
     @include reset_input();
-    color: $text;
+    color: var(--color-text);
+    cursor: pointer;
 
-    &:placeholder {
-      color: $icon;
+    &::placeholder {
+      color: var(--color-icon);
     }
   }
 
   .schedule-clear-icon {
     @include reset_input();
-    color: red;
+    color: $red;
     font-size: 24px;
   }
 
   .schedule-icon {
     @include reset_input();
-    color: $primary;
+    color: var(--color-primary);
     font-size: 20px;
     cursor: default;
   }

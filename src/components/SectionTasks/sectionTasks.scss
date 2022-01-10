@@ -3,32 +3,34 @@
 
 .section-tasks {
   width: 350px;
-  margin: 2rem 4rem 0 0;
+  margin: 2rem 2.5rem 0 0;
 
   .section-tasks-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $second-white;
+    background-color: var(--color-secondary);
     padding: 1rem;
     border-radius: 15px;
 
     .section-tasks-head-title {
-      color: $text;
+      color: var(--color-text);
       padding: 0;
       margin: 0;
     }
 
     .section-tasks-head-menu {
       cursor: pointer;
+
       &:hover {
         span {
-          color: $primary;
+          color: var(--color-primary);
         }
       }
+
       span {
         margin-top: 0.5rem;
-        color: $icon;
+        color: var(--color-icon);
         transition: color 0.25s;
         font-size: 20px;
       }
@@ -42,36 +44,10 @@
     flex-direction: column;
   }
 
-  .section-tasks-add-button {
-    margin-top: 1rem;
-    width: 100%;
+  .section-tasks-list-add-button {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    button {
-      @include reset_input();
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background-color: transparentize($color: $primary, $amount: 0.3);
-      transition: background-color 0.25s;
-
-      &:hover {
-        background-color: $primary;
-      }
-
-      &:focus {
-        background-color: $primary;
-      }
-
-      span {
-        color: $second-white;
-        font-size: 20px;
-      }
-    }
+    width: 100%;
   }
 }

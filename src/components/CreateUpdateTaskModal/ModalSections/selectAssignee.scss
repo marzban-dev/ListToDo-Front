@@ -4,39 +4,13 @@
 .assignee {
   margin-top: 1rem;
   width: 100%;
+
   .assignee-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 
-    .assignee-selected-user {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 0.5rem 0.5rem 0.25rem 0.5rem;
-      border-radius: 15px 0 0 15px;
-      background-color: $primary;
-      width: 20%;
-
-      img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: 2px solid $second-white;
-        transition: border-color 1s;
-      }
-
-      span {
-        margin-top: 0.1rem;
-        text-align: center;
-        color: $second-white;
-        font-size: 12px;
-        transition: color 1s;
-        white-space: nowrap;
-      }
-    }
 
     .assignee-not-selected {
       display: flex;
@@ -57,10 +31,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         span {
           color: $icon;
         }
       }
+
       span {
         margin-top: 0.1rem;
         text-align: center;
@@ -70,6 +46,19 @@
         white-space: nowrap;
       }
     }
+
+    .assignee-selected-user {
+      @extend .assignee-not-selected;
+
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid $second-white;
+        transition: border-color 1s;
+      }
+    }
+
 
     .assignee-users-list {
       width: 80%;
@@ -92,12 +81,14 @@
 
         li {
           padding: 0 0.5rem;
+
           label {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             cursor: pointer;
+
             img {
               width: 30px;
               height: 30px;
@@ -105,6 +96,7 @@
               border: 2px solid $icon;
               transition: border-color 1s;
             }
+
             span {
               margin-top: 0.1rem;
               text-align: center;
@@ -120,6 +112,7 @@
             img {
               border-color: $primary;
             }
+
             span {
               color: darken($color: $primary, $amount: 10%);
             }

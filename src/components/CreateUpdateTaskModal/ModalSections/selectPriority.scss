@@ -10,15 +10,14 @@
     @include reset_input();
     position: relative;
     z-index: 100;
-    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
     cursor: pointer;
     margin: 0.5rem 0.5rem 0 0;
     padding-bottom: 0.5rem;
+    width: 35px;
+    height: 35px;
 
     &:hover {
       span {
@@ -27,7 +26,7 @@
     }
 
     span {
-      color: $icon;
+      color: var(--color-icon);
       font-size: 20px;
       transition: opacity 0.25s;
       opacity: 0.8;
@@ -46,10 +45,10 @@
     align-items: center;
     position: absolute;
     z-index: 90;
-    background-color: $second-white;
-    padding-bottom: 0.5rem;
+    background-color: var(--color-secondary-complement);
     border-radius: 15px;
     right: 25px;
+    height: 40px;
 
     .priority-item {
       label {
@@ -57,20 +56,36 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $second-white;
+        background-color: var(--color-secondary-complement);
         transition: background-color 0.25s;
         width: 35px;
         height: 35px;
         cursor: pointer;
-        margin-top: 0.5rem;
-
         &:hover {
-          background-color: lighten($color: $white, $amount: 5%);
+          background-color: var(--color-secondary-complement-light);
         }
+
         span {
           font-size: 18px;
         }
       }
     }
+
+
+    .priority-item-delete-selection {
+      @include reset_input();
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        color: var(--color-primary);
+        font-size: 18px;
+      }
+    }
   }
+
 }

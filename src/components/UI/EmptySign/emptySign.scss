@@ -1,0 +1,14 @@
+.empty-sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  svg {
+    fill: var(--color-icon);  width: 150px;
+  }
+
+  h3 {
+    color: var(--color-icon);
+  }
+}

@@ -12,27 +12,28 @@
     align-items: center;
     position: relative;
     z-index: 100;
-    background-color: lighten($color: $white, $amount: 5%);
+    background-color: var(--color-modal-input-bg);
     padding: 0.5rem 0;
     border-radius: 15px;
     transition: background-color 0.25s;
 
     &:focus,
     &:hover {
-      background-color: var(--color-input-hover);
+      background-color: var(--color-modal-input-bg-hover);
     }
 
     & > span {
-      color: $primary;
+      color: var(--color-primary);
       padding: 0 0.5rem 0 1rem;
     }
 
     input {
       @include reset_input();
-      color: $text;
+      color: var(--color-text);
       width: 100%;
+
       &::placeholder {
-        color: $icon;
+        color: var(--color-icon);
       }
     }
 
@@ -41,7 +42,7 @@
       padding-right: 0.75rem;
 
       span {
-        color: $primary;
+        color: var(--color-primary);
         transition: transform 0.15s;
       }
     }
@@ -50,7 +51,7 @@
   .labels-select-menu {
     @include reset_list();
     @include reset_scrollbar();
-    background-color: lighten($color: $white, $amount: 5%);
+    background-color: var(--color-modal-input-bg);
     border-radius: 15px;
     transform: translateY(0);
     width: 100%;
@@ -84,20 +85,23 @@
     flex-wrap: wrap;
 
     .labels-selected-item {
-      background-color: $primary;
+      background-color: var(--color-primary);
       border-radius: 10px;
       margin: 0.75rem 0.75rem 0 0;
       padding: 0.25rem 0.5rem !important;
       transition: background-color 0.25s;
       cursor: pointer;
+
       &:hover {
-        background-color: transparentize($color: $primary, $amount: 0.2);
+        background-color: var(--color-primary-transparentize);
       }
+
       .fa-tag {
         color: $second-white;
         font-size: 15px;
         padding-right: 0.5rem;
       }
+
       .labels-selected-item-title {
         color: $white;
         font-size: 14px;
@@ -129,7 +133,7 @@
   padding: 0.5rem;
   transform: translateY(-1rem);
   transition: opacity 0.25s, height 0.25s, transform 0.25s, margin-top 0.25s,
-    padding 0.25s;
+  padding 0.25s;
 }
 
 .labels-list-fade-enter-done {
@@ -155,5 +159,5 @@
   margin-top: 0;
   padding: 0;
   transition: opacity 0.25s, height 0.25s, transform 0.25s, margin-top 0.25s,
-    padding 0.25s;
+  padding 0.25s;
 }

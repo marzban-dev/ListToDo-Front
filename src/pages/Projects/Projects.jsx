@@ -2,17 +2,14 @@ import React, {useEffect, useState} from "react";
 import {arrayMoveImmutable} from "array-move";
 import {useDispatch, useSelector} from "react-redux";
 import {checkUser} from "store/actions/Auth.actions";
-import {
-    fetchAllProjects,
-    setProjects,
-    updateProjectPosition,
-} from "store/actions/Projects.actions";
+import {fetchAllProjects, setProjects, updateProjectPosition,} from "store/actions/Projects.actions";
 import Header from "components/Header/Header";
 import FilterBox from "components/FilterBox/FilterBox";
 import SortableProjectsWrapper from "./SortableProjectsWrapper";
 import FloatButton from "components/UI/FloatButton/FloatButton";
-import Loading from "components/Loading/Loading";
+import LoadingScreen from "components/UI/LoadingScreen/LoadingScreen";
 import "./projects.scss";
+import PageContainer from "../../components/UI/PageContainer";
 
 const Projects = () => {
     const dispatch = useDispatch();
@@ -44,32 +41,29 @@ const Projects = () => {
         console.log(isProjectsLoading, isUserAuthLoading);
         if (!isProjectsLoading && !isUserAuthLoading) {
             return (
-                <main className="projects col-12">
-                    <FilterBox viewMode={viewMode} setViewMode={setViewMode}/>
-                    <div className="projects-list">
-                        {projects !== null ? (
-                            <SortableProjectsWrapper
-                                onSortEnd={onSortEnd}
-                                projects={projects}
-                                useDragHandle
-                                axis="xy"
-                            />
-                        ) : null}
+                <PageContainer widthPadding>
+                    <div className="projects col-12">
+                        <FilterBox viewMode={viewMode} setViewMode={setViewMode}/>
+                        <div className="projects-list">
+                            {projects !== null ? (
+                                <SortableProjectsWrapper
+                                    onSortEnd={onSortEnd}
+                                    projects={projects}
+                                    useDragHandle
+                                    axis="xy"
+                                />
+                            ) : null}
+                        </div>
+                        <FloatButton float="r" iconClass="far fa-plus"/>
                     </div>
-                    <FloatButton float="r" iconClass="far fa-plus"/>
-                </main>
+                </PageContainer>
             );
         } else {
-            return <Loading/>;
+            return <LoadingScreen/>;
         }
     };
 
-    return (
-        <div className="col-10">
-            <Header title="Projects"/>
-            {renderProjects()}
-        </div>
-    );
+    return (renderProjects());
 };
 
 export default Projects;

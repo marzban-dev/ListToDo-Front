@@ -4,13 +4,14 @@ import {Link, useNavigate, useLocation} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "store/actions/Auth.actions";
+import {fetchData} from "store/actions/Main.actions";
 import "../form.scss";
-import {fetchData} from "../../../store/actions/Main.actions";
 
 const login = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.auth.isLoading);
     const [isLoggedIn, setIsLoggedIn] = useState(0);
+    const [ServerErrorMessage, setServerErrorMessage] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -36,7 +37,12 @@ const login = () => {
                 1000
             );
         } catch (error) {
-            console.log(error);
+            if (error.response && error.response.status === 401) {
+                setServerErrorMessage(error.response.data.detail);
+            }
+            if (error.message === "Network Error") {
+                setServerErrorMessage('Network Error');
+            }
             setIsLoggedIn(-1);
         }
     };
@@ -131,7 +137,10 @@ const login = () => {
                 </div>
                 <div className="form-request-error-box">
                     <p>
-                        {isLoggedIn === -1 ? "Your email or password is incorrect" : null}
+                        {isLoggedIn === -1 ? (
+                            Array.isArray(ServerErrorMessage) ? ServerErrorMessage.map(err =>
+                                <h3>{err}</h3>) : ServerErrorMessage
+                        ) : null}
                     </p>
                 </div>
 

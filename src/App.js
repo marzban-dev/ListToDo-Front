@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -6,13 +6,10 @@ import {useSelector} from "react-redux";
 import SideMenu from "components/SideMenu/SideMenu";
 import AppRoutes from "App.routes";
 import {ToastContainer} from "react-toastify";
-import Loading from "components/Loading/Loading";
-import {
-    checkUser,
-    finishPreAuth,
-    startPreAuth,
-} from "store/actions/Auth.actions";
-import {fetchData} from "./store/actions/Main.actions";
+import LoadingScreen from "components/UI/LoadingScreen/LoadingScreen";
+import {checkUser, finishAuthUser, finishPreAuth, startPreAuth,} from "store/actions/Auth.actions";
+import {fetchData, setAppTheme} from "./store/actions/Main.actions";
+import Header from "./components/Header/Header";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.min.css";
 import "assets/css/all.css";
@@ -29,6 +26,9 @@ const App = () => {
 
     useEffect(() => {
         const fn = async () => {
+
+            dispatch(setAppTheme());
+
             const currentPath = location.pathname;
             dispatch(startPreAuth());
 
@@ -39,20 +39,31 @@ const App = () => {
                 navigate(currentPath);
             } catch (error) {
                 dispatch(finishPreAuth());
+                dispatch(finishAuthUser());
                 navigate('/');
             }
         }
         fn();
     }, []);
 
+    const checkPathIsAuthPages = location.pathname === "/login" || location.pathname === "/signup";
+
+    const [isMobileSideMenuOpen, setIsMobileSideMenuOpen] = useState(false);
+
     return (
         <div className="App" id="app">
             <ToastContainer/>
-            {location.pathname === "/login" ||
-            location.pathname === "/signup" ? null : (
-                <SideMenu/>
-            )}
-            {preAuth ? <AppRoutes/> : <Loading/>}
+            {checkPathIsAuthPages ? null :
+                <SideMenu isOpen={isMobileSideMenuOpen} setIsOpen={setIsMobileSideMenuOpen}/>
+            }
+            <div className={[checkPathIsAuthPages ? "full-width" : "width-minus-sidebar"].join(' ')}>
+                {!checkPathIsAuthPages ? <Header
+                    title={location.pathname.split('/')[1]}
+                    isSideMenuOpen={isMobileSideMenuOpen}
+                    setIsSideMenuOpen={setIsMobileSideMenuOpen}
+                /> : null}
+                {preAuth ? <AppRoutes/> : <LoadingScreen/>}
+            </div>
         </div>
     );
 };

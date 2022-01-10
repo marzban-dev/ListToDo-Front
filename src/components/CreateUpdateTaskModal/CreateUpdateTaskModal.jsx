@@ -6,77 +6,69 @@ import {createTask, updateTask} from "store/actions/ApiCalls.actions";
 import {setData} from "store/actions/Main.actions";
 import SelectLabels from "./ModalSections/SelectLabels";
 import SelectPriority from "./ModalSections/SelectPriority";
-import SelectAssignee from "./ModalSections/SelectAssignee";
 import SelectSchedule from "./ModalSections/SelectSchedule";
 import SelectColor from "./ModalSections/SelectColor";
 import {useParams, useLocation, useNavigate} from "react-router-dom";
+import {TOASTIFY_OPTIONS, REACT_MODAL_OPTIONS} from "config";
+import Button from "components/UI/Button/Button";
 import "./taskModal.scss";
 
 export const CreateUpdateTaskModal = ({mode}) => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const {state} = useLocation();
+    const {taskId} = useParams();
     const navigate = useNavigate();
-    const {taskId, sectionId} = useParams();
 
-    const [taskTitle, setTaskTitle] = useState(location.state ? location.state.title : "");
-    const [taskDescription, setTaskDescription] = useState(location.state ? location.state.description : "");
-    const [taskPriority, setTaskPriority] = useState(location.state ? Number(location.state.priority) : 0);
-    const [taskLabels, setTaskLabels] = useState(location.state ? location.state.label : []);
-    const [taskColor, setTaskColor] = useState(location.state ? location.state.color : null);
-    const [taskSchedule, setTaskSchedule] = useState(location.state ? new Date(location.state.schedule) : null);
-    const [taskAssignee] = useState(location.state ? location.state.assignee : null);
+    const [taskTitle, setTaskTitle] = useState(mode === 'modify' ? state.title : "");
+    const [taskDescription, setTaskDescription] = useState(mode === 'modify' ? state.description : "");
+    const [taskPriority, setTaskPriority] = useState(mode === 'modify' ? (state.priority ? Number(state.priority) : null) : null);
+    const [taskLabels, setTaskLabels] = useState(mode === 'modify' ? state.label : []);
+    const [taskColor, setTaskColor] = useState(mode === 'modify' ? state.color : null);
+    const [taskSchedule, setTaskSchedule] = useState(mode === 'modify' ? (state.schedule ? new Date(state.schedule) : null) : null);
+    // const [taskAssignee] = useState(mode === 'modify' ? state.assignee : null);
 
     const [isPriorityListOpen, setIsPriorityListOpen] = useState(false);
     const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(false);
 
-    const toastifyOptions = {
-        autoClose: 2000,
-        closeOnClick: true,
-        position: "top-center",
-        pauseOnHover: false,
-        hideProgressBar: true,
-    };
-
     useEffect(() => {
+        if (!state) navigate('/');
         Modal.setAppElement("body");
     }, []);
 
     const onTitleChanged = (e) => setTaskTitle(e.target.value);
+
     const onDescriptionChanged = (e) => setTaskDescription(e.target.value);
 
-    const onEnterKeyPressed = (e) => e.key === "Enter" ? onSubmitBtnClicked() : null;
     const onSubmitBtnClicked = async () => {
         setIsSubmitButtonDisabled(true);
 
-        const alertId = toast.loading("Creating Task", toastifyOptions);
+        const alertId = toast.loading("Creating Task", TOASTIFY_OPTIONS);
 
         const dataObject = {
             title: taskTitle,
             description: taskDescription,
-            labels:
-                taskLabels.length !== 0 ? taskLabels.map((label) => label.id) : [],
-            priority: taskPriority === 0 ? null : taskPriority,
+            labels: taskLabels.length !== 0 ? taskLabels.map((label) => label.id) : [],
+            priority: taskPriority,
             color: taskColor,
-            assignee: taskAssignee,
             schedule: taskSchedule,
+            task: state.taskId ? state.taskId : null
         };
 
         try {
             if (mode === 'create') {
-                const createdTask = await dispatch(createTask(sectionId, dataObject));
+                console.log(dataObject);
+                const createdTask = await dispatch(createTask(state.sectionId, dataObject));
 
                 setIsSubmitButtonDisabled(false);
 
-                console.log(createdTask)
-
                 dispatch(setData({
                     modify: {
-                        type: 'section',
+                        type: state.taskId ? 'task' : 'section',
                         part: 'projects',
-                        id: Number(sectionId),
+                        id: state.taskId ? Number(state.taskId) : Number(state.sectionId),
                         key: 'id',
                         data: {tasks: createdTask},
-                        nestedProperties: ['projects', 'sections']
+                        nestedProperties: ['projects', 'sections', 'tasks']
                     }
                 }));
 
@@ -84,6 +76,7 @@ export const CreateUpdateTaskModal = ({mode}) => {
                     render: "Task Created",
                     type: "success",
                     isLoading: false,
+                    ...TOASTIFY_OPTIONS
                 });
             } else {
                 const updatedTask = await dispatch(updateTask(taskId, dataObject));
@@ -105,6 +98,7 @@ export const CreateUpdateTaskModal = ({mode}) => {
                     render: "Task Updated",
                     type: "success",
                     isLoading: false,
+                    ...TOASTIFY_OPTIONS
                 });
             }
         } catch (error) {
@@ -114,21 +108,24 @@ export const CreateUpdateTaskModal = ({mode}) => {
                 render: "Create Task Failed",
                 type: "error",
                 isLoading: false,
+                ...TOASTIFY_OPTIONS
             });
         }
     };
 
+    const onEnterKeyPressed = (e) => e.key === "Enter" ? onSubmitBtnClicked() : null;
+
+    const [isModalOpen, setIsModalOpen] = useState(true);
+    const closeModal = () => {
+        setIsModalOpen(false)
+        setTimeout(() => navigate(-1), REACT_MODAL_OPTIONS.closeTimeoutMS)
+    }
+
     return (
         <Modal
-            isOpen={true}
-            onRequestClose={() => navigate(-1)}
-            style={{
-                overlay: {
-                    backgroundColor: "#17171796",
-                },
-            }}
-            className="modal-content"
-            closeTimeoutMS={100}
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            {...REACT_MODAL_OPTIONS}
         >
             <div
                 className="create-new-task-modal"
@@ -156,6 +153,7 @@ export const CreateUpdateTaskModal = ({mode}) => {
                         />
                     </div>
                 </div>
+                {/*TODO --FIX BUG-- if user focused on textarea, when he pressing enter key ; the form should not send data*/}
                 <textarea
                     rows="4"
                     placeholder="Description"
@@ -164,18 +162,18 @@ export const CreateUpdateTaskModal = ({mode}) => {
                     value={taskDescription}
                 ></textarea>
                 <SelectLabels taskLabels={taskLabels} setTaskLabels={setTaskLabels}/>
-                <SelectAssignee/>
+                {/*<SelectAssignee/>*/}
                 <div className="create-new-task-save col-12">
                     <SelectSchedule
                         taskSchedule={taskSchedule}
                         setTaskSchedule={setTaskSchedule}
                     />
-                    <button
-                        className="create-new-task-submit-button col-2"
+                    <Button
                         onClick={!isSubmitButtonDisabled ? onSubmitBtnClicked : null}
-                    >
-                        <span className="far fa-check"></span>
-                    </button>
+                        circleShape
+                        size="md"
+                        iconClass="far fa-check"
+                    />
                 </div>
             </div>
         </Modal>

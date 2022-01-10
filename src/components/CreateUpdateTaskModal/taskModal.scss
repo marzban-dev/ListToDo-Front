@@ -1,25 +1,12 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
-.modal-content {
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 400px !important;
-  padding: 1rem;
-  background-color: $second-white !important;
-  border: none !important;
-  border-radius: 15px !important;
-}
-
 .create-new-task-modal {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  padding: 1rem;
 
   .create-new-task-head-wrapper {
     display: flex;
@@ -39,10 +26,11 @@
       padding: 0.5rem 0 0.5rem 1rem;
       border-radius: 15px;
       transition: background-color 0.25s;
-      color: $text;
+      color: var(--color-text);
       font-size: 20px;
+
       &::placeholder {
-        color: $icon;
+        color: var(--color-icon);
       }
     }
   }
@@ -50,40 +38,20 @@
   .description-input {
     @include reset_input();
     margin-top: 1rem;
-    background-color: lighten($color: $white, $amount: 5%);
+    background-color: var(--color-modal-input-bg);
     padding: 0.5rem 0.5rem 0.5rem 1rem;
     border-radius: 15px;
     transition: background-color 0.25s;
-    color: $text;
+    color: var(--color-text);
     width: 100%;
 
     &::placeholder {
-      color: $icon;
+      color: var(--color-icon);
     }
+
     &:focus,
     &:hover {
-      background-color: $white;
-    }
-  }
-
-  .create-new-task-submit-button {
-    @include reset_input();
-    background-color: $primary;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.25s;
-    &:hover,
-    &:focus {
-      background-color: transparentize($color: $primary, $amount: 0.2);
-    }
-    span {
-      color: $second-white;
-      transform: color 0.25s;
-      font-size: 20px;
+      background-color: var(--color-modal-input-bg-hover);
     }
   }
 
@@ -93,17 +61,4 @@
     align-items: center;
     margin-top: 1rem;
   }
-}
-
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 100ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
 }

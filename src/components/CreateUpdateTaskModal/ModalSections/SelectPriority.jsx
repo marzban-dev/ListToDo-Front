@@ -2,23 +2,11 @@ import React, {useRef} from "react";
 import {CSSTransition} from "react-transition-group";
 import "./selectPriority.scss";
 
-const SelectPriority = ({
-                            taskPriority,
-                            setTaskPriority,
-                            isPriorityListOpen,
-                            setIsPriorityListOpen,
-                        }) => {
-    const priorityList = [
-        {id: 0, color: "#919191"},
-        {id: 1, color: "#dc3545"},
-        {id: 2, color: "#198754"},
-        {id: 3, color: "#0d6efd"},
-        {id: 4, color: "#fd7e14"},
-    ];
+const SelectPriority = ({taskPriority, setTaskPriority, isPriorityListOpen, setIsPriorityListOpen}) => {
 
     const onPriorityChanged = (e) => setTaskPriority(Number(e.target.value));
 
-    const PriorityItem = ({id, color}) => {
+    const PriorityItem = ({id}) => {
         return (
             <div className="priority-item" key={id}>
                 <input
@@ -30,13 +18,14 @@ const SelectPriority = ({
                     onClick={() => setIsPriorityListOpen(false)}
                 />
                 <label htmlFor={`priority-input-${id}`}>
-          <span
-              style={{
-                  color: color,
-                  opacity: taskPriority === id ? 1 : 0.5,
-              }}
-              className="fa fa-flag"
-          ></span>
+                    <span
+                        style={{
+                            color: `var(--color-priority-${id})`,
+                            opacity: taskPriority === id ? 1 : 0.5
+                        }}
+                        className="fa fa-flag"
+                    >
+                    </span>
                 </label>
             </div>
         );
@@ -48,20 +37,19 @@ const SelectPriority = ({
         <div className="new-task-priority col-1">
             <CSSTransition
                 in={isPriorityListOpen}
-                timeout={500}
+                timeout={300}
                 nodeRef={nodeRef}
-                classNames={{
-                    enter: "animate__animated animate__faster",
-                    enterActive: "animate__fadeIn",
-                    exit: "animate__animated animate__faster",
-                    exitActive: "animate__fadeOut",
-                }}
+                classNames="fade"
                 unmountOnExit
             >
                 <div className="new-task-priority-list" ref={nodeRef}>
-                    {priorityList.map(({id, color}) => (
-                        <PriorityItem key={id} id={id} color={color}/>
-                    ))}
+
+                    <button className="priority-item-delete-selection" onClick={() => setTaskPriority(0)}>
+                        <span className="fa fa-trash"></span>
+                    </button>
+
+                    {[1, 2, 3, 4, 5].map((id) => <PriorityItem key={id} id={id}/>)}
+
                 </div>
             </CSSTransition>
             <button
@@ -71,17 +59,10 @@ const SelectPriority = ({
                 ].join(" ")}
                 onClick={() => setIsPriorityListOpen(!isPriorityListOpen)}
             >
-        <span
-            className="fa fa-flag"
-            style={{
-                color:
-                priorityList[
-                    priorityList.findIndex(
-                        (priority) => priority.id === taskPriority
-                    )
-                    ].color,
-            }}
-        ></span>
+                <span
+                    className="fa fa-flag"
+                    style={{color: taskPriority ? `var(--color-priority-${taskPriority})` : "var(--color-icon)"}}
+                ></span>
             </button>
         </div>
     );
