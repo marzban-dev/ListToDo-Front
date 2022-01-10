@@ -26,9 +26,6 @@ const App = () => {
 
     useEffect(() => {
         const fn = async () => {
-            
-            process.env.CI = false;
-
 
             dispatch(setAppTheme());
 
