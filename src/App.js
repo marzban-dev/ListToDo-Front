@@ -22,10 +22,13 @@ const App = () => {
     const dispatch = useDispatch();
     const preAuth = useSelector((state) => state.auth.preAuth);
     const location = useLocation();
-    const navigate = useNavigate();
+    const navigate = useNavigate();إ
 
     useEffect(() => {
         const fn = async () => {
+            
+            process.env.CI = false;
+
 
             dispatch(setAppTheme());
 
