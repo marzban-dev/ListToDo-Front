@@ -173,7 +173,6 @@ export const CreateUpdateTaskModal = ({mode}) => {
                     value={taskDescription}
                 ></textarea>
                 <SelectLabels taskLabels={taskLabels} setTaskLabels={setTaskLabels}/>
-                {/*<SelectAssignee/>*/}
                 <div className="create-new-task-save col-12">
                     <SelectSchedule
                         taskSchedule={taskSchedule}
