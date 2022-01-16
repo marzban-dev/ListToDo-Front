@@ -62,8 +62,14 @@ header {
       align-items: center;
       padding: 0 2rem 0 1rem;
 
-      span {
+      a, span {
+
         color: var(--color-text);
+      }
+
+      a {
+        text-decoration: none;
+        cursor: pointer
       }
     }
   }
