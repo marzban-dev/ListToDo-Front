@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
+import xImg from "assets/img/MEBIB.gif";
 import Button from "../Button";
 import SkeletonLoader from "../SkeletonLoader";
 import "./profilePicture.scss";
@@ -19,9 +20,10 @@ const ProfilePicture =
         const profileImageElement = useRef(null);
 
         useEffect(() => {
-
             setIsProfileLoaded(false);
-            profileImageElement.current.src = null;
+
+            if (profilePicture !== null) profileImageElement.current.src = null;
+            else profileImageElement.current.src = xImg;
 
             const preloadImage = new Image();
 
@@ -42,11 +44,14 @@ const ProfilePicture =
                 <img
                     ref={profileImageElement}
                     src={null}
-                    style={{display: isProfileLoaded ? 'block' : 'none'}}
+                    style={{display: profilePicture ? (isProfileLoaded ? 'block' : 'none') : 'block'}}
                     alt="user-profile"
                 />
 
-                {!isProfileLoaded ? <SkeletonLoader  {...preloaderStyle} viewBox="0 0 50 50" type="profile"/> : null}
+                {!isProfileLoaded && profilePicture ?
+                    <SkeletonLoader  {...preloaderStyle} viewBox="0 0 50 50" type="profile"/>
+                    : null
+                }
 
                 {
                     withEditButton ?
