@@ -52,7 +52,7 @@ const ChangeProfileModal =
                             <div className="upload-picture-modal-wallpaper-preview">
                                 <ProfileWallpaper
                                     wallpaperPicture={userWallpaperPreview}
-                                    className="profile-background-image-loader"
+                                    className="upload-profile-background-image-loader"
                                 />
                                 <label className="upload-input-label" htmlFor="user-wallpaper-picture">
                                     <Button
