@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {SortableContainer, SortableElement} from "react-sortable-hoc";
-import {produce} from "immer";
 import Task from "components/Task";
 import {deleteSection, fetchTasks, updateSection} from "store/actions/ApiCalls.actions";
 import {changePosition, setData} from "store/actions/Main.actions";
@@ -42,9 +41,7 @@ const SectionTasks = ({section}) => {
         const RenderTasks = SortableContainer(() => {
             // Sort tasks list by position.
             const sortedTasksList = () => {
-                return produce(section.tasks, draft => {
-                    draft.sort((a, b) => a.position > b.position)
-                }).map((task, index) => {
+                return section.tasks.map((task, index) => {
                     return !task.completed ? <Task key={index} index={index} task={task}/> : null;
                 });
             }
@@ -161,7 +158,6 @@ const SectionTasks = ({section}) => {
                                 <button onClick={updateSectionHandler}><span className="far fa-check"></span></button>
                             </div>
                         ) : <h3 className="section-title">{section.title}</h3>}
-
                     </div>
                     <div className="section-tasks-head-menu">
                         <button className="head-item"

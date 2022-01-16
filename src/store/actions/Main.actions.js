@@ -51,7 +51,6 @@ export const fetchData = () => {
  * **/
 
 export const changePosition = (parentType, itemType, containerName, id, oldIndex, newIndex, list) => {
-        console.log(parentType, itemType, containerName, id, oldIndex, newIndex, list);
         return async (dispatch) => {
             try {
                 let copyOfList = [...list];
@@ -80,7 +79,7 @@ export const changePosition = (parentType, itemType, containerName, id, oldIndex
                 copyOfList[oldIndex] = {...copyOfList[oldIndex], position: newPosition};
 
                 const sortedList = produce(copyOfList, draft => {
-                    draft.sort((a, b) => a.position > b.position)
+                    draft.sort((a, b) => a.position - b.position)
                 });
 
                 const data = {};

@@ -51,6 +51,7 @@ const reducer = (state = initState, action) => {
 };
 
 const setDataReducer = (state, action) => {
+
     let dataToSet = {};
 
     if (action.hasOwnProperty('modify')) {

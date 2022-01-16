@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Modal from "react-modal";
 import {useDispatch, useSelector} from 'react-redux';
 import {useLocation, useNavigate} from 'react-router-dom'
-import {produce} from "immer";
 import Task from "../Task";
 import {SortableContainer} from "react-sortable-hoc";
 import {FindAndReturnProperties} from "../../Utils/HelperFunctionsForObjects";
@@ -36,9 +35,7 @@ const ShowSubTasks = () => {
             if (subTasks.tasks.length === 0) {
                 return <EmptySign text="Empty" style={{padding: "1.5rem 0"}}/>;
             } else {
-                return produce(subTasks.tasks, draft => {
-                    draft.sort((a, b) => a.position > b.position)
-                }).map((subTask, index) => {
+                return subTasks.tasks.map((subTask, index) => {
                     return !subTask.completed ? <Task key={index} index={index} task={subTask}/> : null;
                 });
             }
