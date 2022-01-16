@@ -1,12 +1,11 @@
 import React from "react";
-import testImg from "assets/img/image-from-rawpixel-id-1219868-jpeg.jpg";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "store/actions/Auth.actions";
 import {useNavigate} from "react-router";
-import LoadingWrapper from "../UI/LoadingWrapper";
+import LoadingWrapper from "components/UI/LoadingWrapper";
+import ProfilePicture from "components/UI/ProfilePicture";
 import "./header.scss";
-import ProfilePicture from "../UI/ProfilePicture";
 
 const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
     const dispatch = useDispatch();
@@ -45,15 +44,6 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                 size="sm"
             >
                 <div className="header-user-data col-3">
-                    {/*{!user ?*/}
-                    {/*    <div className="header-auth">*/}
-                    {/*        <Link to="/signup">*/}
-                    {/*            <span className="far fa-user-plus"></span>*/}
-                    {/*        </Link>*/}
-                    {/*    </div>*/}
-                    {/*    : null*/}
-                    {/*}*/}
-
                     {!user ?
                         <div className="header-auth">
                             <Link to="/login">
@@ -68,17 +58,38 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
 
                     <div className="header-profile">
 
-                        <ProfilePicture
-                            profilePicture={user ? user.setting.profile : null}
-                            style={{
-                                width: "40px",
-                                height: "40px",
-                                marginRight: "0.75rem"
-                            }}
-                            preloaderStyle={{width: 40, height: 40}}
-                        />
+                        {user ?
+                            <Link to="/settings">
+                                <ProfilePicture
+                                    profilePicture={user ? user.setting.profile : null}
+                                    preloaderStyle={{width: 40, height: 40}}
+                                    style={{
+                                        width: "40px",
+                                        height: "40px",
+                                        marginRight: "0.75rem"
+                                    }}
+                                />
+                            </Link>
+                            :
+                            <ProfilePicture
+                                profilePicture={user ? user.setting.profile : null}
+                                preloaderStyle={{width: 40, height: 40}}
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    marginRight: "0.75rem"
+                                }}
+                            />
+                        }
 
-                        <span>{user ? user.username : "Please Login"}</span>
+                        {user ?
+                            <Link to="/settings">
+                                {user.username}
+                            </Link>
+                            :
+                            <span>Please login</span>
+                        }
+
                     </div>
                 </div>
             </LoadingWrapper>
