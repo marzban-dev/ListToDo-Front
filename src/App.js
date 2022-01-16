@@ -1,15 +1,14 @@
-import React, {useState} from "react";
-import {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import SideMenu from "components/SideMenu/SideMenu";
+import SideMenu from "components/SideMenu";
 import AppRoutes from "App.routes";
 import {ToastContainer} from "react-toastify";
-import LoadingScreen from "components/UI/LoadingScreen/LoadingScreen";
+import LoadingScreen from "components/UI/LoadingScreen";
 import {checkUser, finishAuthUser, finishPreAuth, startPreAuth,} from "store/actions/Auth.actions";
 import {fetchData, setAppTheme} from "./store/actions/Main.actions";
-import Header from "./components/Header/Header";
+import Header from "./components/Header";
+import Modal from "react-modal";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.min.css";
 import "assets/css/all.css";
@@ -22,10 +21,12 @@ const App = () => {
     const dispatch = useDispatch();
     const preAuth = useSelector((state) => state.auth.preAuth);
     const location = useLocation();
-    const navigate = useNavigate();إ
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fn = async () => {
+
+            Modal.setAppElement('body');
 
             dispatch(setAppTheme());
 

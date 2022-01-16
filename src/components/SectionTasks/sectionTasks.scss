@@ -1,9 +1,8 @@
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
 
 .section-tasks {
   width: 350px;
-  margin: 2rem 2.5rem 0 0;
 
   .section-tasks-head {
     display: flex;
@@ -12,27 +11,82 @@
     background-color: var(--color-secondary);
     padding: 1rem;
     border-radius: 15px;
+    height: 68px;
+
 
     .section-tasks-head-title {
-      color: var(--color-text);
-      padding: 0;
-      margin: 0;
-    }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    .section-tasks-head-menu {
-      cursor: pointer;
+      .section-title-input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: var(--color-modal-input-bg);
+        padding: 0.25rem 1rem;
+        border-radius: 15px;
+        width: 200px;
 
-      &:hover {
-        span {
-          color: var(--color-primary);
+        input {
+          @include reset_input();
+          color: var(--color-text);
+          width:90%;
+        }
+
+        button {
+          @include reset_input();
+          width: 10%;
+          &:hover {
+            span {
+              color: var(--color-primary);
+            }
+          }
+
+          span {
+            margin-top: 0.5rem;
+            color: var(--color-icon);
+            transition: color 0.25s;
+            font-size: 20px;
+          }
         }
       }
 
-      span {
-        margin-top: 0.5rem;
-        color: var(--color-icon);
-        transition: color 0.25s;
-        font-size: 20px;
+      .section-title{
+        color: var(--color-text);
+        margin: 0;
+        padding: 0;
+      }
+
+      .drag-handler {
+        transform: translateY(2px);
+        padding-right: 0.75rem;
+      }
+
+    }
+
+    .section-tasks-head-menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .head-item {
+        @include reset_input();
+        padding-left: 0.75rem;
+
+        &:hover {
+          span {
+            color: var(--color-primary);
+          }
+        }
+
+        span {
+
+          margin-top: 0.5rem;
+          color: var(--color-icon);
+          transition: color 0.25s;
+          font-size: 20px;
+        }
       }
     }
   }
@@ -49,5 +103,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+
+    span {
+      transform: translate(0.5px, 1.5px);
+    }
   }
 }

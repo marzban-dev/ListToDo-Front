@@ -1,22 +1,15 @@
-import {
-    fetchColors, fetchLabels, fetchTasks, fetchSections, fetchProjects,
-} from "./ApiCalls.actions";
+import {fetchLabels, fetchProjects} from "./ApiCalls.actions";
 import {produce} from "immer";
-import axios from "../../AxiosInstance";
+import axios from "AxiosInstance";
 
 export const START_FETCH_DATA = "START_FETCH_DATA";
 export const FINISH_FETCH_DATA = "FINISH_FETCH_DATA";
 export const FETCH_DATA_FAILED = "FETCH_DATA_FAILED";
 
-export const START_REFRESH_DATA = "START_REFRESH_DATA";
-export const FINISH_REFRESH_DATA = "FINISH_REFRESH_DATA";
-export const REFRESH_DATA_FAILED = "REFRESH_DATA_FAILED";
-
 export const SET_DATA = "SET_DATA";
 
 export const SET_APP_THEME = "SET_APP_THEME";
 
-export const startRefreshData = () => ({type: START_REFRESH_DATA});
 export const startFetchData = () => ({type: START_FETCH_DATA});
 export const finishFetchData = () => ({type: FINISH_FETCH_DATA});
 export const fetchDataFailed = () => ({type: FETCH_DATA_FAILED});
@@ -50,13 +43,15 @@ export const fetchData = () => {
  * This action change position of ( Task - Section - Project )
  *  @param {string} parentType - type of parent that contain the item [ task - section - project ]
  *  @param {string} itemType - type of item that should be changed [ task - section - project ]
+ *  @param {string} containerName
  *  @param {number} id
  *  @param {number} oldIndex
  *  @param {number} newIndex
  *  @param {Array} list - a list that needs to be changed
  * **/
 
-export const changePosition = (parentType, itemType, id, oldIndex, newIndex, list) => {
+export const changePosition = (parentType, itemType, containerName, id, oldIndex, newIndex, list) => {
+        console.log(parentType, itemType, containerName, id, oldIndex, newIndex, list);
         return async (dispatch) => {
             try {
                 let copyOfList = [...list];
@@ -84,9 +79,12 @@ export const changePosition = (parentType, itemType, id, oldIndex, newIndex, lis
 
                 copyOfList[oldIndex] = {...copyOfList[oldIndex], position: newPosition};
 
-                const sortedTasksList = produce(copyOfList, draft => {
+                const sortedList = produce(copyOfList, draft => {
                     draft.sort((a, b) => a.position > b.position)
                 });
+
+                const data = {};
+                data[containerName] = sortedList;
 
                 dispatch(setData({
                     modify: {
@@ -94,7 +92,7 @@ export const changePosition = (parentType, itemType, id, oldIndex, newIndex, lis
                         part: 'projects',
                         id,
                         key: 'id',
-                        data: {tasks: sortedTasksList},
+                        data,
                         nestedProperties: ['projects', 'sections', 'tasks'],
                         compareDeepChanges: false
                     }

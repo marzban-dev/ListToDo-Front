@@ -1,15 +1,16 @@
 import React from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Auth/Login/Login";
-import Signup from "pages/Auth/Signup/Signup";
-import Projects from "pages/Projects/Projects";
-import Tasks from "pages/Tasks/Tasks";
+import Home from "./pages/Home";
+import Login from "./pages/Auth/Login";
+import Signup from "pages/Auth/Signup";
+import Projects from "pages/Projects";
+import Tasks from "pages/Tasks";
 import RequireAuth from "components/helper/RequireAuth";
-import NotFound from "components/NotFound/NotFound";
-import CreateUpdateTaskModal from "./components/CreateUpdateTaskModal/CreateUpdateTaskModal";
-import ShowSubTasks from "./components/ShowSubTasks/ShowSubTasks";
-import Settings from "./pages/Settings/Settings";
+import NotFound from "components/NotFound";
+import CreateUpdateTaskModal from "./components/CreateUpdateTaskModal";
+import ShowSubTasks from "./components/ShowSubTasks";
+import Settings from "./pages/Settings";
+import Labels from "./pages/Labels";
 
 const AppRoutes = () => {
 
@@ -45,6 +46,11 @@ const AppRoutes = () => {
         {
             path: '/settings',
             element: <Settings/>,
+            isPrivate: true
+        },
+        {
+            path: '/labels',
+            element: <Labels />,
             isPrivate: true
         },
         {

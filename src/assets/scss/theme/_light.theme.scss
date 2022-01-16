@@ -23,6 +23,7 @@ body[theme="light"] {
   --color-task-checkbox: rgba(140, 151, 155, 0.2);
   --color-task-checkbox-border: rgba(167, 179, 185, 0.5);
   --color-task-checkbox-hover: rgba(0, 170, 179, 0.6);
+  --color-task-deadline-warning-color: #ff9a7f;
 
   --color-react-modal-container: #232931;
   --color-react-modal-overlay: #17171796;
@@ -35,6 +36,9 @@ body[theme="light"] {
   --color-priority-3: #198754;
   --color-priority-4: #0d6efd;
   --color-priority-5: #fd7e14;
+
+  --color-react-loader-background: #d8d7d7;
+  --color-react-loader-forground: #e2e1e1; 
 
   --toastify-color-light: #ffffff;
 }

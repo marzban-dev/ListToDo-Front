@@ -1,5 +1,9 @@
 import axios from "AxiosInstance";
 
+//**************************************
+// Api for tasks --------------------- *
+//**************************************
+
 export const fetchTasks = (filter = {}) => {
     return async (dispatch) => {
         try {
@@ -45,6 +49,10 @@ export const deleteTask = (taskId) => {
     };
 };
 
+//**************************************
+// Api for sections ------------------ *
+//**************************************
+
 export const fetchSections = (filter = {}) => {
     return async (dispatch) => {
         try {
@@ -85,20 +93,20 @@ export const deleteSection = (sectionId) => {
     }
 }
 
-export const fetchLabels = (filter = {}) => {
+export const updateSection = (sectionId, data) => {
     return async (dispatch) => {
         try {
-            const result = await axios.get("/labels/", {
-                params: {
-                    ...filter,
-                },
-            });
-            return result.data.results;
+            const result = await axios.patch(`/section/${sectionId}/`, data);
+            return result.data;
         } catch (error) {
             throw error;
         }
-    };
-};
+    }
+}
+
+//**************************************
+// Api for colors   ------------------ *
+//**************************************
 
 export const fetchColors = (filter = {}) => {
     return async (dispatch) => {
@@ -115,6 +123,40 @@ export const fetchColors = (filter = {}) => {
     };
 };
 
+//**************************************
+// Api for labels   ------------------ *
+//**************************************
+
+export const fetchLabels = (filter = {}) => {
+    return async (dispatch) => {
+        try {
+            const result = await axios.get("/labels/", {
+                params: {
+                    ...filter,
+                },
+            });
+            return result.data.results;
+        } catch (error) {
+            throw error;
+        }
+    };
+};
+
+export const createLabel = (title) => {
+    return async (dispatch) => {
+        try {
+            const result = await axios.post("/label/", {title});
+            return result.data;
+        } catch (error) {
+            throw error;
+        }
+    };
+};
+
+//**************************************
+// Api for projects   ---------------- *
+//**************************************
+
 export const fetchProjects = (filter = {}) => {
     return async (dispatch, getState) => {
         try {
@@ -130,3 +172,4 @@ export const fetchProjects = (filter = {}) => {
         }
     };
 };
+

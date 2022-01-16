@@ -3,9 +3,6 @@
 
 .button {
   @include reset_input();
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 15px;
   background-color: var(--color-primary-lighten);
   transition: background-color 0.25s;
@@ -17,7 +14,7 @@
 
   .button-icon {
     font-size: 20px;
-    transform: translateY(0);
+
   }
 
   .button-text {

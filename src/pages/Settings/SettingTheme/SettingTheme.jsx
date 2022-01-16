@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Setting from "components/Setting/Setting";
+import Setting from "components/Setting";
 import {useDispatch} from "react-redux";
 import {setAppTheme} from "store/actions/Main.actions";
 import {APP_THEMES} from "config";

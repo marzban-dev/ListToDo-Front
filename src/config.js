@@ -7,6 +7,11 @@ export const TOASTIFY_OPTIONS = {
     theme: localStorage.getItem("APP_THEME") ? localStorage.getItem("APP_THEME") : 'light'
 };
 
+export const SKELETON_OPTIONS = {
+    backgroundColor: getComputedStyle(document.body).getPropertyValue("--color-react-loader-background"),
+    foregroundColor: getComputedStyle(document.body).getPropertyValue("--color-react-loader-forground"),
+}
+
 export const REACT_MODAL_OPTIONS = {
     overlayClassName: "react-modal-overlay",
     className: "react-modal-container",

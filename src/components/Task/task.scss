@@ -1,5 +1,9 @@
-@import "../../assets/scss/variables";
-@import "../../assets/scss/mixins";
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.task-deadline-warning-active {
+  border: 2px solid var(--color-task-deadline-warning-color);
+}
 
 .task {
   background-color: var(--color-secondary);
@@ -11,32 +15,17 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
+  position: relative;
 
   .task-input {
     padding: 0.75rem 3rem 0.6rem 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 60%;
 
-    .tasks-draggable-icon {
-      cursor: move;
-      height: 100%;
+    .drag-handler{
       padding-right: 0.75rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      span {
-        transition: color 0.25s;
-        color: var(--color-icon-lighten);
-        font-size: 20px;
-      }
-
-      &:hover {
-        span {
-          color: var(--color-primary);
-        }
-      }
     }
 
     .task-input-title {
@@ -60,7 +49,7 @@
       border: 3px solid var(--color-task-checkbox-border);
 
       &:hover {
-        background-color: transparentize($color: $primary, $amount: 0.8);
+        background-color: var(--color-task-checkbox-hover);
 
         span {
           color: var(--color-task-checkbox-hover);
@@ -77,7 +66,7 @@
 
     .task-input-checkbox-label-active {
       background-color: var(--color-primary) !important;
-      border-color: transparent;
+      border-color: transparent !important;
 
       span {
         color: var(--color-secondary-complement) !important;
@@ -93,48 +82,57 @@
 
   .task-info {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     padding-right: 0.75rem;
     white-space: nowrap;
+    height: 100%;
+    width: 40%;
 
-    button, span {
-      color: var(--color-icon);
-    }
-
-    .task-info-comments {
+    .task-info-item {
+      @include reset_input();
       padding: 0 0.35rem;
       cursor: pointer;
 
-      &:hover {
-        span {
-          color: $primary;
-        }
+      span {
+        color: var(--color-icon);
       }
 
       span:nth-child(2) {
         padding-left: 0.25rem;
         font-size: 14px;
       }
+
+      &:hover {
+        span {
+          color: var(--color-primary);
+        }
+      }
+    }
+
+    .task-info-deadline-warning {
+      &:hover {
+        span {
+          color: var(--color-task-deadline-warning-color);
+        }
+      }
+
+      span {
+        color: var(--color-task-deadline-warning-color);
+      }
+    }
+
+    .task-info-comments {
     }
 
     .task-info-sub-tasks {
-      @extend .task-info-comments;
-    }
-
-    .task-info-priority {
-      padding: 0 0.35rem;
-      color: $red;
     }
 
     .task-info-modify {
-      @include reset_input();
-      @extend .task-info-comments;
     }
 
     .task-info-delete {
-      @include reset_input();
-      @extend .task-info-comments;
     }
+
   }
 }

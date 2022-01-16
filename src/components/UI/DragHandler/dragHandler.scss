@@ -1,0 +1,20 @@
+.drag-handler{
+  cursor: grab;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    transition: color 0.25s;
+    color: var(--color-icon-lighten);
+    font-size: 20px;
+  }
+
+  &:hover {
+    span {
+      color: var(--color-primary);
+    }
+  }
+}

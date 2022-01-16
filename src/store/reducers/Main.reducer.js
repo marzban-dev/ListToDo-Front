@@ -1,6 +1,7 @@
 import * as Acts from "store/actions/Main.actions";
 import {FindAndUpdateProperties} from "Utils/HelperFunctionsForObjects";
 import {produce} from "immer";
+import {SKELETON_OPTIONS, TOASTIFY_OPTIONS} from "config";
 
 const initState = {
     isLoading: true,
@@ -36,6 +37,12 @@ const reducer = (state = initState, action) => {
 
             document.getElementsByTagName('body')[0].setAttribute('theme', theme);
             localStorage.setItem('APP_THEME', theme);
+            TOASTIFY_OPTIONS.theme = theme;
+
+            SKELETON_OPTIONS.backgroundColor =
+                getComputedStyle(document.body).getPropertyValue("--color-react-loader-background")
+            SKELETON_OPTIONS.foregroundColor =
+                getComputedStyle(document.body).getPropertyValue("--color-react-loader-forground")
 
             return state;
         default:

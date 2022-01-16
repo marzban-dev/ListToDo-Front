@@ -22,9 +22,13 @@ body[theme="dark"] {
   --color-input-bg-hover: #232931;
   --color-input-text: #8c979b;
 
-  --color-task-checkbox: #393E46;
+  --color-task-checkbox: #363a42;
   --color-task-checkbox-border: #4d535d;
-  --color-task-checkbox-hover: #4ECCA3;
+  --color-task-checkbox-hover: #3e434b;
+  --color-task-deadline-warning-color: #af5332;
+
+  --color-label-chackbox-active: rgba(78, 204, 163, 0.2);
+  --color-label-chackbox-hover: rgba(78, 204, 163, 0.1);
 
   --color-react-modal-container: #232931;
   --color-react-modal-overlay: rgba(14, 14, 14, 0.85);
@@ -38,8 +42,10 @@ body[theme="dark"] {
   --color-priority-4: #0d6efd;
   --color-priority-5: #fd7e14;
 
-  --toastify-color-dark: #232931;
+  --color-react-loader-background: #363b43;
+  --color-react-loader-forground: #3f454e; 
 
+  --toastify-color-dark: #232931;
   --toastify-spinner-color: #616161;
   --toastify-spinner-color-empty-area: #e0e0e0;
 }
