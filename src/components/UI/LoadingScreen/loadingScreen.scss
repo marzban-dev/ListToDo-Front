@@ -1,0 +1,25 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.loading-screen{
+  width: 100%;
+  height: calc(100vh - 72px);
+  background-color: var(--color-loading-screen-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 50px;
+    color: var(--color-loading-screen-spinner);
+  }
+}

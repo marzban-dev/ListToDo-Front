@@ -1,0 +1,66 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.circle-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: var(--color-primary);
+    font-size: 20px;
+    animation-name: spinner-rotate;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+.dots-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+$listOfSizes: (
+        'sm': (
+                'w' : 35px,
+                'h' : 25px,
+                'fs' : 0.5rem 1.5rem
+        ),
+        'md': (
+                'w' : 60px,
+                'h' : 40px,
+                'fs' : 0.5rem 1.5rem
+        ),
+        'lg':(
+                'w' : 70px,
+                'h' : 50px,
+                'fs' : 0.75rem 2rem
+        )
+);
+
+@each $size, $properties in $listOfSizes {
+  .dots-spinner-size-#{$size} {
+    svg {
+      width: map-get($properties, "w");
+      height: map-get($properties, "h");
+    }
+  }
+}
+
+@each $size, $properties in $listOfSizes {
+  .circle-spinner-size-#{$size} {
+    font-size: map-get($properties, 'fs');
+  }
+}

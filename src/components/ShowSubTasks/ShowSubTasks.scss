@@ -1,0 +1,47 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.sub-tasks {
+  padding: 1rem;
+
+  .sub-tasks-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+
+    .sub-tasks-head-title {
+      color: var(--color-text);
+      background-color: var(--color-sidemenu-item-bg-active);
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 15px;
+    }
+
+    .sub-tasks-head-menu {
+      color: var(--color-primary);
+
+      span {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .sub-tasks-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .task {
+      background-color: var(--color-secondary-complement);
+    }
+  }
+
+  .sub-tasks-add-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

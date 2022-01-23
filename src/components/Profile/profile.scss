@@ -1,0 +1,34 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.profile {
+  position: relative;
+  padding: 1rem;
+  height: 180px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  .profile-background-image-loader {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+  }
+
+  .profile-picture-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translateY(35px);
+    margin-left: 1rem;
+    z-index: 200;
+
+    .profile-name {
+      font-size: 18px;
+      color: $second-white;
+      margin-left: 1rem;
+    }
+  }
+}

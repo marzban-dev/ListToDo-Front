@@ -1,0 +1,107 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.section-tasks {
+  width: 350px;
+
+  .section-tasks-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-secondary);
+    padding: 1rem;
+    border-radius: 15px;
+    height: 68px;
+
+
+    .section-tasks-head-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .section-title-input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: var(--color-modal-input-bg);
+        padding: 0.25rem 1rem;
+        border-radius: 15px;
+        width: 200px;
+
+        input {
+          @include reset_input();
+          color: var(--color-text);
+          width:90%;
+        }
+
+        button {
+          @include reset_input();
+          width: 10%;
+          &:hover {
+            span {
+              color: var(--color-primary);
+            }
+          }
+
+          span {
+            margin-top: 0.5rem;
+            color: var(--color-icon);
+            transition: color 0.25s;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .section-title{
+        color: var(--color-text);
+        margin: 0;
+        padding: 0;
+      }
+
+      .drag-handler {
+        transform: translateY(2px);
+        padding-right: 0.75rem;
+      }
+
+    }
+
+    .section-tasks-head-menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .head-item {
+        @include reset_input();
+        padding-left: 0.75rem;
+
+        &:hover {
+          span {
+            color: var(--color-primary);
+          }
+        }
+
+        span {
+
+          margin-top: 0.5rem;
+          color: var(--color-icon);
+          transition: color 0.25s;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .section-tasks-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .section-tasks-list-add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}

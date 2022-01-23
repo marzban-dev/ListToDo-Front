@@ -1,0 +1,62 @@
+body[theme="light"] {
+  --color-primary: #00aab3;
+  --color-primary-lighten: #00c2cc;
+  --color-primary-transparentize: rgba(0, 170, 179, 0.7);
+  --color-secondary: #ffffff;
+  --color-secondary-complement: #efefef;
+  --color-icon: #8c979b;
+  --color-icon-lighten: #a7b3b9;
+  --color-page-container-bg: #dfdede;
+  --color-text: #171717;
+  --color-shadow: rgba(14, 15, 16, 0.3);
+
+  --color-loading-screen-bg: #dfdede;
+  --color-loading-screen-spinner: #00aab3;
+
+  --color-sidemenu-item-bg-active: rgba(0, 170, 179, 0.2);
+  --color-sidemenu-item-bg-hover: rgba(0, 170, 179, 0.1);
+
+  --color-input-bg: rgba(255, 255, 255, 0.55);
+  --color-input-bg-hover: #ffffff;
+  --color-input-text: #8c979b;
+
+  --color-task-checkbox: rgba(140, 151, 155, 0.2);
+  --color-task-checkbox-border: rgba(167, 179, 185, 0.5);
+  --color-task-checkbox-hover: rgba(0, 170, 179, 0.6);
+  --color-task-deadline-warning-color: #ff9a7f;
+
+  --color-react-modal-container: #232931;
+  --color-react-modal-overlay: #17171796;
+
+  --color-modal-input-bg: #efefef;
+  --color-modal-input-bg-hover: #e8e8e8;
+
+  --color-priority-1: #ce81ef;
+  --color-priority-2: #dc3545;
+  --color-priority-3: #198754;
+  --color-priority-4: #0d6efd;
+  --color-priority-5: #fd7e14;
+
+  --color-react-loader-background: #d8d7d7;
+  --color-react-loader-forground: #e2e1e1; 
+
+  --toastify-color-light: #ffffff;
+}
+
+// $blue: #0d6efd;
+// $indigo: #6610f2;
+// $purple: #6f42c1;
+// $pink: #d63384;
+// $red: #dc3545;
+// $orange: #fd7e14;
+// $yellow: #ffc107;
+// $green: #198754;
+// $teal: #20c997;
+// $cyan: #0dcaf0;
+
+// $primary: #00adb5;
+// $secondary: #171717;
+// $icon: #8c979c;
+// $white: #dfdede;
+// $second-white: #ffffff;
+// $text: #171717;

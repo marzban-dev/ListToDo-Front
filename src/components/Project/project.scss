@@ -1,0 +1,224 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.project-labels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lighten($color: $white, $amount: 3%);
+  font-size: 12px;
+  color: $icon;
+  border-radius: 12px;
+  padding-right: 1rem;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary;
+    border-radius: 12px;
+    width: 25px;
+    height: 25px;
+    margin-right: 0.5rem;
+    span {
+      color: $white;
+    }
+  }
+}
+
+.project-info-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: $icon;
+  span {
+    padding-right: 0.5rem;
+    color: $primary;
+  }
+}
+
+.project {
+  background-color: $second-white;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 350px;
+  margin: 0 1.5rem 1.5rem 0;
+
+  .project-head {
+    background-color: $second-white;
+    padding: 1rem;
+
+    .project-head-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .project-head-top-draggable-icon {
+        color: transparentize($color: $icon, $amount: 0.3);
+        font-size: 20px;
+        cursor: move;
+        margin-right: 1rem;
+        transition: color 0.25s;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+
+      .project-head-top-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .project-head-top-sections-count {
+          @extend .project-labels;
+          margin-right: 0.5rem;
+        }
+
+        .project-head-top-tasks-count {
+          @extend .project-labels;
+          margin-right: 0.5rem;
+        }
+      }
+
+      .project-head-top-priority {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        span {
+          color: $yellow;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .project-head-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .project-head-bottom-title {
+        color: $text;
+      }
+      .project-head-bottom-text {
+        @extend .project-info-text;
+      }
+    }
+  }
+
+  .project-body {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+
+    .project-body-prj-progress-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .project-body-prj-progress-days {
+        @extend .project-info-text;
+        padding-bottom: 0.25rem;
+      }
+      .project-body-prj-progress-bar-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .project-body-prj-progress-bar {
+          background-color: $white;
+          height: 10px;
+          border-radius: 10px;
+          width: 120px;
+          div {
+            background-color: lighten($color: $green, $amount: 20%);
+            border-radius: 10px;
+            height: 10px;
+          }
+        }
+        .project-body-prj-alarm {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          padding: 0 0.25rem 0 0.5rem;
+          span {
+            color: $icon;
+          }
+        }
+
+        .project-body-prj-completed-tasks {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          color: $icon;
+          span {
+            padding: 0 0.25rem;
+          }
+          span:nth-child(1) {
+            color: $primary;
+          }
+        }
+      }
+    }
+
+    .project-body-prj-members {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: min-content;
+      transform: translateX(30px);
+
+      .project-body-prj-member {
+        position: relative;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        border: 2px solid $second-white;
+
+        img {
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+        }
+
+        &:nth-child(1) {
+          z-index: 10;
+        }
+
+        &:nth-child(2) {
+          z-index: 20;
+          transform: translateX(-10px);
+        }
+
+        &:nth-child(3) {
+          z-index: 30;
+          transform: translateX(-20px);
+        }
+      }
+      .project-body-prj-members-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        border: 2px solid $second-white;
+        background-color: $primary;
+        margin-top: 6px;
+        z-index: 40;
+        transform: translateX(-30px);
+        span {
+          font-size: 11px;
+          color: $second-white;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+body[theme="dark"] {
+  --color-primary: #4ECCA3;
+  --color-primary-lighten: #44b993;
+  --color-primary-transparentize: rgba(78, 204, 163, 0.7);
+  --color-secondary: #232931;
+  --color-secondary-complement: #393E46;
+  --color-secondary-complement-light: #414750;
+  --color-icon: #8c979b;
+  --color-icon-lighten: #a7b3b9;
+  --color-icon-complement: #ffffff;
+  --color-page-container-bg: #393E46;
+  --color-text: #EEEEEE;
+  --color-shadow: rgba(18, 20, 21, 0.5);
+
+  --color-loading-screen-bg: #282f38;
+  --color-loading-screen-spinner: #4ECCA3;
+
+  --color-sidemenu-item-bg-active: rgba(78, 204, 163, 0.2);
+  --color-sidemenu-item-bg-hover: rgba(78, 204, 163, 0.1);
+
+  --color-input-bg: rgba(35, 41, 49, 0.5);
+  --color-input-bg-hover: #232931;
+  --color-input-text: #8c979b;
+
+  --color-task-checkbox: #363a42;
+  --color-task-checkbox-border: #4d535d;
+  --color-task-checkbox-hover: #3e434b;
+  --color-task-deadline-warning-color: #af5332;
+
+  --color-label-chackbox-active: rgba(78, 204, 163, 0.2);
+  --color-label-chackbox-hover: rgba(78, 204, 163, 0.1);
+
+  --color-react-modal-container: #232931;
+  --color-react-modal-overlay: rgba(14, 14, 14, 0.85);
+
+  --color-modal-input-bg: #393E46;
+  --color-modal-input-bg-hover: #42474f;
+
+  --color-priority-1: #ce81ef;
+  --color-priority-2: #dc3545;
+  --color-priority-3: #198754;
+  --color-priority-4: #0d6efd;
+  --color-priority-5: #fd7e14;
+
+  --color-react-loader-background: #363b43;
+  --color-react-loader-forground: #3f454e; 
+
+  --toastify-color-dark: #232931;
+  --toastify-spinner-color: #616161;
+  --toastify-spinner-color-empty-area: #e0e0e0;
+}

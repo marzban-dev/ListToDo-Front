@@ -1,0 +1,65 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.button {
+  @include reset_input();
+  border-radius: 15px;
+  background-color: var(--color-primary-lighten);
+  transition: background-color 0.25s;
+  color: $second-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-primary);
+  }
+
+  .button-icon {
+    font-size: 20px;
+    transform: translate(0.5px ,0.5px);
+  }
+
+  .button-text {
+    padding-left: 0.5rem;
+  }
+}
+
+.button-full-width {
+  width: 100%;
+}
+
+
+$listOfSizes: (
+  "xs": (
+    "w": 30px,
+    "p": 0.4rem 1.2rem,
+  ),
+  "sm": (
+    "w": 35px,
+    "p": 0.5rem 1.5rem,
+  ),
+  "md": (
+    "w": 40px,
+    "p": 0.5rem 1.5rem,
+  ),
+  "lg": (
+    "w": 50px,
+    "p": 0.75rem 2rem,
+  ),
+);
+
+@each $size, $properties in $listOfSizes {
+  .button-size-#{$size} {
+    padding: map-get($properties, "p");
+  }
+}
+
+@each $size, $properties in $listOfSizes {
+  .button-circle-size-#{$size} {
+    width: map-get($properties, "w");
+    height: map-get($properties, "w");
+    border-radius: 50%;
+  }
+}

@@ -1,0 +1,47 @@
+.label {
+  padding: 1rem 1rem 1rem 0.5rem;
+  background-color: var(--color-secondary);
+  border-radius: 15px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .label-wrapper {
+    label {
+      padding-right: 0.25rem;
+
+      .label-icon {
+        transition: background-color 0.25s;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          background-color: var(--color-label-chackbox-hover);
+        }
+
+        span {
+          color: var(--color-primary);
+          font-size: 20px;
+          transform: translateY(1.5px);
+        }
+      }
+    }
+
+    .label-text {
+      color: var(--color-text);
+      font-size: 18px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.label-active {
+  .label-wrapper label .label-icon {
+    background-color: var(--color-label-chackbox-active);
+  }
+}

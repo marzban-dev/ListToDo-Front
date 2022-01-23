@@ -1,0 +1,24 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.sections-container {
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  height: 100%;
+
+  .create-input-container {
+    margin: 2rem 2.5rem 0 2rem;
+  }
+
+  .sections {
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    .section-tasks {
+      margin: 2rem 2.5rem 0 0;
+    }
+  }
+}

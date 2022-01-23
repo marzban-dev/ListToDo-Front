@@ -1,0 +1,63 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.create-new-task-modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 1rem;
+
+  .create-new-task-head-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    .head-wrapper-separator {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title-input {
+      @include reset_input();
+      padding: 0.5rem 0 0.5rem 1rem;
+      border-radius: 15px;
+      transition: background-color 0.25s;
+      color: var(--color-text);
+      font-size: 20px;
+
+      &::placeholder {
+        color: var(--color-icon);
+      }
+    }
+  }
+
+  .description-input {
+    @include reset_input();
+    margin-top: 1rem;
+    background-color: var(--color-modal-input-bg);
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    border-radius: 15px;
+    transition: background-color 0.25s;
+    color: var(--color-text);
+    width: 100%;
+
+    &::placeholder {
+      color: var(--color-icon);
+    }
+
+    &:focus,
+    &:hover {
+      background-color: var(--color-modal-input-bg-hover);
+    }
+  }
+
+  .create-new-task-save {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
