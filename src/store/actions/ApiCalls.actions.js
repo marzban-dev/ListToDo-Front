@@ -195,7 +195,6 @@ export const fetchProjects = (filter = {}) => {
             });
 
             return result.data.results.map(prj => ({...prj, sections: null, projects: null}));
-
         } catch (error) {
             throw error;
         }
