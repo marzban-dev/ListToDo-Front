@@ -18,6 +18,10 @@
 .env.test.local
 .env.production.local
 
+webstorm.js
+todo-list.code-workspace
+/.vscode
+/.idea
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
