@@ -1,99 +1,56 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
+import SelectMenu from "components/UI/SelectMenu";
+import Member from "components/Member";
 import "./selectAssignee.scss";
-import testImage from "assets/img/faces/face-1.jpeg";
 
-const SelectAssignee = () => {
-    const [selectedAssignee, setSelectedAssignee] = useState(null);
-    const usersList = useRef(null);
+const SelectAssignee = ({taskAssignee, setTaskAssignee, members}) => {
+
+    const [selectMenuOptions, setSelectMenuOptions] = useState([
+        {
+            iconClass: "far fa-user-circle",
+            text: "No Assignee",
+            value: null,
+            iconColor: "var(--color-icon)"
+        }
+    ]);
 
     useEffect(() => {
-        // Scroll to selected user in the users list
-        document.querySelector('.user-selected')?.scrollIntoView();
-    },);
+        const selectMenuMembers = [];
 
-    const users = [
-        {id: 1, name: "ali"},
-        {id: 2, name: "gholi"},
-        {id: 3, name: "soltan"},
-        {id: 4, name: "mostafa"},
-        {id: 5, name: "ali"},
-        {id: 6, name: "gholi"},
-        {id: 7, name: "soltan"},
-        {id: 8, name: "mostafa"},
-    ];
+        members.forEach(member => {
+            selectMenuMembers.push({
+                iconCustomComponent: (
+                    <Member
+                        picture={member.owner.profile_img}
+                        name={member.owner.username}
+                        style={{width : "20px",height: "20px"}}
+                        disableHover
+                    />
+                ),
+                text: member.owner.username,
+                value: member.owner
+            })
+        })
 
-    const onSelectUserChanged = (e) => {
-        const userIndex = users.findIndex(
-            (user) => user.id === Number(e.target.value)
-        );
-        setSelectedAssignee(users[userIndex]);
-    };
-
-    const User = ({id, name}) => {
-        const userClasses = [
-            selectedAssignee !== null
-                ? selectedAssignee.id === id
-                    ? "user-selected"
-                    : null
-                : null,
-        ];
-
-        return (
-            <li className={userClasses.join(" ")}>
-                <input
-                    type="radio"
-                    id={`select-user-input-${id}`}
-                    hidden
-                    value={id}
-                    onChange={onSelectUserChanged}
-                />
-                <label htmlFor={`select-user-input-${id}`}>
-                    <img src={testImage} alt="user-profile"/>
-                    <span>{name}</span>
-                </label>
-            </li>
-        );
-    };
-
-    const ListOfUsers = () => {
-        return (
-            <div className="assignee-users-list">
-                <ul ref={usersList}>
-                    {users.map((user) => {
-                        return <User key={user.id} id={user.id} name={user.name}/>;
-                    })}
-                </ul>
-            </div>
-        );
-    };
+        setSelectMenuOptions([...selectMenuOptions, ...selectMenuMembers]);
+    }, []);
 
     return (
-        <div className="assignee">
-            <div className="assignee-wrapper">
-                <div
-                    className={[
-                        selectedAssignee
-                            ? "assignee-selected-user"
-                            : "assignee-not-selected",
-                    ].join(" ")}
-                >
-                    {selectedAssignee ? (
-                        <React.Fragment>
-                            <img src={testImage} alt="user-profile"/>
-                            <span>{selectedAssignee.name}</span>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <div>
-                                <span className="far fa-user"></span>
-                            </div>
-                            <span>No User</span>
-                        </React.Fragment>
-                    )}
-                </div>
-                <ListOfUsers/>
-            </div>
-        </div>
+        <SelectMenu
+            options={selectMenuOptions}
+            type="selectable-options"
+            CustomButtonComponent={(
+                <Member
+                    picture={taskAssignee ? taskAssignee.profile_img : null}
+                    name={taskAssignee ? taskAssignee.username : "No Assignee"}
+                    style={{width : "24px",height: "24px"}}
+                    defaultIconSize="22px"
+                    disableHover
+                />
+            )}
+            activeOption={taskAssignee}
+            setActiveOption={setTaskAssignee}
+        />
     );
 };
 

@@ -1,4 +1,4 @@
-import axios from "AxiosInstance";
+import axios from "axios.instance";
 
 //**************************************
 // Api for tasks --------------------- *
@@ -171,12 +171,22 @@ export const createLabel = (title) => {
     };
 };
 
+export const deleteLabel = (id) => {
+    return async (dispatch) => {
+        try {
+            await axios.delete(`/label/${id}`);
+        } catch (error) {
+            throw error;
+        }
+    };
+};
+
 //**************************************
 // Api for projects   ---------------- *
 //**************************************
 
 export const fetchProjects = (filter = {}) => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         try {
             const result = await axios.get("/projects/", {
                 params: {

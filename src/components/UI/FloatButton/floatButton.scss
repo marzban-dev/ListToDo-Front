@@ -1,32 +1,16 @@
 @import "src/assets/scss/variables";
 @import "src/assets/scss/mixins";
 
-.float-button {
-  @include reset_input();
-  position: fixed;
-  background-color: $primary;
-  width: 60px;
-  bottom: 2rem;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.25s;
-  &:hover,
-  &:focus {
-    background-color: transparentize($color: $primary, $amount: 0.2);
-  }
-  span {
-    color: $second-white;
-    font-size: 20px;
-  }
-}
-
 .float-right {
-  right: 1rem;
+  position: fixed;
+  z-index: 999;
+  bottom: 1rem;
+  right: 2rem;
 }
 
 .float-left {
-  left: 1rem;
+  position: fixed;
+  z-index: 999;
+  bottom: 1rem;
+  left: 2rem;
 }

@@ -1,0 +1,10 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.project-page-container {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}

@@ -1,0 +1,39 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.project-body-container {
+  height: 300px;
+  width: 100%;
+  padding: 1rem 0;
+
+  .project-body-tabs {
+    padding: 0 1.5rem;
+    button {
+      @include reset_input();
+      color: var(--color-text);
+      padding: 0.5rem 1.5rem;
+      font-size: 22px;
+      cursor: pointer;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      border-radius: 25px;
+      transition: background-color 0.2s;
+      background-color: var(--color-secondary);
+
+      &:hover,&:focus {
+        background-color: var(--color-primary-transparentize);
+      }
+    }
+
+    .project-body-tab-active {
+      background-color: var(--color-primary-transparentize);
+    }
+  }
+
+  .project-body-content-wrapper {
+    width: 100%;
+    height: calc(100vh - 320px);
+    .show-projects-container {
+      margin-left: 1.5rem;
+    }
+  }
+}

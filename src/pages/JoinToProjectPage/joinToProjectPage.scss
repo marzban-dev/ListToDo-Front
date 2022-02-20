@@ -1,0 +1,25 @@
+@import "src/assets/scss/variables";
+
+.join-to-project-page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  div {
+    margin-bottom: 1rem;
+  }
+
+  .join-warning {
+    font-size: 34px;
+    color: $cyan;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    font-size: 20px;
+    color: var(--color-text);
+  }
+}

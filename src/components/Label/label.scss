@@ -1,36 +1,20 @@
 .label {
-  padding: 1rem 1rem 1rem 0.5rem;
-  background-color: var(--color-secondary);
-  border-radius: 15px;
-  height: 48px;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--color-secondary);
+  position: relative;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
 
-  .label-wrapper {
-    label {
-      padding-right: 0.25rem;
-
-      .label-icon {
-        transition: background-color 0.25s;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &:hover {
-          background-color: var(--color-label-chackbox-hover);
-        }
-
-        span {
-          color: var(--color-primary);
-          font-size: 20px;
-          transform: translateY(1.5px);
-        }
-      }
-    }
+  .label-text-wrapper {
+    padding-left: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .label-text {
       color: var(--color-text);
@@ -38,10 +22,42 @@
       white-space: nowrap;
     }
   }
+
+  .label-shape {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transform: rotateZ(45deg);
+    position: absolute;
+    left: -20px;
+    background-color: var(--color-secondary);
+    transition: background-color 0.2s;
+
+    div {
+      width: 13px;
+      height: 13px;
+      background-color: var(--color-page-container-bg);
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 .label-active {
-  .label-wrapper label .label-icon {
-    background-color: var(--color-label-chackbox-active);
+  background-color: var(--color-labels-tab-bg-active);
+
+  .label-shape {
+    background-color: var(--color-labels-tab-bg-active);
+  }
+}
+
+.label-hover {
+  background-color: var(--color-labels-tab-bg-hover);
+
+  .label-shape {
+    background-color: var(--color-labels-tab-bg-hover);
   }
 }

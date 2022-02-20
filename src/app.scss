@@ -1,3 +1,11 @@
+@import "assets/scss/variables";
+@import "assets/scss/mixins";
+
+body {
+  @include reset_scrollbar();
+  background-color: var(--color-page-container-bg);
+}
+
 .App {
   display: flex;
   justify-content: center;
@@ -45,7 +53,7 @@
   background-color: var(--color-secondary) !important;
   border: none !important;
   border-radius: 15px !important;
-  z-index: 8888;
+  z-index: 888;
   cursor: default;
 }
 
@@ -56,7 +64,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--color-react-modal-overlay);
-  z-index: 8888;
+  z-index: 888;
   cursor: pointer;
   display: flex;
   justify-content: center;

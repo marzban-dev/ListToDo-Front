@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import xImg from "assets/img/MEBIB.gif";
-import Button from "../Button";
-import SkeletonLoader from "../SkeletonLoader";
+import Button from "components/UI/Button";
+import SkeletonLoader from "components/UI/SkeletonLoader";
 import "./profilePicture.scss";
 
 const ProfilePicture =

@@ -1,5 +1,7 @@
+import {toast} from "react-toastify";
+
 export const TOASTIFY_OPTIONS = {
-    autoClose: 900,
+    autoClose: 1100,
     closeOnClick: true,
     position: "top-center",
     pauseOnHover: false,
@@ -38,3 +40,20 @@ export const APP_THEMES = [
         }
     }
 ]
+
+export const USE_QUERY_ALERT_SETTINGS = (options) => ({
+    onSuccess: () => {
+        toast.update(options.alertId, {
+            render: options.onSuccess,
+            type: "success",
+            isLoading: false,
+        });
+    },
+    onError: () => {
+        toast.update(options.alertId, {
+            render: options.onError,
+            type: "error",
+            isLoading: false,
+        });
+    }
+})

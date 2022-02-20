@@ -1,36 +1,9 @@
 import React from "react";
-import {NavLink, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import MenuLink from "./components/MenuLink";
 import "./sideMenu.scss";
 
 const SideMenu = ({isOpen, setIsOpen}) => {
-    const isPreAuthLoading = useSelector(state => state.auth.isPreAuthLoading);
-
-    const MenuLink = ({to, iconClass, children}) => {
-        const location = useLocation();
-
-        const linkClickHandler = (e) => {
-            if (!isPreAuthLoading) {
-                setIsOpen(false)
-            } else {
-                e.preventDefault();
-            }
-        }
-
-        return (
-            <NavLink
-                to={to}
-                onClick={linkClickHandler}
-                className={[
-                    !isPreAuthLoading ? (location.pathname.includes(to) ? "side-menu-link-active" : null) : null,
-                    isPreAuthLoading ? "side-menu-link-disabled" : null
-                ].join(' ')}
-            >
-                <span className={["link-icon", iconClass].join(" ")}></span>
-                <span className="link-text">{children}</span>
-            </NavLink>
-        );
-    };
+    // const isPreAuthLoading = useSelector(state => state.auth.isPreAuthLoading);
 
     return (
         <aside className={["side-menu", isOpen ? "side-menu-active" : null].join(' ')} onClick={() => setIsOpen(false)}>
@@ -38,28 +11,28 @@ const SideMenu = ({isOpen, setIsOpen}) => {
                 <h1 className="side-menu-logo">Logo</h1>
                 <ul className="side-menu-links">
                     <div className="side-menu-links-divider">
-                        <MenuLink to="/tasks" iconClass="far fa-tasks">
+                        <MenuLink to="/tasks" iconClass="far fa-tasks" setIsOpen={setIsOpen}>
                             Tasks
                         </MenuLink>
 
-                        <MenuLink to="/projects" iconClass="far fa-briefcase">
+                        <MenuLink to="/projects" iconClass="far fa-briefcase" setIsOpen={setIsOpen}>
                             Projects
                         </MenuLink>
 
-                        <MenuLink to="/sections" iconClass="far fa-archive">
+                        <MenuLink to="/sections" iconClass="far fa-archive" setIsOpen={setIsOpen}>
                             Archive
                         </MenuLink>
 
-                        <MenuLink to="/labels" iconClass="far fa-tags">
+                        <MenuLink to="/labels" iconClass="far fa-tags" setIsOpen={setIsOpen}>
                             Labels
                         </MenuLink>
                     </div>
                     <div className="side-menu-links-divider">
-                        <MenuLink to="/notifications" iconClass="far fa-bell">
+                        <MenuLink to="/notifications" iconClass="far fa-bell" setIsOpen={setIsOpen}>
                             Notifications
                         </MenuLink>
 
-                        <MenuLink to="/settings" iconClass="far fa-cog">
+                        <MenuLink to="/settings" iconClass="far fa-cog" setIsOpen={setIsOpen}>
                             Settings
                         </MenuLink>
                     </div>

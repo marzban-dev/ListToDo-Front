@@ -1,27 +1,22 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {REACT_MODAL_OPTIONS, TOASTIFY_OPTIONS} from "config";
-import Modal from "react-modal";
-import ProfilePicture from "../UI/ProfilePicture";
-import Button from "../UI/Button";
-import {updateUserSettings} from "../../store/actions/Auth.actions";
+import {TOASTIFY_OPTIONS} from "config";
+import ProfilePicture from "components/UI/ProfilePicture";
 import {toast} from "react-toastify";
+import ProfileWallpaper from "components/UI/ProfileWallpaper";
+import ChangeProfileModal from "components/ChangeProfileModal";
+import {useQueryClient} from "react-query";
+import {useUpdateSettingsQuery} from "hooks/useAuth";
 import "./profile.scss";
-import ProfileWallpaper from "../UI/ProfileWallpaper";
-import ChangeProfileModal from "../ChangeProfileModal";
 
 const Profile = () => {
-
-    const dispatch = useDispatch();
-    const username = useSelector(state => state.auth.user.username);
-    const wallpaper = useSelector(state => state.auth.user.setting.header);
-    const profile = useSelector(state => state.auth.user.setting.profile);
+    const queryClient = useQueryClient();
+    const {username, header_img: wallpaper, profile_img: profile} = queryClient.getQueryData('user');
+    const {mutateAsync: updateSettings} = useUpdateSettingsQuery();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userWallpaper, setUserWallpaper] = useState(null);
     const [userPicture, setUserPicture] = useState(null);
     const [userName, setUserName] = useState(username);
-
 
     const saveChanges = async () => {
         const alertId = toast.loading("Updating Profile", {
@@ -33,9 +28,9 @@ const Profile = () => {
         try {
             const settingsToUpdate = new FormData();
 
-            if (userPicture) settingsToUpdate.append('profile', userPicture, userPicture.name);
-            if (userWallpaper) settingsToUpdate.append('header', userWallpaper, userWallpaper.name);
-            if (userName !== username) settingsToUpdate.append("username", userName)
+            if (userPicture) settingsToUpdate.append('profile_img', userPicture, userPicture.name);
+            if (userWallpaper) settingsToUpdate.append('header_img', userWallpaper, userWallpaper.name);
+            if (userName !== username) settingsToUpdate.append("first_name", userName)
             if (!userPicture && !userWallpaper && userName === username) {
                 toast.info("All things are the same.", {...TOASTIFY_OPTIONS, autoClose: 2000})
             } else {
@@ -47,7 +42,9 @@ const Profile = () => {
                     });
                 }
 
-                await dispatch(updateUserSettings(settingsToUpdate, uploadProgressHandler));
+                await updateSettings({
+                    properties: settingsToUpdate, uploadProgressHandler
+                });
             }
         } catch (error) {
             toast.update(alertId, {

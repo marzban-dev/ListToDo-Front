@@ -1,26 +1,27 @@
 @import "src/assets/scss/variables";
 @import "src/assets/scss/mixins";
 
-.project-labels {
+.project-badges {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lighten($color: $white, $amount: 3%);
+  background-color: var(--color-secondary-complement);
   font-size: 12px;
-  color: $icon;
+  color: var(--color-icon);
   border-radius: 12px;
   padding-right: 1rem;
+
   div {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $primary;
+    background-color: var(--color-primary-lighten);
     border-radius: 12px;
     width: 25px;
     height: 25px;
     margin-right: 0.5rem;
     span {
-      color: $white;
+      color: var(--color-text);
     }
   }
 }
@@ -30,39 +31,57 @@
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  color: $icon;
+  color: var(--color-icon);
   span {
     padding-right: 0.5rem;
-    color: $primary;
+    color: var(--color-primary);
   }
 }
 
 .project {
-  background-color: $second-white;
+  background-color: var(--color-project-bg);
   border-radius: 15px;
   overflow: hidden;
   width: 350px;
   margin: 0 1.5rem 1.5rem 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-project-bg-hover);
+    .project-head {
+      background-color: var(--color-project-bg-hover);
+    }
+  }
 
   .project-head {
-    background-color: $second-white;
-    padding: 1rem;
+    position: relative;
+    background-color: var(--color-project-bg);
 
+    .project-head-background {
+      position: absolute;
+      z-index: 100;
+      top: 0;
+      left: 0;
+    }
+    
     .project-head-top {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 1rem 0 1rem;
       margin-bottom: 1rem;
+      z-index: 200;
 
       .project-head-top-draggable-icon {
-        color: transparentize($color: $icon, $amount: 0.3);
+        color: var(--color-icon);
         font-size: 20px;
         cursor: move;
         margin-right: 1rem;
         transition: color 0.25s;
 
         &:hover {
-          color: $primary;
+          color: var(--color-primary);
         }
       }
 
@@ -72,37 +91,35 @@
         align-items: center;
 
         .project-head-top-sections-count {
-          @extend .project-labels;
+          @extend .project-badges;
           margin-right: 0.5rem;
         }
 
         .project-head-top-tasks-count {
-          @extend .project-labels;
+          @extend .project-badges;
           margin-right: 0.5rem;
-        }
-      }
-
-      .project-head-top-priority {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-
-        span {
-          color: $yellow;
-          font-size: 20px;
         }
       }
     }
 
     .project-head-bottom {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       flex-direction: column;
+      height: 80px;
+      width: 100%;
+      padding: 0 1rem;
+      z-index: 200;
+      .project-head-bottom-left-side{
+
+      }
 
       .project-head-bottom-title {
-        color: $text;
+        color: var(--color-text);
       }
+
       .project-head-bottom-text {
         @extend .project-info-text;
       }
@@ -125,99 +142,6 @@
       .project-body-prj-progress-days {
         @extend .project-info-text;
         padding-bottom: 0.25rem;
-      }
-      .project-body-prj-progress-bar-container {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        .project-body-prj-progress-bar {
-          background-color: $white;
-          height: 10px;
-          border-radius: 10px;
-          width: 120px;
-          div {
-            background-color: lighten($color: $green, $amount: 20%);
-            border-radius: 10px;
-            height: 10px;
-          }
-        }
-        .project-body-prj-alarm {
-          display: flex;
-          justify-content: center;
-          align-items: flex-end;
-          padding: 0 0.25rem 0 0.5rem;
-          span {
-            color: $icon;
-          }
-        }
-
-        .project-body-prj-completed-tasks {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 12px;
-          color: $icon;
-          span {
-            padding: 0 0.25rem;
-          }
-          span:nth-child(1) {
-            color: $primary;
-          }
-        }
-      }
-    }
-
-    .project-body-prj-members {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: min-content;
-      transform: translateX(30px);
-
-      .project-body-prj-member {
-        position: relative;
-        border-radius: 50%;
-        width: 25px;
-        height: 25px;
-        border: 2px solid $second-white;
-
-        img {
-          border-radius: 50%;
-          width: 100%;
-          height: 100%;
-        }
-
-        &:nth-child(1) {
-          z-index: 10;
-        }
-
-        &:nth-child(2) {
-          z-index: 20;
-          transform: translateX(-10px);
-        }
-
-        &:nth-child(3) {
-          z-index: 30;
-          transform: translateX(-20px);
-        }
-      }
-      .project-body-prj-members-count {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        width: 25px;
-        height: 25px;
-        border: 2px solid $second-white;
-        background-color: $primary;
-        margin-top: 6px;
-        z-index: 40;
-        transform: translateX(-30px);
-        span {
-          font-size: 11px;
-          color: $second-white;
-        }
       }
     }
   }

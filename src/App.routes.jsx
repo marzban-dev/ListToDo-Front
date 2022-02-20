@@ -1,86 +1,139 @@
 import React from "react";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Auth/Login";
 import Signup from "pages/Auth/Signup";
 import Projects from "pages/Projects";
-import Tasks from "pages/Tasks";
-import RequireAuth from "components/helper/RequireAuth";
-import NotFound from "components/NotFound";
 import CreateUpdateTaskModal from "./components/CreateUpdateTaskModal";
-import ShowSubTasks from "./components/ShowSubTasks";
 import Settings from "./pages/Settings";
 import Labels from "./pages/Labels";
+import RequireAuth from "components/helper/RequireAuth";
+import ProjectPage from "pages/ProjectPage";
+import Tasks from "pages/Tasks";
+import {useQueryClient} from "react-query";
+import JoinToProjectPage from "pages/JoinToProjectPage";
+import {AnimatePresence} from "framer-motion/dist/framer-motion";
+import NotFoundPage from "pages/NotFoundPage";
 
-const AppRoutes = () => {
+const AppRoutes = ({loadPrivateRoutes}) => {
+    const queryClient = useQueryClient();
+    const location = useLocation();
+    const projectInbox = queryClient.getQueryData('inbox-project');
 
-    const routes = [
-        {
-            path: "/",
-            element: <Home/>
-        },
-        {
-            path: '/login',
-            element: <Login/>,
-        },
-        {
-            path: '/signup',
-            element: <Signup/>,
-        },
-        {
-            path: '/tasks/*',
-            element: <Tasks/>,
-            children:
-                <React.Fragment>
-                    <Route path="modify/:taskId" element={<CreateUpdateTaskModal mode={'modify'}/>}/>
-                    <Route path="create" element={<CreateUpdateTaskModal mode={'create'}/>}/>
-                    <Route path="subtasks" element={<ShowSubTasks/>}/>
-                </React.Fragment>,
-            isPrivate: true
-        },
-        // {
-        //     path: '/projects',
-        //     element: <Projects/>,
-        //     isPrivate: true
-        // },
-        {
-            path: '/settings',
-            element: <Settings/>,
-            isPrivate: true
-        },
-        {
-            path: '/labels',
-            element: <Labels />,
-            isPrivate: true
-        },
-        {
-            path: '/404',
-            element: <NotFound/>,
-        },
-        {
-            path: '*',
-            element: <Navigate to="/404" replace/>,
-        },
-    ]
+    const privateAppRoutes = (
+        <React.Fragment>
+            <Route path="/tasks" element={<RequireAuth><Tasks project={projectInbox}/></RequireAuth>}>
+                <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
+                <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+            </Route>
+            <Route path="/projects" element={<RequireAuth><Projects/></RequireAuth>}>
+                <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
+                <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+            </Route>
+            <Route path="/project/:id/:parentId" element={<RequireAuth><ProjectPage/></RequireAuth>}>
+                <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
+                <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+            </Route>
+            <Route path="/settings" element={<RequireAuth><Settings/></RequireAuth>}/>
+            <Route path="/labels">
+                <Route path=":id" element={<RequireAuth><Labels/></RequireAuth>}/>
+                <Route path="" element={<RequireAuth><Labels/></RequireAuth>}/>
+                <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
+                <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+            </Route>
+            <Route exact path="/join-to-project/:inviteSlug" element={<RequireAuth><JoinToProjectPage/></RequireAuth>}/>
+        </React.Fragment>
+    );
 
-    const renderRoutes = () => {
-        return routes.map(({path, element, children, isPrivate}) => {
-            return (
-                <Route
-                    path={path}
-                    element={isPrivate ? <RequireAuth>{element}</RequireAuth> : element}
-                >
-                    {children}
-                </Route>
-            );
-        });
-    }
+    const publicAppRoutes = (
+        <React.Fragment>
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/login" element={<Login/>}/>
+            <Route exact path="/signup" element={<Signup/>}/>
+        </React.Fragment>
+    );
+
+    const importantAppRoutes = (
+        <React.Fragment>
+            <Route exact path="/404" element={<NotFoundPage/>}/>
+            <Route path="/*" element={<Navigate to="/404" replace/>}/>
+        </React.Fragment>
+    );
 
     return (
-        <Routes>
-            {renderRoutes()}
-        </Routes>
+        <AnimatePresence exitBeforeEnter>
+            <Routes key={location.pathname.split("/")[0]} location={location}>
+                {publicAppRoutes}
+                {privateAppRoutes}
+                {importantAppRoutes}
+            </Routes>
+        </AnimatePresence>
     );
 };
 
 export default AppRoutes;
+
+// let routes = [
+//     {
+//         path: "/",
+//         element: <Home/>
+//     },
+//     {
+//         path: '/login',
+//         element: <Login/>,
+//     },
+//     {
+//         path: '/signup',
+//         element: <Signup/>,
+//     },
+//     {
+//         path: '/tasks',
+//         element: <RequireAuth><Tasks project={projectInbox}/></RequireAuth>,
+//     },
+//     {
+//         path: '/projects',
+//         element: <RequireAuth><Projects/></RequireAuth>,
+//     },
+//     {
+//         path: '/project/:id/:parentId',
+//         element: <RequireAuth><ProjectPage/></RequireAuth>,
+//     },
+//     {
+//         path: '/settings',
+//         element: <RequireAuth><Settings/></RequireAuth>,
+//     },
+//     {
+//         path: '/labels',
+//         element: <RequireAuth><Labels/></RequireAuth>,
+//     },
+//     {
+//         path: '/join-to-project/:inviteSlug',
+//         element: <RequireAuth><JoinToProjectPage/></RequireAuth>
+//     },
+//     {
+//         path: '/404',
+//         element: <NotFound/>,
+//     },
+//     {
+//         path: '*',
+//         element: <Navigate to="/404" replace/>,
+//     },
+// ];
+
+// const Routes = useRoutes(routes.map(route => {
+//     let copyOfRoute = {...route};
+//     if (route.path.includes('tasks') || route.path.includes('labels') || route.path.includes('project')) {
+//         copyOfRoute['children'] = [
+//             {
+//                 path: copyOfRoute.path + "/create-task/:sectionId/:parentId",
+//                 element: <CreateUpdateTaskModal mode="create"/>
+//             },
+//             {
+//                 path: copyOfRoute.path + "/update-task/:taskId/:parentId",
+//                 element: <CreateUpdateTaskModal mode="modify"/>
+//             }
+//         ]
+//     }
+//
+//     return copyOfRoute;
+// }), location);

@@ -1,65 +1,57 @@
-import React, {useRef, useState} from "react";
-import {useSelector} from "react-redux";
-import {CSSTransition} from "react-transition-group";
-import "./selectColor.scss";
+import React from "react";
+import SelectMenu from "components/UI/SelectMenu";
 
-const SelectColor = ({taskColor, setTaskColor, isPriorityListOpen}) => {
-    const colors = useSelector((state) => state.main.colors);
-    const [isColorListOpen, setIsColorListOpen] = useState(false);
+const SelectColor = ({taskColor, setTaskColor}) => {
 
-    const Color = ({id, hex}) => {
-        const onColorChanged = (e) => setTaskColor(e.target.value);
-
-        return (
-            <div className="colors-item" key={id}>
-                <input
-                    type="radio"
-                    id={`color-input-${id}`}
-                    hidden
-                    value={hex}
-                    onChange={onColorChanged}
-                    onClick={() => setIsColorListOpen(false)}
-                />
-                <label htmlFor={`color-input-${id}`}>
-                    <div
-                        style={{
-                            backgroundColor: hex.toLowerCase(),
-                            opacity: taskColor === hex ? 1 : 0.5,
-                        }}
-                    ></div>
-                </label>
-            </div>
-        );
-    };
-
-    const nodeRef = useRef(null);
+    const selectMenuOptions = [
+        {
+            iconClass: "far fa-circle",
+            text: "No Color",
+            value: null,
+            iconColor: "var(--color-icon)"
+        },
+        {
+            iconClass: "fa fa-circle",
+            text: "Color 1",
+            value: 1,
+            iconColor: "var(--color-priority-1)"
+        },
+        {
+            iconClass: "fa fa-circle",
+            text: "Color 2",
+            value: 2,
+            iconColor: "var(--color-priority-2)"
+        },
+        {
+            iconClass: "fa fa-circle",
+            text: "Color 3",
+            value: 3,
+            iconColor: "var(--color-priority-3)"
+        },
+        {
+            iconClass: "fa fa-circle",
+            text: "Color 4",
+            value: 4,
+            iconColor: "var(--color-priority-4)"
+        },
+        {
+            iconClass: "fa fa-circle",
+            text: "Color 5",
+            value: 5,
+            iconColor: "var(--color-priority-5)"
+        },
+    ];
 
     return (
-        <div className="colors col-1">
-            <CSSTransition
-                in={isColorListOpen && !isPriorityListOpen}
-                timeout={500}
-                nodeRef={nodeRef}
-                onExited={() => setIsColorListOpen(false)}
-                classNames="fade"
-                unmountOnExit
-            >
-                <div className="colors-list" ref={nodeRef}>
-                    {colors.map(({id, color}) => (
-                        id !== 0 ? <Color key={id} id={id} hex={color}/> : null
-                    ))}
-                </div>
-            </CSSTransition>
-            <button
-                className={[
-                    "colors-open-list-button",
-                    isColorListOpen ? "colors-open-list-button-active" : null,
-                ].join(" ")}
-                onClick={() => setIsColorListOpen(!isColorListOpen)}
-            >
-                <span style={{backgroundColor: taskColor ? taskColor.toLowerCase() : "transparent"}}></span>
-            </button>
-        </div>
+        <SelectMenu
+            options={selectMenuOptions}
+            type="selectable-options"
+            customButtonIcon="far fa-palette"
+            buttonSize="22px"
+            activeOption={taskColor}
+            setActiveOption={setTaskColor}
+            customButtonIconColor={`var(${taskColor ? `--color-priority-${taskColor}` : "--color-icon"})`}
+        />
     );
 };
 

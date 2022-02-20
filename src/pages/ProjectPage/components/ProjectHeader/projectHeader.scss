@@ -1,0 +1,126 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.project-head-container {
+  position: relative;
+  color: var(--color-text);
+  height: 250px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.16);
+
+  .project-wallpaper {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+  }
+
+  .project-head-details {
+    position: absolute;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 1rem 1rem 0.5rem 1.5rem;
+
+    .project-head-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.25rem;
+
+      h3 {
+        color: var(--color-text);
+        font-size: 42px;
+      }
+    }
+
+    .project-head-bottom {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.75rem;
+
+      .project-head-bottom-left-side {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        height: 100%;
+        padding-bottom: 0.1rem;
+
+        & > * {
+          margin-right: 1.75rem;
+        }
+
+        .project-labels {
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-end;
+          height: 100%;
+
+          .label-item {
+            margin-right: 1rem;
+          }
+        }
+      }
+
+      .project-head-bottom-right-side {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        height: 100%;
+        margin-bottom: 0.2rem;
+
+        .members {
+          margin-top: 0.2rem;
+        }
+
+        .project-invite-button-container {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          height: 100%;
+
+          .project-invite-button {
+            margin-left: 0.5rem;
+            width: 35px;
+            height: 35px;
+
+            span {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.show-project-invite-slug-msg-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  button {
+    width: 40px;
+    border-radius: 5px;
+  }
+
+  div {
+    @include reset_scrollbar();
+    background-color: var(--color-secondary-complement);
+    border-radius: 5px;
+    padding: 0.5rem;
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 225px;
+  }
+}

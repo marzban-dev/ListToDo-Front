@@ -2,6 +2,7 @@
 @import "src/assets/scss/mixins";
 
 .page-container {
+  @include reset_scrollbar();
   background-color: var(--color-page-container-bg);
   height: calc(100vh - 70px);
   width: 100%;

@@ -14,7 +14,7 @@ const SelectSchedule = ({taskSchedule, setTaskSchedule}) => {
                 closeOnScroll={false}
                 selected={taskSchedule}
                 onChange={(date) => setTaskSchedule(date)}
-                placeholderText="Select Deadline"
+                placeholderText="Select deadline"
                 shouldCloseOnSelect={true}
                 minDate={new Date()}
                 showTimeInput

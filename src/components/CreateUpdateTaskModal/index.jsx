@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Modal from "react-modal";
-import {toast} from "react-toastify";
-import {useDispatch} from "react-redux";
-import {createTask, updateTask} from "store/actions/ApiCalls.actions";
-import {setData} from "store/actions/Main.actions";
 import SelectLabels from "./components/SelectLabels";
 import SelectPriority from "./components/SelectPriority";
 import SelectSchedule from "./components/SelectSchedule";
 import SelectColor from "./components/SelectColor";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {REACT_MODAL_OPTIONS, TOASTIFY_OPTIONS} from "config";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {REACT_MODAL_OPTIONS} from "config";
 import Button from "components/UI/Button";
+import catchAsync from "Utils/CatchAsync";
+import {useCreateTaskQuery, useTaskQuery, useUpdateTaskQuery} from "hooks/useTasksData";
+import LoadingWrapper from "components/UI/LoadingWrapper";
+import SelectAssignee from "components/CreateUpdateTaskModal/components/SelectAssignee";
+import {useQueryClient} from "react-query";
 import "./taskModal.scss";
 
 export const CreateUpdateTaskModal = ({mode}) => {
-    const dispatch = useDispatch();
-    const {state} = useLocation();
-    const {taskId} = useParams();
+    const {taskId, sectionId, projectId, parentId} = useParams();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
@@ -25,104 +26,64 @@ export const CreateUpdateTaskModal = ({mode}) => {
     const [taskLabels, setTaskLabels] = useState([]);
     const [taskColor, setTaskColor] = useState(null);
     const [taskSchedule, setTaskSchedule] = useState(null);
-    // const [taskAssignee] = useState(mode === 'modify' ? state.assignee : null);
-
-    const [isPriorityListOpen, setIsPriorityListOpen] = useState(false);
+    const [taskAssignee, setTaskAssignee] = useState(null);
     const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(false);
 
-    useEffect(() => {
-        console.log(state);
-        if (!state) {
-            navigate('/')
-        } else {
-            if (mode === 'modify') {
-                setTaskTitle(state.title);
-                setTaskDescription(state.description);
-                setTaskPriority(state.priority ? Number(state.priority) : null);
-                setTaskLabels(state.label);
-                setTaskColor(state.color);
-                setTaskSchedule(state.schedule ? new Date(state.schedule) : null)
-            }
-        }
-    }, []);
+    const inboxProject = queryClient.getQueryData('inbox-project');
+    const project = queryClient.getQueryData(['project', Number(projectId)]);
+    const labels = queryClient.getQueryData("labels");
+
+    const {data: task} = useTaskQuery(taskId, {
+        enabled: mode === "modify",
+        onError: () => navigate('/404')
+    });
+    const {mutateAsync: updateTask} = useUpdateTaskQuery(taskId, parentId, searchParams.get('isSubTask') === "true");
+    const {mutateAsync: createTask} = useCreateTaskQuery(parentId, searchParams.get('isSubTask') === "true");
+
+    if (!!task && taskTitle.length === 0) {
+        setTaskTitle(task.title);
+        setTaskDescription(task.description);
+        setTaskPriority(task.priority ? Number(task.priority) : null);
+        setTaskLabels(task.label);
+        setTaskColor(task.color);
+        setTaskSchedule(task.schedule ? new Date(task.schedule) : null)
+        setTaskAssignee(task.assignee)
+    }
 
     const onTitleChanged = (e) => setTaskTitle(e.target.value);
 
     const onDescriptionChanged = (e) => setTaskDescription(e.target.value);
 
-    const onSubmitBtnClicked = async () => {
+    const onSubmitBtnClicked = catchAsync(async () => {
         setIsSubmitButtonDisabled(true);
-
-        const alertId = toast.loading("Creating Task", TOASTIFY_OPTIONS);
 
         const dataObject = {
             title: taskTitle,
             description: taskDescription,
-            labels: taskLabels.length !== 0 ? taskLabels.map((label) => label.id) : [],
+            label: taskLabels,
             priority: taskPriority,
             color: taskColor,
             schedule: taskSchedule,
-            task: state.taskId ? state.taskId : null
+            assignee: taskAssignee
         };
 
-        try {
-            if (mode === 'create') {
-                console.log(dataObject);
-                const createdTask = await dispatch(createTask(state.sectionId, dataObject));
-
-                setIsSubmitButtonDisabled(false);
-
-                dispatch(setData({
-                    modify: {
-                        type: state.taskId ? 'task' : 'section',
-                        part: 'projects',
-                        id: state.taskId ? Number(state.taskId) : Number(state.sectionId),
-                        key: 'id',
-                        data: {tasks: createdTask},
-                        nestedProperties: ['projects', 'sections', 'tasks']
-                    }
-                }));
-
-                toast.update(alertId, {
-                    render: "Task Created",
-                    type: "success",
-                    isLoading: false,
-                    ...TOASTIFY_OPTIONS
-                });
-            } else {
-                const updatedTask = await dispatch(updateTask(taskId, dataObject));
-
-                setIsSubmitButtonDisabled(false);
-
-                dispatch(setData({
-                    modify: {
-                        type: 'task',
-                        part: 'projects',
-                        id: Number(taskId),
-                        key: 'id',
-                        data: updatedTask,
-                        nestedProperties: ['projects', 'sections', 'tasks']
-                    }
-                }));
-
-                toast.update(alertId, {
-                    render: "Task Updated",
-                    type: "success",
-                    isLoading: false,
-                    ...TOASTIFY_OPTIONS
-                });
-            }
-        } catch (error) {
+        if (mode === 'create') {
+            await createTask({sectionId: sectionId, data: dataObject});
+            setIsSubmitButtonDisabled(false)
+        } else {
+            await updateTask({id: taskId, data: dataObject});
             setIsSubmitButtonDisabled(false);
-            console.log(error);
-            toast.update(alertId, {
-                render: "Create Task Failed",
-                type: "error",
-                isLoading: false,
-                ...TOASTIFY_OPTIONS
-            });
         }
-    };
+
+    }, mode === 'modify' ? {
+        onLoad: `Updating task ${taskTitle}`,
+        onSuccess: `Task ${taskTitle} updated`,
+        onError: `Updating task ${taskTitle} failed`
+    } : {
+        onLoad: `Creating task ${taskTitle}`,
+        onSuccess: `Task ${taskTitle} created`,
+        onError: `Creating task ${taskTitle} failed`
+    }, () => setIsSubmitButtonDisabled(false))
 
     const onEnterKeyPressed = (e) => e.key === "Enter" ? onSubmitBtnClicked() : null;
 
@@ -131,6 +92,50 @@ export const CreateUpdateTaskModal = ({mode}) => {
         setIsModalOpen(false)
         setTimeout(() => navigate(-1), REACT_MODAL_OPTIONS.closeTimeoutMS)
     }
+
+    const modalContent = (
+        <React.Fragment>
+            <div className="create-new-task-head-wrapper col-12">
+                <input
+                    type="text"
+                    placeholder="Title"
+                    className="title-input col-7"
+                    onChange={onTitleChanged}
+                    value={taskTitle}
+                />
+                <div className="head-wrapper-separator col-3">
+                    <SelectAssignee
+                        taskAssignee={taskAssignee}
+                        setTaskAssignee={setTaskAssignee}
+                        members={inboxProject.id === Number(projectId) ? inboxProject.users : project.users}
+                    />
+                    <SelectColor taskColor={taskColor} setTaskColor={setTaskColor}/>
+                    <SelectPriority taskPriority={taskPriority} setTaskPriority={setTaskPriority}/>
+                </div>
+            </div>
+            {/*TODO --FIX BUG-- if user focused on textarea, when he pressing enter key ; the form should not send data*/}
+            <textarea
+                rows="4"
+                placeholder="Description"
+                className="description-input"
+                onChange={onDescriptionChanged}
+                value={taskDescription}
+            ></textarea>
+            <SelectLabels taskLabels={taskLabels} setTaskLabels={setTaskLabels} labels={labels}/>
+            <div className="create-new-task-save col-12">
+                <SelectSchedule
+                    taskSchedule={taskSchedule}
+                    setTaskSchedule={setTaskSchedule}
+                />
+                <Button
+                    onClick={!isSubmitButtonDisabled ? onSubmitBtnClicked : null}
+                    circleShape
+                    size="md"
+                    iconClass="far fa-check"
+                />
+            </div>
+        </React.Fragment>
+    );
 
     return (
         <Modal
@@ -142,49 +147,13 @@ export const CreateUpdateTaskModal = ({mode}) => {
                 className="create-new-task-modal"
                 onKeyPress={(e) => !isSubmitButtonDisabled ? onEnterKeyPressed(e) : null}
             >
-                <div className="create-new-task-head-wrapper col-12">
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        className="title-input col-5"
-                        onChange={onTitleChanged}
-                        value={taskTitle}
-                    />
-                    <div className="head-wrapper-separator col-2">
-                        <SelectColor
-                            isPriorityListOpen={isPriorityListOpen}
-                            taskColor={taskColor}
-                            setTaskColor={setTaskColor}
-                        />
-                        <SelectPriority
-                            isPriorityListOpen={isPriorityListOpen}
-                            setIsPriorityListOpen={setIsPriorityListOpen}
-                            taskPriority={taskPriority}
-                            setTaskPriority={setTaskPriority}
-                        />
-                    </div>
-                </div>
-                {/*TODO --FIX BUG-- if user focused on textarea, when he pressing enter key ; the form should not send data*/}
-                <textarea
-                    rows="4"
-                    placeholder="Description"
-                    className="description-input"
-                    onChange={onDescriptionChanged}
-                    value={taskDescription}
-                ></textarea>
-                <SelectLabels taskLabels={taskLabels} setTaskLabels={setTaskLabels}/>
-                <div className="create-new-task-save col-12">
-                    <SelectSchedule
-                        taskSchedule={taskSchedule}
-                        setTaskSchedule={setTaskSchedule}
-                    />
-                    <Button
-                        onClick={!isSubmitButtonDisabled ? onSubmitBtnClicked : null}
-                        circleShape
-                        size="md"
-                        iconClass="far fa-check"
-                    />
-                </div>
+                {
+                    mode === "modify" ? (
+                        <LoadingWrapper show={(!!task)} type="dots" size="sm">
+                            {modalContent}
+                        </LoadingWrapper>
+                    ) : modalContent
+                }
             </div>
         </Modal>
     );

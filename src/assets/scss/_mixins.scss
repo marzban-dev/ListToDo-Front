@@ -27,3 +27,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@mixin box_shadow {
+  box-shadow: 0 3px 10px 0.1px var(--color-shadow);
+}

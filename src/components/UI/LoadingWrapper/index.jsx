@@ -2,11 +2,16 @@ import React from "react";
 import Spinner from "../Spinner";
 import PropTypes from "prop-types";
 
-const LoadingWrapper = ({show, size, type, spinnerClassName, style, children}) => {
+const LoadingWrapper = ({show, size, type, spinnerClassName, style, children, onLoaded, customLoadingComponent}) => {
     if (show) {
-        return children;
+        if (onLoaded) return onLoaded();
+        else return children;
     } else {
-        return <Spinner size={size} type={type} className={spinnerClassName} style={style}/>
+        if (customLoadingComponent) {
+            return customLoadingComponent;
+        } else {
+            return <Spinner size={size} type={type} className={spinnerClassName} style={style}/>
+        }
     }
 }
 
@@ -15,7 +20,9 @@ LoadingWrapper.propTypes = {
     type: PropTypes.oneOf(['circle', 'dots']),
     size: PropTypes.oneOf(['sm', 'md', 'lg']),
     spinnerClassName: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    onLoaded: PropTypes.func,
+    customLoadingComponent: PropTypes.element
 }
 
 export default LoadingWrapper;

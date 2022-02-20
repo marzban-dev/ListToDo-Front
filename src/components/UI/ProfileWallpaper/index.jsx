@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import SkeletonLoader from "../SkeletonLoader";
 import "./profileWallpaper.scss";
 
-const ProfileWallpaper = ({wallpaperPicture, className}) => {
+const ProfileWallpaper = ({wallpaperPicture, className, darkLayerOpacity = 0.6}) => {
 
     const [isWallpaperLoaded, setIsWallpaperLoaded] = useState(false);
     const wallpaperImageElement = useRef(null);
@@ -30,7 +30,7 @@ const ProfileWallpaper = ({wallpaperPicture, className}) => {
                 className="profile-wallpaper-image"
                 ref={wallpaperImageElement}
                 src={null}
-                style={{display: isWallpaperLoaded ? 'block' : 'none'}}
+                style={{display: isWallpaperLoaded ? 'block' : 'none', opacity: darkLayerOpacity}}
                 alt="user-wallpaper"
             />
 

@@ -1,6 +1,6 @@
-import {fetchLabels, fetchProjects} from "./ApiCalls.actions";
-import {produce} from "immer";
-import axios from "AxiosInstance";
+import {fetchLabels, fetchLabelTreeData, fetchProjects} from "./ApiCalls.actions";
+import axios from "axios.instance";
+import sortListItems from "Utils/SortListItems";
 
 export const START_FETCH_DATA = "START_FETCH_DATA";
 export const FINISH_FETCH_DATA = "FINISH_FETCH_DATA";
@@ -16,6 +16,21 @@ export const fetchDataFailed = () => ({type: FETCH_DATA_FAILED});
 export const setData = (data) => ({type: SET_DATA, ...data});
 export const addLabel = (label) => ({type: ADD_LABEL, label});
 export const setLabelData = (id, data) => ({type: SET_LABEL_DATA, id, ...data});
+
+export const refreshLabelData = () => {
+    return async (dispatch, getState) => {
+        const labels = getState().main.labels;
+        try {
+            for (const label in labels) {
+                const {tasks, projects} = await dispatch(fetchLabelTreeData(labels[label].id));
+                dispatch(setLabelData(labels[label].id, {tasks, projects}))
+            }
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+};
 
 export const setAppTheme = (themeName = null) => ({type: SET_APP_THEME, themeName})
 
@@ -80,9 +95,7 @@ export const changePosition = (parentType, itemType, containerName, id, oldIndex
 
             copyOfList[oldIndex] = {...copyOfList[oldIndex], position: newPosition};
 
-            const sortedList = produce(copyOfList, draft => {
-                draft.sort((a, b) => a.position - b.position)
-            });
+            const sortedList = sortListItems(copyOfList);
 
             const data = {};
             data[containerName] = sortedList;

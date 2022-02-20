@@ -6,12 +6,12 @@ const Button =
     ({
          onClick,
          iconClass,
-         text = null,
+         text,
          size = 'md',
-         circleShape = false,
-         style = {},
-         fullWidth = false,
-         className = ""
+         circleShape,
+         style,
+         fullWidth,
+         className
      }) => {
         return (
             <button

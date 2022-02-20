@@ -2,10 +2,13 @@ import React from "react";
 import Spinner from "components/UI/Spinner";
 import "./loadingScreen.scss";
 
-const LoadingScreen = () => {
+const LoadingScreen = ({text}) => {
     return (
         <div className="loading-screen">
-            <Spinner/>
+            <div className="loading-screen-content-wrapper">
+                <Spinner/>
+                <p>{text}</p>
+            </div>
         </div>
     );
 };

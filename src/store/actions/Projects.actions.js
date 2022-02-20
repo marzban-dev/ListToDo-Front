@@ -1,4 +1,4 @@
-import axios from "AxiosInstance";
+import axios from "axios.instance";
 
 export const START_FETCH_PROJECTS = "START_FETCH_PROJECTS";
 export const FINISH_FETCH_PROJECTS = "FINISH_FETCH_PROJECTS";

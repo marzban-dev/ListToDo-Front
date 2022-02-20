@@ -22,7 +22,7 @@ const catchAsync = (cb, options, errorCb) => {
                 });
             }).catch(error => {
                 console.log(error);
-                if (errorCb) errorCb();
+                if (errorCb) errorCb(error);
                 toast.update(alertId, {
                     render: alertSetting.onError, type: "error", isLoading: false, ...TOASTIFY_OPTIONS
                 });
@@ -30,7 +30,7 @@ const catchAsync = (cb, options, errorCb) => {
         } else {
             cb().catch(error => {
                 console.log(error)
-                if (errorCb) errorCb();
+                if (errorCb) errorCb(error);
             });
         }
     };

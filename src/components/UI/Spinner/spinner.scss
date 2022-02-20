@@ -36,17 +36,17 @@ $listOfSizes: (
         'sm': (
                 'w' : 35px,
                 'h' : 25px,
-                'fs' : 0.5rem 1.5rem
+                'fs' : 1rem
         ),
         'md': (
                 'w' : 60px,
                 'h' : 40px,
-                'fs' : 0.5rem 1.5rem
+                'fs' :2rem
         ),
         'lg':(
                 'w' : 70px,
                 'h' : 50px,
-                'fs' : 0.75rem 2rem
+                'fs' : 3rem
         )
 );
 
@@ -61,6 +61,8 @@ $listOfSizes: (
 
 @each $size, $properties in $listOfSizes {
   .circle-spinner-size-#{$size} {
-    font-size: map-get($properties, 'fs');
+    span {
+      font-size: map-get($properties, 'fs');
+    }
   }
 }

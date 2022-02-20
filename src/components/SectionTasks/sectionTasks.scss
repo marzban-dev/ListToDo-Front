@@ -13,7 +13,6 @@
     border-radius: 15px;
     height: 68px;
 
-
     .section-tasks-head-title {
       display: flex;
       justify-content: space-between;
@@ -64,38 +63,6 @@
       }
 
     }
-
-    .section-tasks-head-menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-
-      .head-item {
-        @include reset_input();
-        padding-left: 0.75rem;
-
-        &:hover {
-          span {
-            color: var(--color-primary);
-          }
-        }
-
-        span {
-
-          margin-top: 0.5rem;
-          color: var(--color-icon);
-          transition: color 0.25s;
-          font-size: 20px;
-        }
-      }
-    }
-  }
-
-  .section-tasks-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
   }
 
   .section-tasks-list-add-button {

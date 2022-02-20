@@ -1,70 +1,56 @@
-import React, {useRef} from "react";
-import {CSSTransition} from "react-transition-group";
-import "./selectPriority.scss";
+import React from "react";
+import SelectMenu from "components/UI/SelectMenu";
 
-const SelectPriority = ({taskPriority, setTaskPriority, isPriorityListOpen, setIsPriorityListOpen}) => {
+const SelectPriority = ({taskPriority, setTaskPriority}) => {
 
-    const onPriorityChanged = (e) => setTaskPriority(Number(e.target.value));
-
-    const PriorityItem = ({id}) => {
-        return (
-            <div className="priority-item">
-                <input
-                    type="radio"
-                    id={`priority-input-${id}`}
-                    hidden
-                    value={id}
-                    onChange={onPriorityChanged}
-                    onClick={() => setIsPriorityListOpen(false)}
-                />
-                <label htmlFor={`priority-input-${id}`}>
-                    <span
-                        style={{
-                            color: `var(--color-priority-${id})`,
-                            opacity: taskPriority === id ? 1 : 0.5
-                        }}
-                        className="fa fa-flag"
-                    >
-                    </span>
-                </label>
-            </div>
-        );
-    };
-
-    const nodeRef = useRef(null);
+    const selectMenuOptions = [
+        {
+            iconClass: "far fa-pennant",
+            text: "No Priority",
+            value: null,
+            iconColor: "var(--color-icon)"
+        },
+        {
+            iconClass: "fa fa-pennant",
+            text: "Priority 1",
+            value: 1,
+            iconColor: "var(--color-priority-1)"
+        },
+        {
+            iconClass: "fa fa-pennant",
+            text: "Priority 2",
+            value: 2,
+            iconColor: "var(--color-priority-2)"
+        },
+        {
+            iconClass: "fa fa-pennant",
+            text: "Priority 3",
+            value: 3,
+            iconColor: "var(--color-priority-3)"
+        },
+        {
+            iconClass: "fa fa-pennant",
+            text: "Priority 4",
+            value: 4,
+            iconColor: "var(--color-priority-4)"
+        },
+        {
+            iconClass: "fa fa-pennant",
+            text: "Priority 5",
+            value: 5,
+            iconColor: "var(--color-priority-5)"
+        },
+    ];
 
     return (
-        <div className="new-task-priority col-1">
-            <CSSTransition
-                in={isPriorityListOpen}
-                timeout={300}
-                nodeRef={nodeRef}
-                classNames="fade"
-                unmountOnExit
-            >
-                <div className="new-task-priority-list" ref={nodeRef}>
-
-                    <button className="priority-item-delete-selection" onClick={() => setTaskPriority(0)}>
-                        <span className="fa fa-trash"></span>
-                    </button>
-
-                    {[1, 2, 3, 4, 5].map((id) => <PriorityItem key={id} id={id}/>)}
-
-                </div>
-            </CSSTransition>
-            <button
-                className={[
-                    "new-task-priority-open-list-button",
-                    isPriorityListOpen ? "priority-list-button-active" : null,
-                ].join(" ")}
-                onClick={() => setIsPriorityListOpen(!isPriorityListOpen)}
-            >
-                <span
-                    className="fa fa-flag"
-                    style={{color: taskPriority ? `var(--color-priority-${taskPriority})` : "var(--color-icon)"}}
-                ></span>
-            </button>
-        </div>
+        <SelectMenu
+            options={selectMenuOptions}
+            type="selectable-options"
+            customButtonIcon="fa fa-pennant"
+            activeOption={taskPriority}
+            setActiveOption={setTaskPriority}
+            customButtonIconColor={`var(${taskPriority ? `--color-priority-${taskPriority}` : "--color-icon"})`}
+        />
     );
 };
 

@@ -38,7 +38,7 @@ const reducer = (state = initState, action) => {
 };
 
 const setLabelDataReducer = (state, action) => {
-    const copyOfLabels = state.labels;
+    const copyOfLabels = [...state.labels];
     const labelIndex = copyOfLabels.findIndex(label => label.id === action.id);
 
     copyOfLabels[labelIndex].tasks = action.tasks;

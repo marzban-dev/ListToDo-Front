@@ -3,19 +3,5 @@
 
 .projects {
   height: 100%;
-  padding: 1rem 2rem;
-
-  .projects-list {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .projects-list-wrapper {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-  }
+  padding: 1rem;
 }

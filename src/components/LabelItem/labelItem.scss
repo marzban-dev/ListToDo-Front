@@ -1,0 +1,141 @@
+.label-item {
+  padding-right: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary-lighten);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  .label-item-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+  }
+
+  .label-item-shape {
+    transform: rotateZ(45deg);
+    position: absolute;
+    background-color: var(--color-primary-lighten);
+    transition: background-color 0.2s;
+
+    div {
+      background-color: var(--color-secondary);
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.label-item-disabled {
+  cursor: default;
+  background-color: var(--color-icon);
+
+  .label-item-shape {
+    background-color: var(--color-icon);
+  }
+
+  &:hover {
+    background-color: var(--color-icon) !important;
+
+    .label-item-shape {
+      background-color: var(--color-icon) !important;
+    }
+  }
+}
+
+.label-item-hover-effect {
+  &:hover {
+    background-color: var(--color-primary);
+
+    .label-item-shape {
+      background-color: var(--color-primary);
+    }
+  }
+}
+
+.label-item-size-sm {
+  padding-right: 0.5rem;
+  height: 20px;
+  border-radius: 2px 6px 6px 2px;
+
+  .label-item-title {
+    padding: 2px 2px 0 14px;
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .label-item-shape {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    left: -7px;
+
+    div {
+      width: 6px;
+      height: 6px;
+    }
+  }
+}
+
+.label-item-size-md {
+  padding-right: 0.75rem;
+  height: 28px;
+  border-radius: 2px 8px 8px 2px;
+
+  .label-item-title {
+    padding: 2px 2px 0 16px;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .label-item-shape {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    left: -11px;
+
+    div {
+      width: 8px;
+      height: 8px;
+    }
+  }
+}
+
+//.label-item-size-lg {
+//  height: 28px;
+//  border-radius: 2px 8px 8px 2px;
+//
+//  .label-item-title {
+//    padding: 2px 2px 0 16px;
+//
+//    span {
+//      font-size: 14px;
+//    }
+//  }
+//
+//  .label-item-shape {
+//    width: 24px;
+//    height: 24px;
+//    border-radius: 7px;
+//    left: -11px;
+//
+//    div {
+//      width: 8px;
+//      height: 8px;
+//    }
+//  }
+//}

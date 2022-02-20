@@ -3,9 +3,11 @@
 
 .labels-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
 
   .labels {
     @include reset_scrollbar();
@@ -13,9 +15,8 @@
     justify-content: flex-start;
     align-items: flex-start;
     overflow-x: scroll;
-    width: 100%;
     margin-top: 2rem;
-      height: 100px;
+    height: 100px;
 
     .create-input-container {
       margin: 0 2.5rem 0 2rem;

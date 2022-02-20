@@ -10,7 +10,7 @@
   }
 }
 
-.loading-screen{
+.loading-screen {
   width: 100%;
   height: calc(100vh - 72px);
   background-color: var(--color-loading-screen-bg);
@@ -18,8 +18,22 @@
   justify-content: center;
   align-items: center;
 
-  span {
-    font-size: 50px;
-    color: var(--color-loading-screen-spinner);
+  .loading-screen-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    span {
+      font-size: 50px;
+      color: var(--color-loading-screen-spinner);
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: var(--color-text);
+      font-size: 22px;
+      margin-top: 0.75rem;
+    }
   }
 }

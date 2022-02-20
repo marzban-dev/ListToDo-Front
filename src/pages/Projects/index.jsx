@@ -1,65 +1,47 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {arrayMoveImmutable} from "array-move";
-import {useDispatch, useSelector} from "react-redux";
-import {checkUser} from "store/actions/Auth.actions";
-import {fetchAllProjects, setProjects, updateProjectPosition} from "store/actions/Projects.actions";
-import FilterBox from "components/FilterBox";
-import SortableProjectsWrapper from "./SortableProjectsWrapper";
+import {setProjects, updateProjectPosition} from "store/actions/Projects.actions";
 import FloatButton from "components/UI/FloatButton";
-import LoadingScreen from "components/UI/LoadingScreen";
 import PageContainer from "components/UI/PageContainer";
+import {useQueryClient} from "react-query";
+import {useDispatch} from "react-redux";
+import ShowProjects from "components/ShowProjects";
+import LoadingWrapper from "components/UI/LoadingWrapper";
 import "./projects.scss";
 
 const Projects = () => {
     const dispatch = useDispatch();
-    const projects = useSelector((state) => state.projects.all);
-    const isProjectsLoading = useSelector((state) => state.projects.isLoading);
-    const isUserAuthLoading = useSelector((state) => state.auth.isLoading);
-    const [viewMode, setViewMode] = useState("table");
-
-    useEffect(() => {
-        const fn = async () => {
-            try {
-                await dispatch(checkUser())
-                await dispatch(fetchAllProjects());
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fn();
-    }, []);
+    const queryClient = useQueryClient();
+    const [viewMode, setViewMode] = useState('table');
+    const inboxProject = queryClient.getQueryData('inbox-project');
+    const projects = queryClient.getQueryData(['projects', inboxProject?.id]);
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         const returnedItems = arrayMoveImmutable(projects, oldIndex, newIndex);
-        console.log(oldIndex, newIndex);
         dispatch(updateProjectPosition(projects[oldIndex].id, newIndex + 1));
         dispatch(setProjects(returnedItems));
     };
 
     const renderProjects = () => {
-        console.log(isProjectsLoading, isUserAuthLoading);
-        if (!isProjectsLoading && !isUserAuthLoading) {
-            return (
+        return (
+
                 <PageContainer widthPadding>
                     <div className="projects col-12">
-                        <FilterBox viewMode={viewMode} setViewMode={setViewMode}/>
-                        <div className="projects-list">
-                            {projects !== null ? (
-                                <SortableProjectsWrapper
+                        <LoadingWrapper show={!!projects} type="circle" size="lg">
+                            {projects && (
+                                <ShowProjects
                                     onSortEnd={onSortEnd}
                                     projects={projects}
                                     useDragHandle
                                     axis="xy"
                                 />
-                            ) : null}
-                        </div>
-                        <FloatButton float="r" iconClass="far fa-plus"/>
+                            )}
+                        </LoadingWrapper>
+                        <FloatButton float="r" iconClass="far fa-plus" onClick={() => alert('New Project')}/>
                     </div>
                 </PageContainer>
-            );
-        } else {
-            return <LoadingScreen/>;
-        }
+
+        );
     };
 
     return (renderProjects());

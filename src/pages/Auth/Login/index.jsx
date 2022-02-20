@@ -2,40 +2,41 @@
 import React, {useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
-import {loginUser} from "store/actions/Auth.actions";
-import {fetchData} from "store/actions/Main.actions";
+import {useLoginQuery} from "hooks/useAuth";
+import {useQueryClient} from "react-query";
+import {check} from "apis/auth.api";
 import "../form.scss";
 
 const login = () => {
-    const dispatch = useDispatch();
-    const isLoading = useSelector((state) => state.auth.isLoading);
+    const queryClient = useQueryClient();
     const [isLoggedIn, setIsLoggedIn] = useState(0);
     const [ServerErrorMessage, setServerErrorMessage] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
-
     const {
         register,
         handleSubmit,
         formState: {errors},
     } = useForm({mode: "onChange"});
 
+    const {mutateAsync: loginUser, isLoading} = useLoginQuery();
+
     const handleLogin = async (data) => {
         try {
-            await dispatch(loginUser(data.username, data.password));
+            await loginUser({username: data.username, password: data.password});
+
+            const user = await check();
+
+            queryClient.setQueryData('user', user);
 
             setIsLoggedIn(1);
 
             const fromLocation = location.state ? location.state.from : null;
 
-            setTimeout(
-                async () => {
-                    await dispatch(fetchData())
-                    fromLocation ? navigate(fromLocation.pathname) : navigate("/")
-                },
-                1000
-            );
+            setTimeout(() => {
+                fromLocation ? navigate(fromLocation.pathname) : navigate("/")
+            }, 1200);
+
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setServerErrorMessage(error.response.data.detail);
@@ -45,9 +46,6 @@ const login = () => {
             }
             setIsLoggedIn(-1);
         }
-    };
-
-    const handleErrors = (e) => {
     };
 
     const loginFormOptions = {
@@ -64,7 +62,7 @@ const login = () => {
     return (
         <main className="auth-form">
             <form
-                onSubmit={handleSubmit(handleLogin, handleErrors)}
+                onSubmit={handleSubmit(handleLogin)}
                 className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
             >
                 <div

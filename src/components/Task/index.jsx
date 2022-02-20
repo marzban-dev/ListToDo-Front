@@ -1,110 +1,115 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {deleteTask, fetchTasks, updateTask} from "store/actions/ApiCalls.actions";
-import {setData} from "store/actions/Main.actions";
 import {useLocation, useNavigate} from "react-router-dom";
-import {SortableElement} from "react-sortable-hoc";
-import Spinner from "components/UI/Spinner";
 import ReactTooltip from "react-tooltip";
-import CalculateRemainingTime from "Utils/CalculateRemainingTime";
+import {CalculateRemainingTime, ConvertToHumanReadableDate} from "Utils/DateHelpers";
 import DragHandler from "components/UI/DragHandler";
 import catchAsync from "Utils/CatchAsync";
+import {SortableElement} from "react-sortable-hoc";
+import {useDeleteTaskQuery, useUpdateTaskQuery} from "hooks/useTasksData";
+import SelectMenu from "components/UI/SelectMenu";
+import Member from "components/Member";
 import "./task.scss";
 
-const Task = ({task}) => {
+export const Task = ({task, dragHandlerIcon = true}) => {
         const dispatch = useDispatch();
         const navigate = useNavigate();
         const location = useLocation();
         const [isTaskChecked, setIsTaskChecked] = useState(false);
+        const {mutateAsync: deleteTask} = useDeleteTaskQuery(
+            task.task ? task.task : task.section.id,
+            !!task.task
+        );
+        const {mutateAsync: updateTask} = useUpdateTaskQuery(
+            task.id,
+            task.task ? task.task : task.section.id,
+            !!task.task
+        );
 
         const completeTaskHandler = catchAsync(async () => {
             setIsTaskChecked(true);
-
-            await dispatch(updateTask(task.id, {completed: true}));
-
-            dispatch(setData({
-                modify: {
-                    type: 'task',
-                    part: 'projects',
-                    id: task.id,
-                    key: 'id',
-                    data: {completed: true},
-                    nestedProperties: ['projects', 'sections', 'tasks']
-                }
-            }));
+            setTimeout(async () => {
+                await updateTask({id: task.id, data: {completed: true}});
+            }, 1000);
         }, {
-            onLoad: "Updating task",
-            onSuccess: "Task completed",
-            onError: "Update task failed",
+            onLoad: `Completing task ${task.title}`,
+            onSuccess: `Task ${task.title} Completed`,
+            onError: `Completing task ${task.title} failed`
         }, () => setIsTaskChecked(false));
 
-        const [isSubTasksLoading, setIsSubTasksLoading] = useState(false);
-
-        const showSubTasks = catchAsync(async () => {
-            if (task.tasks === null) {
-                setIsSubTasksLoading(true);
-
-                const subTasks = await dispatch(fetchTasks({task: task.id}));
-
-                dispatch(setData({
-                    modify: {
-                        type: 'task',
-                        part: 'projects',
-                        id: task.id,
-                        key: 'id',
-                        data: {tasks: subTasks},
-                        nestedProperties: ['projects', 'sections', 'tasks']
-                    }
-                }));
-
-                setIsSubTasksLoading(false);
-            }
-            navigate('/tasks/subtasks', {state: {previousPath: location.pathname, parentTask: task}})
-        });
-
-        const DeleteTask = catchAsync(async () => {
-            await dispatch(deleteTask(task.id));
-
-            dispatch(setData({
-                modify: {
-                    type: 'task',
-                    part: 'projects',
-                    id: task.id,
-                    key: 'id',
-                    nestedProperties: ['projects', 'sections', 'tasks'],
-                    deleteMatchedItem: true
-                }
-            }));
-
+        const deleteTaskHandler = catchAsync(async () => {
+            await deleteTask(task.id);
         }, {
-            onLoad: "Deleting task",
-            onSuccess: "Task deleted",
-            onError: "Deleting task failed"
+            onLoad: `Deleting task ${task.title}`,
+            onSuccess: `Task ${task.title} deleted`,
+            onError: `Deleting task ${task.title} failed`
         });
+
+        // const [isSubTasksLoading, setIsSubTasksLoading] = useState(false);
+
+        // const showSubTasks = catchAsync(async () => {
+        //     if (task.tasks === null) {
+        //         setIsSubTasksLoading(true);
+        //
+        //         const subTasks = await dispatch(fetchTasks({task: task.id}));
+        //
+        //         dispatch(setData({
+        //             modify: {
+        //                 type: 'task',
+        //                 part: 'projects',
+        //                 id: task.id,
+        //                 key: 'id',
+        //                 data: {tasks: subTasks},
+        //                 nestedProperties: ['projects', 'sections', 'tasks']
+        //             }
+        //         }));
+        //
+        //         setIsSubTasksLoading(false);
+        //     }
+        //     navigate('/tasks/subtasks', {state: {previousPath: location.pathname, parentTask: task}})
+        // });
 
         const [isDeadLineActive, setIsDeadLineActive] = useState(false);
 
         useEffect(() => {
             if (task.schedule) {
-                const remainingTime = CalculateRemainingTime(task.created, task.schedule);
-                setIsDeadLineActive(remainingTime)
+                const {remaining, total} = CalculateRemainingTime(task.created, task.schedule);
+                const readableDate = ConvertToHumanReadableDate(remaining);
 
-                setInterval(() => {
-                    const remainingTime = CalculateRemainingTime(task.created, task.schedule);
-                    setIsDeadLineActive(remainingTime)
-                }, 60000)
+                if (remaining <= Math.floor(total / 5)) {
+                    setIsDeadLineActive(readableDate);
+                } else {
+                    setIsDeadLineActive(true);
+                }
             }
-        }, [])
+        }, []);
 
         const [isMouseDown, setIsMouseDown] = useState(false);
+
+        const selectMenuOptions = [
+            {
+                iconClass: "far fa-pen",
+                text: "Edit",
+                action: () => {
+                    navigate(`update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`)
+                }
+            },
+            {
+                iconClass: "far fa-trash-alt",
+                text: "Delete",
+                action: deleteTaskHandler,
+                yesNoQAlert: "Are you sure to delete this task ?",
+                color: "danger"
+            }
+        ]
 
         return (
             <div
                 className={["task", isDeadLineActive ? "task-deadline-warning-active" : null].join(' ')}
-                // style={{backgroundColor : task.color ? `var(--color-priority-${task.color})` : null}}
+                style={task.color ? {backgroundColor: `var(--color-${task.color})`} : null}
             >
                 <div className="task-input">
-                    <DragHandler/>
+                    {dragHandlerIcon ? <DragHandler/> : null}
                     <input
                         type="checkbox"
                         id={`task-radio-btn-${task.id}`}
@@ -129,38 +134,28 @@ const Task = ({task}) => {
                     <span className="task-input-title">{task.title}</span>
                 </div>
                 <div className="task-info">
+                    {isDeadLineActive && (
+                        <div className="task-info-deadline-warning" data-tip={isDeadLineActive}>
+                            <span className="far fa-alarm-exclamation"></span>
+                        </div>
+                    )}
 
-                    {isDeadLineActive ? (
-                        <>
-                            <ReactTooltip/>
-                            <div className="task-info-item task-info-deadline-warning" data-tip={isDeadLineActive}>
-                                <span className="far fa-exclamation-circle"></span>
-                            </div>
-                        </>
-                    ) : null}
+                    <ReactTooltip/>
+                    {task.assignee && (
+                        <Member
+                            picture={task.assignee.profile_img}
+                            name={task.assignee.username}
+                            widthSize="26px"
+                            style={{marginLeft: "14px"}}
+                        />
+                    )}
 
-                    <button
-                        className="task-info-item task-info-sub-tasks"
-                        onClick={!isSubTasksLoading ? showSubTasks : null}
-                    >
-                        {!isSubTasksLoading ? (
-                            <>
-                                <span className="far fa-code-merge"></span>
-                                <span className="sub-tasks-count">5</span>
-                            </>
-                        ) : <Spinner type="circle" size="sm"/>}
-                    </button>
-
-                    <button
-                        className="task-info-item task-info-modify"
-                        onClick={() => navigate(`/tasks/modify/${task.id}`, {state: task})}
-                    >
-                        <span className="far fa-pen"></span>
-                    </button>
-
-                    <button className="task-info-item task-info-delete" onClick={DeleteTask}>
-                        <span className="far fa-trash-alt"></span>
-                    </button>
+                    <SelectMenu
+                        options={selectMenuOptions}
+                        type="executable-options"
+                        buttonAxis="v"
+                        style={{margin: "2px 4px 0 0"}}
+                    />
                 </div>
             </div>
         );

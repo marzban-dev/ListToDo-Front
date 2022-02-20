@@ -4,21 +4,22 @@
 .create-new-task-modal {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   padding: 1rem;
+  min-height: 300px;
 
   .create-new-task-head-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    overflow: hidden;
 
     .head-wrapper-separator {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-right: 1.25rem;
     }
 
     .title-input {
