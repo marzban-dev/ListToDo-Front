@@ -1,37 +1,43 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {CalculateRemainingTime, ConvertToHumanReadableDate} from "Utils/DateHelpers";
+import {CalculateRemainingTime, ConvertToHumanReadableDate} from "utils/DateHelpers";
 import "./scheduleProgressBar.scss";
 
 const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
     const [isDeadLineActive, setIsDeadLineActive] = useState(false);
     const [remainingTime, setRemainingTime] = useState("");
-    const [progressPercent, setProgressPercent] = useState(0);
+    const [passedTime, setPassedTime] = useState("");
+    const [progressPercent, setProgressPercent] = useState(5);
 
-    useEffect(() => {
-        const {remaining, total} = CalculateRemainingTime(createdTime, deadTime);
-        const readableDate = ConvertToHumanReadableDate(remaining);
-        setRemainingTime(readableDate);
+    const setScheduleProgress = () => {
+        const {remaining, total, passed} = CalculateRemainingTime(createdTime, deadTime);
 
-        const percent = Math.floor(100 - remaining / (total / 100));
-        if (percent > 0) setProgressPercent(percent);
-        else {
+        const {readableDate: readableRemainingDate, isLeft} = ConvertToHumanReadableDate(remaining);
+        if (isLeft) setRemainingTime(readableRemainingDate + " left");
+        else setRemainingTime("Finished " + readableRemainingDate + " ago");
+
+        const {readableDate: readablePassedDate} = ConvertToHumanReadableDate(passed);
+        setPassedTime(readablePassedDate + " passed");
+
+        const percent = Math.floor((100 - remaining / (total / 100)) * 100) / 100;
+
+        if (remaining > 0) {
+            if (percent > 5) setProgressPercent(percent)
+        } else {
             setProgressPercent(100);
             setIsDeadLineActive(true);
         }
-
-        setProgressPercent()
 
         if (remaining <= Math.floor(total / 5)) {
             setIsDeadLineActive(true);
         } else {
             setIsDeadLineActive(false);
         }
+    }
 
-        // setInterval(() => {
-        //     const remainingTime = CalculateRemainingTime(createdTime, deadTime);
-        //     setIsDeadLineActive(remainingTime)
-        // }, 60000)
+    useEffect(() => {
+        setScheduleProgress()
+        setInterval(setScheduleProgress, 1000)
     }, []);
 
     return (
@@ -53,8 +59,16 @@ const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
                     className={[
                         "schedule-progress-bar",
                         isDeadLineActive && "schedule-progress-bar-warning"
-                    ].join(' ')}>
-                    <div style={{width: progressPercent + "%"}} data-tip={remainingTime}></div>
+                    ].join(' ')}
+                    data-tip={passedTime}
+                    data-delay-update={1000}
+                    data-effect="solid"
+                >
+                    <div className="schedule-progress-bar-text">{remainingTime}</div>
+                    <div
+                        className="schedule-progress-bar-bar"
+                        style={{width: progressPercent + "%"}}
+                    ></div>
                 </div>
             </div>
         </div>

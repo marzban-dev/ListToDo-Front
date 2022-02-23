@@ -23,28 +23,40 @@
     }
 
     .schedule-progress-bar {
+      position: relative;
       background-color: var(--color-secondary-complement);
-      height: 10px;
-      border-radius: 10px;
+      height: 16px;
+      border-radius: 6px;
 
-      div {
-        background-color: var(--color-schedule-progress);
-        border-radius: 10px;
-        height: 10px;
-
-        &:hover {
+      &:hover {
+        .schedule-progress-bar-bar {
           background-color: var(--color-schedule-progress-hover);
         }
+      }
+
+      .schedule-progress-bar-text {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-55%);
+        font-size: 10px;
+        color: var(--color-text);
+        white-space: nowrap;
+      }
+
+      .schedule-progress-bar-bar {
+        background-color: var(--color-schedule-progress);
+        border-radius: 6px;
+        height: 16px;
       }
     }
   }
 
   .schedule-progress-bar-warning {
-    div {
-      background-color: var(--color-schedule-progress-warning);
+    .schedule-progress-bar-bar {
+      background-color: var(--color-schedule-progress-warning) !important;
 
       &:hover {
-        background-color: var(--color-schedule-progress-warning-hover);
+        background-color: var(--color-schedule-progress-warning-hover) !important;
       }
     }
   }
