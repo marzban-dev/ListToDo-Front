@@ -26,7 +26,8 @@ body[theme="dark"] {
   --color-task-checkbox: #363a42;
   --color-task-checkbox-border: #626d72;
   --color-task-checkbox-hover: #3e434b;
-  --color-task-deadline-warning-color: #c55b35;
+  --color-task-deadline-warning-color: #ce5a4b;
+  --color-task-bg-hover: #282f38;
 
   --color-label-chackbox-active: rgba(78, 204, 163, 0.2);
   --color-label-chackbox-hover: rgba(78, 204, 163, 0.1);
@@ -35,21 +36,22 @@ body[theme="dark"] {
   --color-labels-tab-bg-active: #3E5B59;
   --color-labels-tab-bg-hover: #3B4D50;
 
-  --color-project-bg : #232931;
-  --color-project-bg-hover : #282f38;
+  --color-project-bg: #232931;
+  --color-project-bg-hover-secondary: #282f38;
+  --color-project-bg-hover-secondary-complement: #434850;
 
-  --color-select-menu-bg : #282f38;
-  --color-select-menu-item-hover-bg : rgba(78, 204, 163, 0.1);
-  --color-select-menu-item-hover-icon : rgba(78, 204, 163, 0.64);
-  --color-select-menu-item-active-bg :  rgba(78, 204, 163, 0.2);
-  --color-select-menu-item-active-icon : #4ECCA3;
+  --color-select-menu-bg: #282f38;
+  --color-select-menu-item-hover-bg: rgba(78, 204, 163, 0.1);
+  --color-select-menu-item-hover-icon: rgba(78, 204, 163, 0.64);
+  --color-select-menu-item-active-bg: rgba(78, 204, 163, 0.2);
+  --color-select-menu-item-active-icon: #4ECCA3;
 
   --color-modal-input-bg: #393E46;
   --color-modal-input-bg-hover: #42474f;
   --color-modal-label-box-bg: #393E46;
 
-  --color-schedule-progress-warning: #af5332;
-  --color-schedule-progress-warning-hover: #de714b;
+  --color-schedule-progress-warning: #c94c3c;
+  --color-schedule-progress-warning-hover: #ce5a4b;
   --color-schedule-progress: #21b26f;
   --color-schedule-progress-hover: #30d789;
 
@@ -65,6 +67,12 @@ body[theme="dark"] {
   --color-4: #2A538F;
   --color-5: #6C4B32;
 
+  --color-hover-1: #715886;
+  --color-hover-2: #88414c;
+  --color-hover-3: #25644d;
+  --color-hover-4: #315ea1;
+  --color-hover-5: #79553a;
+
   --color-react-modal-container: #232931;
   --color-react-modal-overlay: rgba(14, 14, 14, 0.85);
 
@@ -74,4 +82,8 @@ body[theme="dark"] {
   --toastify-color-dark: #232931;
   --toastify-spinner-color: #616161;
   --toastify-spinner-color-empty-area: #e0e0e0;
+
+  --color-scrollbar-track: #232931;
+  --color-scrollbar-handle: #4e555e;
+  --color-scrollbar-handle-hover: #5b626b;
 }
