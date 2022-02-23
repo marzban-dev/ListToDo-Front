@@ -20,17 +20,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.scss";
 import "./assets/scss/theme/themes.scss";
 import "animate.css";
+import ReactTooltip from "react-tooltip";
 
 const App = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
+    useEffect(() => ReactTooltip.rebuild());
+
     Modal.setAppElement('body');
     dispatch(setAppTheme());
 
     const currentPath = location.pathname;
-    const {data: authedUser, isFetchedAfterMount: isUserFetched} = useCheckUserQuery();
+    const {data: authedUser} = useCheckUserQuery();
 
     useLabelsQuery({enabled: !!authedUser});
 
@@ -66,8 +69,10 @@ const App = () => {
                     isSideMenuOpen={isMobileSideMenuOpen}
                     setIsSideMenuOpen={setIsMobileSideMenuOpen}
                 /> : null}
-                {authedUser !== null ? (<AppRoutes loadPrivateRoutes={isInboxFetched}/>) : <LoadingScreen text="Authorizing"/>}
+                {authedUser !== null ? (<AppRoutes loadPrivateRoutes={isInboxFetched}/>) :
+                    <LoadingScreen text="Authorizing"/>}
             </div>
+            <ReactTooltip/>
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
         </div>
     );
