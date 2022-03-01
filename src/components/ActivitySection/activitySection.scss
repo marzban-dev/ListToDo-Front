@@ -1,0 +1,27 @@
+.activity-section {
+  border-left: 3px solid var(--color-secondary);
+  padding-bottom: 1.5rem;
+
+  &:first-child {
+    padding-top: 2rem;
+  }
+
+  .activity-section-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translateX(-7.5px);
+    span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+    }
+
+    h1 {
+      color: var(--color-text);
+      margin: 0 0 0 0.75rem;
+    }
+  }
+}
