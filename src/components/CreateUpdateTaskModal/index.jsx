@@ -7,7 +7,7 @@ import SelectColor from "./components/SelectColor";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {REACT_MODAL_OPTIONS} from "config";
 import Button from "components/UI/Button";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import {useCreateTaskQuery, useTaskQuery, useUpdateTaskQuery} from "hooks/useTasksData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import SelectAssignee from "components/CreateUpdateTaskModal/components/SelectAssignee";
@@ -60,11 +60,12 @@ export const CreateUpdateTaskModal = ({mode}) => {
         const dataObject = {
             title: taskTitle,
             description: taskDescription,
-            label: taskLabels,
+            label: taskLabels.map(lbl => lbl.id),
             priority: taskPriority,
             color: taskColor,
             schedule: taskSchedule,
-            assignee: taskAssignee
+            assignee: taskAssignee,
+            task: searchParams.get("isSubTask") === "true" ? parentId : null
         };
 
         if (mode === 'create') {
