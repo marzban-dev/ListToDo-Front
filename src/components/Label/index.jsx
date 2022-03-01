@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import {useDeleteLabelQuery, useLabelProjectsQuery, useLabelTasksQuery} from "hooks/useDetailsData";
 import "./label.scss";
 import SelectMenu from "components/UI/SelectMenu";

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import PageContainer from "components/UI/PageContainer";
 import CreateInput from "components/CreateInput";
 import Label from "components/Label";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import LabelTabs from "components/LabelTabs";
 import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import {useQueryClient} from "react-query";
@@ -45,7 +45,7 @@ const Labels = () => {
     return (
         <React.Fragment>
             <PageContainer>
-                <LoadingWrapper show={!!labels} type="circle" size="lg">
+                <LoadingWrapper show={labels} type="circle" size="lg">
                     <div className="labels-container">
                         <div className="labels">
                             <CreateInput

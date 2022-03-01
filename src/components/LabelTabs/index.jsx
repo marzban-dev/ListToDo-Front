@@ -43,14 +43,12 @@ const LabelTabs = ({selectedLabelId}) => {
                         <AnimatedPage>
                             <ListTab isEmpty={labelTasks?.length === 0} emptyListWarning="There is no any task">
                                 {!!labelTasks && (
-
                                     <ShowTasks
                                         onSortEnd={null}
                                         tasks={labelTasks}
                                         axis="xy"
                                         sortable={false}
                                     />
-
                                 )}
                             </ListTab>
                         </AnimatedPage>
