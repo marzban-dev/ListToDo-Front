@@ -1,6 +1,34 @@
 @import "assets/scss/variables";
 @import "assets/scss/mixins";
 
+* {
+  font-family: 'Sora', sans-serif;
+  font-weight: 300;
+}
+
+/* Scroll bar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-handle);
+  border-radius: 5px;
+  cursor: pointer !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-handle-hover);
+}
+
 body {
   @include reset_scrollbar();
   background-color: var(--color-page-container-bg);
@@ -9,6 +37,10 @@ body {
 .App {
   display: flex;
   justify-content: center;
+}
+
+.infinite-scroll-component  {
+  overflow: visible !important;
 }
 
 .width-minus-sidebar {
