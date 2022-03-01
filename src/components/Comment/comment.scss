@@ -1,0 +1,104 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.comment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+
+  .member {
+    @include box_shadow();
+    margin-right: 0.6rem;
+  }
+
+  .comment-box {
+    @import "src/assets/scss/variables";
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: var(--color-secondary);
+    border-radius: 15px;
+    width: fit-content;
+    padding: 0.5rem 0.75rem;
+
+    h4 {
+      padding: 0.25rem 0 0 0.25rem;
+      font-size: 16px;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+    }
+
+    p {
+      color: var(--color-text);
+      max-width: 800px;
+      line-height: 26px;
+      padding-left: 0.25rem;
+      white-space: pre-wrap;
+      word-wrap: anywhere;
+      font-size: 14px;
+      margin-bottom: 0.5rem;
+    }
+
+    .comment-box-data {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .comment-box-data-date {
+        font-size: 10px;
+        align-self: flex-end;
+        color: var(--color-icon-lighten);
+      }
+
+      .comment-box-data-attachment-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-primary);
+        font-size: 16px;
+        text-decoration: none;
+        margin-left: 0.5rem;
+        cursor: pointer;
+      }
+
+      .comment-box-data-delete-btn {
+        @include reset_input();
+        margin-left: 0.5rem;
+
+        &:hover {
+          span {
+            color: $red;
+          }
+        }
+
+        span {
+          color: var(--color-icon-lighten);
+        }
+      }
+    }
+  }
+}
+
+.comment-view-right {
+  justify-content: flex-end;
+
+  .member {
+    margin-left: 0.6rem;
+    margin-right: 0;
+  }
+
+  .comment-box {
+    background-color: var(--color-comment-client-bg);
+
+    p {
+      padding-right: 1rem;
+      padding-left: 0;
+    }
+
+    .comment-box-data {
+      align-self: flex-start;
+    }
+  }
+}

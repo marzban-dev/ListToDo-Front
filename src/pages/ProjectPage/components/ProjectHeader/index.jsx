@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectMenu from "components/UI/SelectMenu";
 import {useDeleteProjectQuery} from "hooks/useProjectsData";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import Members from "components/Members";
 import ScheduleProgressBar from "components/ScheduleProgressBar";
 import LabelItem from "components/LabelItem";
@@ -36,23 +36,6 @@ const ProjectHeader = ({project}) => {
         onError: `Deleting project ${project.title} failed`
     });
 
-    const selectMenuOptions = [
-        {
-            iconClass: "far fa-pen", text: "Edit", action: () => {
-            }
-        },
-        {
-            iconClass: "far fa-archive", text: "Archive", action: () => {
-            }
-        },
-        {
-            iconClass: "far fa-trash-alt",
-            text: "Delete",
-            action: deleteProjectHandler,
-            yesNoQAlert: "Are you sure to delete this project ?",
-            color: "danger"
-        }
-    ];
 
     const showProjectInviteSlug = () => {
 
@@ -75,6 +58,27 @@ const ProjectHeader = ({project}) => {
             closeButton: false
         });
     }
+
+    const selectMenuOptions = [
+        {
+            iconClass: "far fa-pen", text: "Edit", action: () => {
+            }
+        },
+        {
+            iconClass: "far fa-archive", text: "Archive", action: () => {
+            }
+        },
+        {
+            iconClass: "far fa-user", text: "Invite Link", action: showProjectInviteSlug
+        },
+        {
+            iconClass: "far fa-trash-alt",
+            text: "Delete",
+            action: deleteProjectHandler,
+            yesNoQAlert: "Are you sure to delete this project ?",
+            color: "danger"
+        }
+    ];
 
     const renderLabels = () => {
         const projectLabels = project.users.find(usr => usr.owner.id === user.id).label;
@@ -120,16 +124,6 @@ const ProjectHeader = ({project}) => {
                             gap={15}
                             members={project.users}
                         />
-                        <div className="project-invite-button-container">
-                            <Button
-                                className="project-invite-button"
-                                iconClass="far fa-user-plus"
-                                onClick={showProjectInviteSlug}
-                                size="xs"
-                                circleShape
-                                style={{width: "33px", height: "33px"}}
-                            />
-                        </div>
                     </div>
                 </div>
             </div>

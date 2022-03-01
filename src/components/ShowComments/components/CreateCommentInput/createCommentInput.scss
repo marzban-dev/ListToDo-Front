@@ -1,0 +1,75 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.create-comment-input {
+  transition: background-color 0.25s;
+  padding: 0.9rem 0.75rem;
+  background-color: var(--color-input-bg);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: flex-start;
+  width: 400px;
+  height: 68px;
+
+  &:hover,
+  &:focus-within {
+    background-color: var(--color-input-bg-hover);
+  }
+
+  textarea {
+    @include reset_input();
+    color: var(--color-input-text);
+    margin-left: 0.5rem;
+    padding: 0.5rem 0.75rem 0 0;
+    font-size: 18px;
+    resize: none;
+    height: 100%;
+    width: 280px;
+  }
+
+  .create-comment-input-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button, label {
+      @include reset_input();
+      padding: 0.5rem 0.5rem 0.25rem 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:disabled {
+        pointer-events: none;
+      }
+
+      &:hover {
+        span {
+          color: var(--color-primary);
+        }
+      }
+
+      span {
+        color: var(--color-icon);
+        font-size: 22px;
+        transition: color 0.25s;
+      }
+    }
+
+    .comment-attachment-preview {
+      span {
+        font-size: 24px;
+        color: var(--color-primary-lighten);
+      }
+
+      &:hover {
+        span {
+          color: $red;
+        }
+      }
+    }
+  }
+}

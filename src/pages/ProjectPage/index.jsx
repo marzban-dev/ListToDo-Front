@@ -29,11 +29,11 @@ const ProjectPage = () => {
     }
 
     return (
-            <PageContainer>
-                <div className="project-page-container">
-                    <LoadingWrapper show={!isProjectLoading} type="circle" size="lg" onLoaded={renderProject}/>
-                </div>
-            </PageContainer>
+        <PageContainer>
+            <div className="project-page-container">
+                <LoadingWrapper show={!isProjectLoading} type="circle" size="lg" onLoaded={renderProject}/>
+            </div>
+        </PageContainer>
     );
 }
 
