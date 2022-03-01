@@ -13,6 +13,13 @@ body[theme="dark"] {
   --color-text: #EEEEEE;
   --color-shadow: rgba(18, 20, 21, 0.5);
 
+  --auth-page-bg: url("../../img/form-background-dark.jpg");
+  --color-auth-form-input-line: #eeeeee3d;
+  --color-auth-form-input-line-error: #bd1616;
+  --color-auth-form-input-line-error-shadow: rgba(211, 51, 51, 0.534);
+  --color-auth-form-box-error: #b63737;
+  --color-auth-form-box-text-error: #b64a4a;
+
   --color-loading-screen-bg: #282f38;
   --color-loading-screen-spinner: #4ECCA3;
 
@@ -54,6 +61,12 @@ body[theme="dark"] {
   --color-schedule-progress-warning-hover: #ce5a4b;
   --color-schedule-progress: #21b26f;
   --color-schedule-progress-hover: #30d789;
+
+  --color-comment-client-bg : #416f64;
+
+  --color-activity-status-delete : #d03f4e;
+  --color-activity-status-create : #1c8858;
+  --color-activity-status-update : #2675e8;
 
   --color-priority-1: #BE79DE;
   --color-priority-2: #d03f4e;
