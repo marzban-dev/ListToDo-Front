@@ -1,20 +1,20 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://listtodo2030.pythonanywhere.com/",
+    baseURL: "https://listtodo2030.pythonanywhere.com/",
 });
 
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("AUTH_ACCESS_TOKEN");
+    const token = localStorage.getItem("AUTH_ACCESS_TOKEN");
 
-  const isRequestToSignupUrl =
-    config.url === `/auth/users/` && config.method === "post";
+    const isRequestToSignupUrl =
+        config.url === `/auth/users/` && config.method === "post";
 
-  if (!isRequestToSignupUrl) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+    if (!isRequestToSignupUrl) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
 
-  return config;
+    return config;
 });
 
 export default instance;
