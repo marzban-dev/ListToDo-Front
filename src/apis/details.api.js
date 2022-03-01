@@ -28,3 +28,39 @@ export const createLabel = async (title) => {
     const result = await axios.post("/label/", {title});
     return result.data;
 };
+
+export const changePosition = async ({id, newPosition, type}) => {
+    return await axios.post("/changeposition/", {
+        obj: id,
+        position: newPosition
+    }, {
+        params: {type},
+    });
+}
+
+export const fetchComments = async (id, task) => {
+    const result = await axios.get(`/comments/?project=${id}${task ? "&task=" + task : ""}&ordering=-created`);
+    return result.data.results;
+}
+
+export const createComment = async ({id, data, uploadProgressHandler}) => {
+    const result = await axios.post(`/project/${id}/comment/`, data, {
+        onUploadProgress: uploadProgressHandler
+    });
+    return result.data;
+}
+
+export const deleteComment = async (id) => {
+    const result = await axios.delete(`/comment/${id}`);
+    return result.data;
+}
+
+export const updateComment = async (id) => {
+    const result = await axios.patch(`/comment/${id}`);
+    return result.data;
+}
+
+export const fetchActivity = async ({pageParam = 1}) => {
+    const result = await axios.get(`/activity/?page=${pageParam}&ordering=-created`);
+    return result.data.results;
+}

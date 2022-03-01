@@ -33,12 +33,3 @@ export const leaveProject = async (id) => {
     const result = await axios.post(`/project/${id}/leave/`);
     return result.data;
 }
-
-// export const changeProjectPosition = async (id,newPos) => {
-//     return await axios.post("/changeposition/", {
-//         obj: itemId,
-//         position: newPosition
-//     }, {
-//         params: {type: itemType},
-//     });
-// }

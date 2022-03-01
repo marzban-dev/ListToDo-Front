@@ -1,15 +1,15 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {createTask, deleteTask, fetchTask, fetchTasks, updateTask} from "apis/tasks.api";
 
-export const useTasksQuery = (id, isSubTask) => {
+export const useTasksQuery = (id, isSubTask, options) => {
     return useQuery(
-        [isSubTask ? "sub-tasks" : "section-tasks", id],
+        [isSubTask ? "sub-tasks" : "section-tasks", Number(id)],
         () => fetchTasks({
             section: !isSubTask ? id : null,
             task: isSubTask ? id : null,
             task__isnull: !isSubTask
         }),
-        {initialData: null}
+        {initialData: null, ...options}
     );
 };
 
@@ -27,7 +27,10 @@ export const useCreateTaskQuery = (parentId, isSubTask) => {
 
     return useMutation(createTask, {
         onSuccess: (createdTask) => {
-            queryClient.setQueryData(key, oldTasks => [...oldTasks, createdTask])
+            queryClient.setQueryData(key, oldTasks => {
+                console.log(oldTasks);
+                return [...oldTasks, createdTask];
+            })
         }
     });
 };

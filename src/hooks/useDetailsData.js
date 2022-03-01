@@ -1,5 +1,13 @@
-import {useMutation, useQuery, useQueryClient} from "react-query";
-import {createLabel, deleteLabel, fetchLabelProjects, fetchLabels, fetchLabelTasks} from "apis/details.api";
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from "react-query";
+import {
+    changePosition,
+    createLabel,
+    deleteLabel,
+    fetchActivity,
+    fetchLabelProjects,
+    fetchLabels,
+    fetchLabelTasks
+} from "apis/details.api";
 
 export const useLabelsQuery = (options) => {
     return useQuery(
@@ -94,3 +102,32 @@ export const useDeleteLabelQuery = () => {
         }
     });
 };
+
+export const useChangePositionQuery = (key) => {
+    const queryClient = useQueryClient();
+
+    return useMutation(changePosition, {
+        onMutate: async ({list}) => {
+            await queryClient.cancelQueries(key);
+            const previousData = queryClient.getQueryData(key);
+            queryClient.setQueryData(key, list);
+            return {previousData};
+        },
+        onError: (_error, _newLabel, context) => {
+            queryClient.setQueryData(key, context.previousLabelsData)
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries(key);
+        }
+    });
+}
+
+export const useActivityQuery = (page) => {
+    const queryClient = useQueryClient();
+
+    return useInfiniteQuery(['activities'], fetchActivity, {
+        getNextPageParam: (_lastPage, pages) => {
+            return pages.length + 1;
+        }
+    });
+}
