@@ -1,5 +1,5 @@
 import * as Acts from "store/actions/Main.actions";
-import {FindAndUpdateProperties} from "Utils/HelperFunctionsForObjects";
+import {FindAndUpdateProperties} from "utils/HelperFunctionsForObjects";
 import {produce} from "immer";
 import {SKELETON_OPTIONS, TOASTIFY_OPTIONS} from "config";
 

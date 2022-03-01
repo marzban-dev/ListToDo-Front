@@ -1,6 +1,4 @@
 import {fetchLabels, fetchLabelTreeData, fetchProjects} from "./ApiCalls.actions";
-import axios from "axios.instance";
-import sortListItems from "Utils/SortListItems";
 
 export const START_FETCH_DATA = "START_FETCH_DATA";
 export const FINISH_FETCH_DATA = "FINISH_FETCH_DATA";
@@ -66,61 +64,61 @@ export const fetchData = () => {
  *  @param {number} newIndex
  *  @param {Array} list - a list that needs to be changed
  * **/
-
-export const changePosition = (parentType, itemType, containerName, id, oldIndex, newIndex, list) => {
-    return async (dispatch) => {
-        try {
-            let copyOfList = [...list];
-            const oldPosition = copyOfList[oldIndex].position;
-            const newPosition = copyOfList[newIndex].position;
-            const itemId = copyOfList[oldIndex].id;
-
-            if (oldPosition > newPosition) {
-                const start = newPosition;
-                const finish = oldPosition - 1;
-                copyOfList.forEach((task, index) => {
-                    if (task.position >= start && task.position <= finish) {
-                        copyOfList[index] = {...copyOfList[index], position: task.position + 1};
-                    }
-                })
-            } else {
-                const start = oldPosition + 1;
-                const finish = newPosition;
-                copyOfList.forEach((task, index) => {
-                    if (task.position >= start && task.position <= finish) {
-                        copyOfList[index] = {...copyOfList[index], position: task.position - 1};
-                    }
-                })
-            }
-
-            copyOfList[oldIndex] = {...copyOfList[oldIndex], position: newPosition};
-
-            const sortedList = sortListItems(copyOfList);
-
-            const data = {};
-            data[containerName] = sortedList;
-
-            dispatch(setData({
-                modify: {
-                    type: parentType,
-                    part: 'projects',
-                    id,
-                    key: 'id',
-                    data,
-                    nestedProperties: ['projects', 'sections', 'tasks'],
-                    compareDeepChanges: false
-                }
-            }));
-
-            await axios.post("/changeposition/", {
-                obj: itemId,
-                position: newPosition
-            }, {
-                params: {type: itemType},
-            });
-
-        } catch (error) {
-            throw error;
-        }
-    };
-};
+//
+// export const changePosition = (parentType, itemType, containerName, id, oldIndex, newIndex, list) => {
+//     return async (dispatch) => {
+//         try {
+//             let copyOfList = [...list];
+//             const oldPosition = copyOfList[oldIndex].position;
+//             const newPosition = copyOfList[newIndex].position;
+//             const itemId = copyOfList[oldIndex].id;
+//
+//             if (oldPosition > newPosition) {
+//                 const start = newPosition;
+//                 const finish = oldPosition - 1;
+//                 copyOfList.forEach((task, index) => {
+//                     if (task.position >= start && task.position <= finish) {
+//                         copyOfList[index] = {...copyOfList[index], position: task.position + 1};
+//                     }
+//                 })
+//             } else {
+//                 const start = oldPosition + 1;
+//                 const finish = newPosition;
+//                 copyOfList.forEach((task, index) => {
+//                     if (task.position >= start && task.position <= finish) {
+//                         copyOfList[index] = {...copyOfList[index], position: task.position - 1};
+//                     }
+//                 })
+//             }
+//
+//             copyOfList[oldIndex] = {...copyOfList[oldIndex], position: newPosition};
+//
+//             const sortedList = sortListItems(copyOfList);
+//
+//             const data = {};
+//             data[containerName] = sortedList;
+//
+//             dispatch(setData({
+//                 modify: {
+//                     type: parentType,
+//                     part: 'projects',
+//                     id,
+//                     key: 'id',
+//                     data,
+//                     nestedProperties: ['projects', 'sections', 'tasks'],
+//                     compareDeepChanges: false
+//                 }
+//             }));
+//
+//             await axios.post("/changeposition/", {
+//                 obj: itemId,
+//                 position: newPosition
+//             }, {
+//                 params: {type: itemType},
+//             });
+//
+//         } catch (error) {
+//             throw error;
+//         }
+//     };
+// };

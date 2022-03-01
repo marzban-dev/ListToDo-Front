@@ -17,11 +17,10 @@ export const CalculateRemainingTime = (createdDate, completionDate) => {
 }
 
 export const ConvertToHumanReadableDate = (dateTime) => {
-    const duration = Duration.fromMillis(dateTime).shiftTo('months', 'days', 'hours', 'minutes', 'seconds', 'milliseconds').toObject()
+    const duration = Duration.fromMillis(dateTime).shiftTo('days', 'hours', 'minutes', 'seconds', 'milliseconds').toObject()
 
     let readableDate = "";
-    if (duration.months !== 0) readableDate += `${Math.abs(duration.months)}month/`;
-    if (duration.days !== 0) readableDate += `${Math.abs(duration.days)}day & `;
+    if (duration.days !== 0) readableDate += `${Math.abs(duration.days)} day and `;
     if (duration.hours !== 0) readableDate += `${Math.abs(duration.hours)} : `;
     if (duration.minutes !== 0) readableDate += `${Math.abs(duration.minutes)} : `;
     readableDate += `${Math.abs(duration.seconds)}`;
