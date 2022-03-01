@@ -6,7 +6,6 @@
 }
 
 .task {
-  background-color: var(--color-secondary);
   border-radius: 15px;
   width: 100%;
   height: 45px;
@@ -14,6 +13,12 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
+  cursor: pointer;
+  background-color: var(--color-secondary);
+
+  &:hover {
+    background-color: var(--color-project-bg-hover-secondary);
+  }
 
   .task-input {
     padding: 0.75rem 3rem 0.6rem 0.75rem;
@@ -22,7 +27,7 @@
     align-items: center;
     width: 60%;
 
-    .drag-handler{
+    .drag-handler {
       padding-right: 0.75rem;
     }
 
@@ -34,49 +39,6 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-
-    .task-input-checkbox-label {
-      width: 23px;
-      height: 23px;
-      border-radius: 50%;
-      background-color: var(--color-task-checkbox);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background-color 0.25s, transform 0.1s;
-      cursor: pointer;
-      border: 3px solid var(--color-task-checkbox-border);
-
-      &:hover {
-        background-color: var(--color-task-checkbox-hover);
-
-        span {
-          color: var(--color-task-checkbox-hover);
-        }
-      }
-
-      span {
-        opacity: 0;
-        font-size: 15px;
-        transform: translateY(1px);
-        transition: color 0.25s;
-      }
-    }
-
-    .task-input-checkbox-label-active {
-      background-color: var(--color-primary) !important;
-      border-color: transparent !important;
-
-      span {
-        color: var(--color-secondary-complement) !important;
-        opacity: 1;
-      }
-    }
-
-    .task-input-checkbox-label-mouse-down {
-      transform: scale(0.95);
-    }
-
   }
 
   .task-info {
@@ -100,6 +62,24 @@
         margin-top: 4px;
         font-size: 20px;
       }
+    }
+  }
+}
+
+.task-color-secondary {
+  background-color: var(--color-secondary-complement);
+
+  &:hover {
+    background-color: var(--color-project-bg-hover-secondary-complement);
+  }
+}
+
+@for $i from 1 to 5 {
+  .task-bg-color-#{$i} {
+    background-color: var(--color-#{$i}) !important;
+
+    &:hover {
+      background-color: var(--color-hover-#{$i}) !important;
     }
   }
 }
