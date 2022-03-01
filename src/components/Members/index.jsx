@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import ReactTooltip from "react-tooltip";
 import Member from "components/Member";
 import "./members.scss";
 
@@ -46,7 +45,6 @@ const Members =
 
         return (
             <div className="members" style={{flexDirection: axis === "l" ? "row-reverse" : "row"}}>
-                <ReactTooltip/>
                 {renderMembers()}
                 {
                     members.length - limit > 0 && (
