@@ -4,7 +4,9 @@ import {useNavigate} from "react-router";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import ProfilePicture from "components/UI/ProfilePicture";
 import {useQueryClient,} from "react-query";
+import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
 import "./header.scss";
+import NetworkStatus from "components/UI/NetworkStatus";
 
 const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
     const queryClient = useQueryClient();
@@ -27,7 +29,7 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                         <span className="far fa-bars"></span>
                     </button>
                 }
-                <h3 className="header-title">{title.charAt(0).toUpperCase() + title.slice(1)}</h3>
+                <h3 className="header-title">{UpperCaseFirstLetter(title)}</h3>
             </div>
 
             <LoadingWrapper
@@ -41,6 +43,9 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                 size="sm"
             >
                 <div className="header-user-data col-3">
+
+                    <NetworkStatus/>
+
                     {user === undefined ?
                         <div className="header-auth">
                             <Link to="/login">

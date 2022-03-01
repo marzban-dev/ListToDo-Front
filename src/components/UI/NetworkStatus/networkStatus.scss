@@ -1,0 +1,59 @@
+@import "src/assets/scss/variables";
+
+.network-status-container {
+  span {
+    color: orange;
+    font-size: 24px;
+    transform: translateY(1.5px);
+    margin-right: 0.5rem;
+    transition: color 0.25s;
+  }
+}
+
+@keyframes networkWarningFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes networkWarningFadeOut {
+  0% {
+    opacity: 1;
+    color: $green;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    color: $green;
+    transform: translateY(5px);
+  }
+}
+
+.network-warning-fade-enter {
+  animation-name: networkWarningFadeIn;
+  animation-duration: 350ms;
+  animation-iteration-count: 1;
+}
+
+.network-warning-fade-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.network-warning-fade-exit {
+  animation-name: networkWarningFadeOut;
+  animation-duration: 350ms;
+  animation-iteration-count: 1;
+}
+
+.network-warning-fade-exit-active {
+  opacity: 0;
+  transform: translateY(5px);
+}
