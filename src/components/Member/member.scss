@@ -4,6 +4,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 20px;
+  height: 20px;
 
   &:last-child {
     margin-left: 0;
@@ -32,6 +34,7 @@
 
 .member-hover-effect {
   border: 2px solid transparent;
+
   &:hover {
     border-color: var(--color-primary-transparentize);
   }
