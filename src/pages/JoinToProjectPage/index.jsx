@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import PageContainer from "components/UI/PageContainer";
 import {useJoinToProjectQuery} from "hooks/useProjectsData";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import Spinner from "components/UI/Spinner";
 import "./joinToProjectPage.scss";
 
