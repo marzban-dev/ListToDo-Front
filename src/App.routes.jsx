@@ -1,8 +1,8 @@
 import React from "react";
 import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Auth/Login";
-import Signup from "pages/Auth/Signup";
+import Login from "pages/LoginPage";
+import Signup from "pages/SignupPage";
 import Projects from "pages/Projects";
 import CreateUpdateTaskModal from "./components/CreateUpdateTaskModal";
 import Settings from "./pages/Settings";
@@ -14,6 +14,8 @@ import {useQueryClient} from "react-query";
 import JoinToProjectPage from "pages/JoinToProjectPage";
 import {AnimatePresence} from "framer-motion/dist/framer-motion";
 import NotFoundPage from "pages/NotFoundPage";
+import ShowTask from "components/ShowTask";
+import ActivityPage from "pages/ActivityPage";
 
 const AppRoutes = ({loadPrivateRoutes}) => {
     const queryClient = useQueryClient();
@@ -25,14 +27,17 @@ const AppRoutes = ({loadPrivateRoutes}) => {
             <Route path="/tasks" element={<RequireAuth><Tasks project={projectInbox}/></RequireAuth>}>
                 <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
                 <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+                <Route path="task/:taskId" element={<ShowTask />}/>
             </Route>
             <Route path="/projects" element={<RequireAuth><Projects/></RequireAuth>}>
                 <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
                 <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+                <Route path="task/:taskId" element={<ShowTask />} />
             </Route>
             <Route path="/project/:id/:parentId" element={<RequireAuth><ProjectPage/></RequireAuth>}>
                 <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
                 <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+                <Route path="task/:taskId" element={<ShowTask />}/>
             </Route>
             <Route path="/settings" element={<RequireAuth><Settings/></RequireAuth>}/>
             <Route path="/labels">
@@ -40,8 +45,10 @@ const AppRoutes = ({loadPrivateRoutes}) => {
                 <Route path="" element={<RequireAuth><Labels/></RequireAuth>}/>
                 <Route path="create-task/:sectionId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="create"/>}/>
                 <Route path="update-task/:taskId/:parentId/:projectId" element={<CreateUpdateTaskModal mode="modify"/>}/>
+                <Route path="task/:taskId" element={<ShowTask />} />
             </Route>
             <Route exact path="/join-to-project/:inviteSlug" element={<RequireAuth><JoinToProjectPage/></RequireAuth>}/>
+            <Route exact path="/activity" element={<RequireAuth><ActivityPage/></RequireAuth>} />
         </React.Fragment>
     );
 
