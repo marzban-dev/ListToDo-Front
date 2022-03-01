@@ -7,6 +7,7 @@ import ChangeProfileModal from "components/ChangeProfileModal";
 import {useQueryClient} from "react-query";
 import {useUpdateSettingsQuery} from "hooks/useAuth";
 import "./profile.scss";
+import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
 
 const Profile = () => {
     const queryClient = useQueryClient();
@@ -67,7 +68,7 @@ const Profile = () => {
                 />
 
                 <div className="profile-name">
-                    {username ? username.charAt(0).toUpperCase() + username.slice(1) : 'Please Login'}
+                    {username ? UpperCaseFirstLetter(username) : 'Please Login'}
                 </div>
             </div>
 
