@@ -46,6 +46,10 @@
 
     ul {
       @include reset_list();
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
 
       .select-menu-item {
         margin-bottom: 0.25rem;

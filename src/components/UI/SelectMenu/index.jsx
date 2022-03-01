@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {CSSTransition} from "react-transition-group";
-import isOutOfViewport from "Utils/IsOutOfViewPort";
+import isOutOfViewport from "utils/IsOutOfViewPort";
 import "./selecMenu.scss";
 
 const SelectMenu =
@@ -45,15 +45,16 @@ const SelectMenu =
             });
         }
 
-        const onClickHandler = (disabled, yesNoQAlert, action, value) => {
-            if (!disabled) {
+        const onClickHandler = (e, option) => {
+            e.stopPropagation();
+            if (!option.disabled) {
                 if (type === "selectable-options") {
-                    setActiveOption(value)
+                    setActiveOption(option.value)
                 } else {
-                    if (yesNoQAlert) {
-                        const result = window.confirm(yesNoQAlert);
-                        if (result) action();
-                    } else action();
+                    if (option.yesNoQAlert) {
+                        const result = window.confirm(option.yesNoQAlert);
+                        if (result) option.action();
+                    } else option.action();
                 }
             }
         }
@@ -62,7 +63,10 @@ const SelectMenu =
             <div className="select-menu" onBlur={closeMenu} style={style}>
                 <button
                     className="select-menu-button"
-                    onClick={() => setIsSelectMenuOpen(!isSelectMenuOpen)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setIsSelectMenuOpen(!isSelectMenuOpen)
+                    }}
                 >
                     {CustomButtonComponent ? CustomButtonComponent : (
                         <span
@@ -85,41 +89,29 @@ const SelectMenu =
                     <div className="select-menu-box" tabIndex="0" ref={selectMenuElement}>
                         <ul>
                             {
-                                options.map((
-                                    {
-                                        text,
-                                        value,
-                                        iconClass,
-                                        action,
-                                        disabled,
-                                        yesNoQAlert,
-                                        color,
-                                        iconColor,
-                                        iconCustomComponent
-                                    }, index
-                                ) => {
+                                options.map((option, index) => {
                                     return (
                                         <li
                                             key={index}
                                             className={[
                                                 "select-menu-item",
                                                 type === "selectable-options" ? (
-                                                    JSON.stringify(value) === JSON.stringify(activeOption) ? "select-menu-item-active" : null
+                                                    JSON.stringify(option.value) === JSON.stringify(activeOption) ? "select-menu-item-active" : null
                                                 ) : null,
-                                                disabled ? "select-menu-item-disabled" : null,
-                                                color ? `select-menu-item-color-${color}` : null
+                                                option.disabled ? "select-menu-item-disabled" : null,
+                                                option.color ? `select-menu-item-color-${option.color}` : null
                                             ].join(" ")}
-                                            onClick={() => onClickHandler(disabled, yesNoQAlert, action, value)}
+                                            onClick={(e) => onClickHandler(e, option)}
                                         >
-                                            {iconCustomComponent ? iconCustomComponent : (
+                                            {option.iconCustomComponent ? option.iconCustomComponent : (
                                                 <span
                                                     className={[
-                                                        "select-menu-item-icon", iconClass ? iconClass : "far fa-circle"
+                                                        "select-menu-item-icon", option.iconClass ? option.iconClass : "far fa-circle"
                                                     ].join(' ')}
-                                                    style={iconColor ? {color: iconColor} : null}
+                                                    style={option.iconColor ? {color: option.iconColor} : null}
                                                 ></span>
                                             )}
-                                            <span className="select-menu-item-value">{text}</span>
+                                            <span className="select-menu-item-value">{option.text}</span>
                                         </li>
                                     )
                                 })}
