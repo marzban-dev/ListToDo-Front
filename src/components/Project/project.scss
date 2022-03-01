@@ -47,9 +47,9 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-project-bg-hover);
+    background-color: var(--color-project-bg-hover-secondary);
     .project-head {
-      background-color: var(--color-project-bg-hover);
+      background-color: var(--color-project-bg-hover-secondary);
     }
   }
 
@@ -143,6 +143,16 @@
         @extend .project-info-text;
         padding-bottom: 0.25rem;
       }
+    }
+  }
+}
+
+@for $i from 1 to 5 {
+  .project-bg-color-#{$i} {
+    background-color: var(--color-#{$i}) !important;
+
+    &:hover {
+      background-color: var(--color-hover-#{$i}) !important;
     }
   }
 }
