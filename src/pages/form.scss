@@ -5,7 +5,7 @@
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
-  background-image: url("../assets/img/form-background-dark.jpg");
+  background-image: var(--auth-page-bg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,15 +16,14 @@
 
 form {
   position: relative;
-  background-color: transparentize($color: #171717, $amount: 0.3);
+  background-color: rgba(23, 23, 23, 0.3);
   backdrop-filter: blur(15px);
   padding: 2rem 1.5rem 1rem 1.5rem;
   border-radius: 15px;
   overflow: hidden;
 
-
   legend {
-    color: #eeeeee;
+    color: var(--color-text);
     font-size: 36px;
     margin-bottom: 1rem;
   }
@@ -34,7 +33,7 @@ form {
     top: 0;
     left: 0;
     border-radius: 15px;
-    background-color: $green;
+    background-color: var(--color-primary);
     width: 100%;
     height: 100%;
     display: flex;
@@ -46,7 +45,7 @@ form {
 
     span {
       font-size: 60px;
-      color: #eeeeee;
+      color: var(--color-text);
     }
   }
 
@@ -66,7 +65,7 @@ form {
 
         input {
           @include reset_input();
-          color: #eeeeee;
+          color: var(--color-text);
           padding: 0.5rem 0;
         }
 
@@ -79,7 +78,7 @@ form {
         width: 100%;
         height: 2px;
         border-radius: 5px;
-        background-color: #eeeeee3d;
+        background-color: var(--color-auth-form-input-line);
         box-shadow: 0 0 5px 1px rgba(211, 51, 51, 0);
         transition: 0.25s;
       }
@@ -87,17 +86,17 @@ form {
 
     .form-input-box-error {
       display: none;
-      border: 1px solid #b63737;
+      border: 1px solid var(--color-auth-form-box-error);
       padding: 1rem;
       border-radius: 10px;
-      color: #b64a4a;
+      color: var(--color-auth-form-box-text-error);
       font-size: 16px;
       margin-top: 1.5rem;
     }
 
     .form-input-error-line-active {
-      background-color: #bd1616 !important;
-      box-shadow: 0 0 8px 1px rgba(211, 51, 51, 0.534) !important;
+      background-color: var(--color-auth-form-input-line-error) !important;
+      box-shadow: 0 0 8px 1px var(--color-auth-form-box-error-shadow) !important;
     }
 
     .form-input-error-box-active {
@@ -110,14 +109,14 @@ form {
 
     p {
       padding: 0;
-      color: #b64a4a;
+      color: var(--color-auth-form-box-text-error);
     }
 
     .form-request-error-box-list {
       @include reset_list();
 
       li {
-        color: $red;
+        color: var(--color-auth-form-box-text-error);
         padding-bottom: 1rem;
 
         &:last-child {
@@ -130,18 +129,14 @@ form {
   button {
     @include reset_input();
     margin-top: 2rem;
-    background-color: #00adb5;
-    color: #eeeeee;
+    background-color: var(--color-primary-lighten);
+    color: var(--color-text);
     padding: 1rem;
     border-radius: 30px;
     transition: background-color 0.25s;
 
-    &:hover {
-      background-color: #10969d;
-    }
-
-    &:focus {
-      background-color: #00adb5;
+    &:hover,&:focus {
+      background-color: var(--color-primary);
     }
 
     &:disabled {
@@ -162,7 +157,7 @@ form {
       padding: 2rem 0 1.5rem 0;
 
       span {
-        color: #eeeeee;
+        color: var(--color-text);
         padding: 0 0.5rem;
       }
 
@@ -170,7 +165,7 @@ form {
         margin-top: 2px;
         width: 120px;
         height: 1px;
-        background-color: #eeeeee;
+        background-color: var(--color-text);
       }
     }
 
@@ -183,7 +178,7 @@ form {
 
       li span {
         font-size: 25px;
-        color: #eeeeee;
+        color: var(--color-text);
       }
     }
   }
@@ -196,11 +191,11 @@ form {
 
     p {
       font-size: 14px;
-      color: #eeeeee;
+      color: var(--color-text);
 
       a {
         text-decoration: none;
-        color: #00adb5;
+        color: var(--color-primary);
       }
     }
   }

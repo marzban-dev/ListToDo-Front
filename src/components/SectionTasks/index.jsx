@@ -2,14 +2,13 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {SortableElement} from "react-sortable-hoc";
-import {changePosition} from "store/actions/Main.actions";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import Button from "components/UI/Button";
 import DragHandler from "components/UI/DragHandler";
-import catchAsync from "Utils/CatchAsync";
+import catchAsync from "utils/CatchAsync";
 import {useTasksQuery} from "hooks/useTasksData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
-import {ShowTasks} from "components/ShowTasks";
+import ShowTasks from "components/ShowTasks";
 import {useDeleteSectionQuery, useUpdateSectionQuery} from "hooks/useSectionsData";
 import SelectMenu from "components/UI/SelectMenu";
 import "./sectionTasks.scss";
@@ -21,9 +20,9 @@ export const SectionTasks = ({section}) => {
         const {mutateAsync: updateSection} = useUpdateSectionQuery(section.id, section.project.id);
         const {mutateAsync: deleteSection} = useDeleteSectionQuery(section.project.id);
 
-        const onSortEnd = ({oldIndex, newIndex}) => dispatch(
-            changePosition('section', 'task', 'tasks', section.id, oldIndex, newIndex, section.tasks)
-        );
+        const onSortEnd = ({oldIndex, newIndex}) => {
+            // changePosition('section', 'task', 'tasks', section.id, oldIndex, newIndex, section.tasks)
+        };
 
         const deleteSectionHandler = catchAsync(async () => {
             await deleteSection(section.id);
@@ -101,7 +100,7 @@ export const SectionTasks = ({section}) => {
                         />
                     }
                 >
-                    {!!tasks && <ShowTasks tasks={tasks} onSortEnd={onSortEnd} useDragHandle axis="y"/>}
+                    {!!tasks && <ShowTasks tasks={tasks} onSortEnd={onSortEnd} useDragHandle axis="y" sortable/>}
                     <div className="section-tasks-list-add-button">
                         <Button
                             iconClass="far fa-plus"

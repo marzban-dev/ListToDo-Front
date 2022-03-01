@@ -1,0 +1,21 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.input {
+  @include reset_input();
+  background-color: var(--color-modal-input-bg);
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-radius: 15px;
+  transition: background-color 0.25s;
+  color: var(--color-text);
+  width: 100%;
+
+  &::placeholder {
+    color: var(--color-icon);
+  }
+
+  &:focus,
+  &:hover {
+    background-color: var(--color-modal-input-bg-hover);
+  }
+}

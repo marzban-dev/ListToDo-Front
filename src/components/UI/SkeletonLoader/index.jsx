@@ -60,14 +60,36 @@ const SkeletonLoader = ({type, speed = 1, width, height, viewBox, style}) => {
         case "wallpaper" :
             return (
                 <ContentLoader {...skeletonSettings}>
-                    <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" />
+                    <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%"/>
+                </ContentLoader>
+            )
+        case "projects" :
+            return (
+                <ContentLoader
+                    {...skeletonSettings}
+                >
+                    <rect x="0" y="32" rx="15" ry="15" width="350" height="208"/>
+                    <rect x="374" y="32" rx="15" ry="15" width="350" height="208"/>
+                    <rect x="748" y="32" rx="15" ry="15" width="350" height="208"/>
+                </ContentLoader>
+            )
+        case "comments" :
+            return (
+                <ContentLoader {...skeletonSettings} >
+                    <rect x="748" y="0" rx="15" ry="15" width="350" height="137"/>
+                    <rect x="200" y="0" rx="15" ry="15" width="250" height="105"/>
+                    <circle cx="480" cy="20" r="20"/>
+                    <rect x="125" y="129" rx="15" ry="15" width="325" height="90"/>
+                    <circle cx="480" cy="149" r="20"/>
+                    <rect x="270" y="243" rx="15" ry="15" width="180" height="165"/>
+                    <circle cx="480" cy="263" r="20"/>
                 </ContentLoader>
             )
     }
 }
 
 SkeletonLoader.propTypes = {
-    type: PropTypes.oneOf(['sections', 'tasks', 'profile', 'wallpaper']).isRequired,
+    type: PropTypes.oneOf(['sections', 'tasks', 'profile', 'wallpaper', 'projects', 'comments']).isRequired,
     speed: PropTypes.number,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,

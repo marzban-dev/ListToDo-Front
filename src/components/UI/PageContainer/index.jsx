@@ -8,7 +8,7 @@ const PageContainer = ({children, widthPadding, scrollY}) => {
             <main className="page-container" style={{
                 paddingLeft: widthPadding ? '2rem' : '0',
                 overflowY: scrollY ? "scroll" : "auto"
-            }}>
+            }} id="scrollable-container">
                 {children}
             </main>
         </AnimatedPage>

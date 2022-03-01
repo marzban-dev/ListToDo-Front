@@ -3,8 +3,6 @@ import MenuLink from "./components/MenuLink";
 import "./sideMenu.scss";
 
 const SideMenu = ({isOpen, setIsOpen}) => {
-    // const isPreAuthLoading = useSelector(state => state.auth.isPreAuthLoading);
-
     return (
         <aside className={["side-menu", isOpen ? "side-menu-active" : null].join(' ')} onClick={() => setIsOpen(false)}>
             <div className="side-menu-container" onClick={(e) => e.stopPropagation()}>
@@ -25,6 +23,10 @@ const SideMenu = ({isOpen, setIsOpen}) => {
 
                         <MenuLink to="/labels" iconClass="far fa-tags" setIsOpen={setIsOpen}>
                             Labels
+                        </MenuLink>
+
+                        <MenuLink to="/activity" iconClass="far fa-chart-line" setIsOpen={setIsOpen}>
+                            Activity
                         </MenuLink>
                     </div>
                     <div className="side-menu-links-divider">

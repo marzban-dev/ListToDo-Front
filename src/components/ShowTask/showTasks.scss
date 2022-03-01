@@ -1,0 +1,124 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.show-task-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1.25rem;
+  min-height: 350px;
+  border-radius: 15px;
+
+  .show-task-modal-wrapper {
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .show-task-modal-head {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .show-task-modal-head-left {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .show-task-modal-head-left-title {
+          transform: translateY(0.65rem);
+          margin-left: 0.75rem;
+
+          h5 {
+            width: 180px;
+            color: var(--color-text);
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: normal;
+            font-size: 20px;
+            margin: 0;
+          }
+
+          span {
+            display: inline-block;
+            transform: translateY(-0.25rem);
+            font-size: 11px;
+            color: var(--color-text);
+          }
+        }
+      }
+
+      .show-task-modal-head-right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        transform: translateX(0.75rem);
+      }
+    }
+
+    .show-task-modal-body {
+      width: 100%;
+      margin-top: 1rem;
+
+      & > p {
+        color: var(--color-text);
+        background-color: var(--color-secondary-complement);
+        padding: 0.75rem;
+        width: 100%;
+        min-height: 100px;
+        border-radius: 15px;
+      }
+
+      & > ul {
+        @include reset_list();
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        & > li:first-child {
+          margin-left: 0.75rem;
+        }
+
+        & > li {
+          margin-left: 1.25rem;
+          padding-right: 0.5rem;
+        }
+      }
+
+      .schedule-progress-container {
+        margin-top: 1rem;
+      }
+    }
+
+    .show-task-modal-footer {
+      width: 100%;
+      margin-top: 1rem;
+
+      .show-task-modal-body-subtasks {
+        padding-top: 1rem;
+        color: var(--color-text);
+        background-color: var(--color-secondary-complement);
+        width: 100%;
+        min-height: 100px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .show-task-modal-body-subtasks-wrapper {
+          width: 100%;
+          padding: 0 0.75rem 1rem 0.75rem;
+          .show-task-subtasks-add-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
