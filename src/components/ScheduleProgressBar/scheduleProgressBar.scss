@@ -25,7 +25,7 @@
     .schedule-progress-bar {
       position: relative;
       background-color: var(--color-secondary-complement);
-      height: 16px;
+      height: 12px;
       border-radius: 6px;
 
       &:hover {
@@ -37,7 +37,7 @@
       .schedule-progress-bar-text {
         position: absolute;
         left: 50%;
-        transform: translateX(-55%);
+        transform: translateX(-50%) translateY(-22px);
         font-size: 10px;
         color: var(--color-text);
         white-space: nowrap;
@@ -46,7 +46,7 @@
       .schedule-progress-bar-bar {
         background-color: var(--color-schedule-progress);
         border-radius: 6px;
-        height: 16px;
+        height: 12px;
       }
     }
   }

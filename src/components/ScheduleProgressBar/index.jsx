@@ -14,7 +14,7 @@ const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
 
         const {readableDate: readableRemainingDate, isLeft} = ConvertToHumanReadableDate(remaining);
         if (isLeft) setRemainingTime(readableRemainingDate + " left");
-        else setRemainingTime("Finished " + readableRemainingDate + " ago");
+        else setRemainingTime(readableRemainingDate + " ago");
 
         const {readableDate: readablePassedDate} = ConvertToHumanReadableDate(passed);
         setPassedTime(readablePassedDate + " passed");
