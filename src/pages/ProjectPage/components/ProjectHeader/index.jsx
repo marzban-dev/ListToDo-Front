@@ -70,7 +70,14 @@ const ProjectHeader = ({project}) => {
     }
 
     const archiveProject = catchAsync(async () => {
-        await updateProject({projectData: project, data: {archive: true}});
+        await updateProject({
+            data: {archive: true},
+            personalizeData: {
+                label: project.users.find(usr => usr.owner.id === user.id).label,
+                color: project.users.find(usr => usr.owner.id === user.id).color,
+            },
+            projectData: project
+        });
     }, {
         onLoad: `Archiving project ${project.title}`,
         onSuccess: `Project ${project.title} archived`,

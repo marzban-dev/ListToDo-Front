@@ -169,11 +169,11 @@ export const useUpdateProjectQuery = (parentId, options) => {
             });
 
 
-            if (projectUpdatedData.hasOwnProperty('archive')) {
+            if (projectUpdatedData.hasOwnProperty('archive') && previousProjectData.archive) {
                 queryClient.setQueryData("archived-projects", oldArchivedProjects => {
-                    if (oldArchivedProjects) return oldArchivedProjects.filter(prj => prj.id !== projectData.id);
+                    if (oldArchivedProjects) return oldArchivedProjects.filter(prj => prj.project.id !== projectData.id)
                     else return oldArchivedProjects;
-                })
+                });
             }
 
             return {previousProjectsData, previousArchivedProjectsData, previousLabelsData, previousProjectData};
