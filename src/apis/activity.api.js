@@ -10,7 +10,6 @@ export const fetchActivity = async ({pageParam = 1}) => {
             lite: false
         }
     });
-    console.log(result.data.results);
     return result.data.results;
 }
 
@@ -24,6 +23,5 @@ export const fetchActivityByRange = async (lteDate, gteDate) => {
             lite: true
         }
     });
-    console.log(result.data);
     return result.data;
 }

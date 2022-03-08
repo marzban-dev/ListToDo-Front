@@ -1,47 +1,43 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from "react";
-import "../form.scss";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
-import {signupUser} from "store/actions/Auth.actions";
 import {Link, useNavigate} from "react-router-dom";
 import AnimateComponent from "components/UI/AnimateComponent";
+import {useSignUpQuery} from "hooks/useAuth";
+import catchAsync from "utils/CatchAsync";
+import "../form.scss";
 
 const signup = () => {
-    const dispatch = useDispatch();
-    const isLoading = useSelector((state) => state.auth.isLoading);
     const [isSignedUp, setIsSignedUp] = useState(0);
     const [ServerErrorMessage, setServerErrorMessage] = useState(null);
     const navigate = useNavigate();
-
+    const {mutateAsync: signUp, isLoading} = useSignUpQuery();
     const {
         register, handleSubmit, formState: {errors},
     } = useForm({mode: "onChange"});
 
-    const handleSignup = async (data) => {
-        try {
-            await dispatch(signupUser(data.username, data.email, data.password));
-
-            setIsSignedUp(1);
-
-            setTimeout(() => navigate("/login"), 1000);
-
-        } catch (error) {
-            console.log(error.response);
-            if (error.response && error.response.status === 400) {
-                setServerErrorMessage(error.response.data);
+    const handleSignup = (data) => {
+        catchAsync(async () => {
+                await signUp({
+                    username: data.username,
+                    email: data.email,
+                    password: data.password
+                });
+                setIsSignedUp(1);
+                setTimeout(() => navigate("/login"), 1000);
             }
-
-            if (error.message === "Network Error") {
-                setServerErrorMessage('Network Error');
+            ,
+            null, error => {
+                if (error.response && error.response.status === 400) {
+                    setServerErrorMessage(error.response.data);
+                }
+                if (error.message === "Network Error") {
+                    setServerErrorMessage('Network Error');
+                }
+                setIsSignedUp(-1);
             }
-
-            setIsSignedUp(-1);
-        }
-    };
-
-    const handleErrors = (e) => {
-    };
+        )();
+    }
 
     const signupFormOptions = {
         email: {
@@ -56,13 +52,11 @@ const signup = () => {
     };
 
     const showServerErrors = () => {
-        if (typeof ServerErrorMessage === "object") {
-
+        if (ServerErrorMessage) {
             const listOfErrorsMessage = [];
             Object.keys(ServerErrorMessage).forEach(errorKey => {
                 ServerErrorMessage[errorKey].forEach(error => listOfErrorsMessage.push(<li>{error}</li>))
             })
-
             return <ul className="form-request-error-box-list">{listOfErrorsMessage}</ul>;
         }
         return <p>ServerErrorMessage</p>;
@@ -72,7 +66,7 @@ const signup = () => {
         <AnimateComponent>
             <main className="auth-form">
                 <form
-                    onSubmit={handleSubmit(handleSignup, handleErrors)}
+                    onSubmit={handleSubmit(handleSignup)}
                     className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
                 >
                     <div

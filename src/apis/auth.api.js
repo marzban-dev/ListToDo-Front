@@ -11,6 +11,10 @@ export const login = async ({username, password}) => {
     localStorage.setItem("AUTH_REFRESH_TOKEN", refreshToken);
 }
 
+export const signup = async ({email, username, password}) => {
+    return await axios.post("/auth/users/", {username, email, password});
+}
+
 export const refreshToken = async () => {
     // Use refresh token if it exists, to update both refresh and access token.
     const oldRefreshToken = localStorage.getItem("AUTH_REFRESH_TOKEN");
