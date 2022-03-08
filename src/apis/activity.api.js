@@ -6,9 +6,11 @@ export const fetchActivity = async ({pageParam = 1}) => {
             page: pageParam,
             offset: 20,
             ordering: "-created",
-            pagination: true
+            pagination: true,
+            lite: false
         }
     });
+    console.log(result.data.results);
     return result.data.results;
 }
 
@@ -22,5 +24,6 @@ export const fetchActivityByRange = async (lteDate, gteDate) => {
             lite: true
         }
     });
+    console.log(result.data);
     return result.data;
 }
