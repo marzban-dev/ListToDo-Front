@@ -1,0 +1,25 @@
+.activity-sections {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+
+.infinite-scroll-component__outerdiv {
+  width: 40%;
+}
+
+.infinite-scroll-component {
+  width: 100%;
+}
+
+@media screen and (max-width: 1410px) {
+  .infinite-scroll-component__outerdiv {
+    width: 100%;
+  }
+
+  .infinite-scroll-component {
+    width: 100%;
+  }
+}

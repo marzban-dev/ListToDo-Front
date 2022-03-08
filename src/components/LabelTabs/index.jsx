@@ -1,15 +1,20 @@
 import React, {useState} from "react";
 import ListTab from "components/LabelTabs/components/ListTab";
-import {useQueryClient} from "react-query";
-import AnimatedPage from "components/UI/AnimatedPage";
+import AnimateComponent from "components/UI/AnimateComponent";
 import {ShowProjects} from "components/ShowProjects";
 import {ShowTasks} from "components/ShowTasks";
+import LoadingWrapper from "components/UI/LoadingWrapper";
+import {useLabelProjectsQuery, useLabelTasksQuery} from "hooks/useDetailsData";
 import "./labelTabs.scss";
 
 const LabelTabs = ({selectedLabelId}) => {
-    const queryClient = useQueryClient();
-    const labelTasks = queryClient.getQueryData(['label-tasks', selectedLabelId])
-    const labelProjects = queryClient.getQueryData(['label-projects', selectedLabelId])
+    // const queryClient = useQueryClient();
+    const {data: labelTasks} = useLabelTasksQuery(selectedLabelId);
+    const {data: labelProjects} = useLabelProjectsQuery(selectedLabelId);
+    // const labelTasks = queryClient.getQueryData(['label-tasks', selectedLabelId]);
+    // const labelProjects = queryClient.getQueryData(['label-projects', selectedLabelId]);
+
+    console.log(labelTasks);
 
     const [tabState, setTabState] = useState("tasks");
 
@@ -40,33 +45,50 @@ const LabelTabs = ({selectedLabelId}) => {
 
                 <div className="label-tab-content">
                     {tabState === "tasks" && (
-                        <AnimatedPage>
+                        <AnimateComponent>
                             <ListTab isEmpty={labelTasks?.length === 0} emptyListWarning="There is no any task">
-                                {!!labelTasks && (
-                                    <ShowTasks
-                                        onSortEnd={null}
-                                        tasks={labelTasks}
-                                        axis="xy"
-                                        sortable={false}
-                                    />
-                                )}
+                                <LoadingWrapper
+                                    type="dots"
+                                    show={!!labelTasks}
+                                    style={{width: "100%", height: "100%"}}
+                                    size="sm"
+                                >
+                                    {!!labelTasks && (
+                                        <ShowTasks
+                                            onSortEnd={null}
+                                            tasks={labelTasks}
+                                            axis="xy"
+                                            sortable={false}
+                                            showParents
+                                            secondaryColor
+                                        />
+                                    )}
+                                </LoadingWrapper>
                             </ListTab>
-                        </AnimatedPage>
+                        </AnimateComponent>
                     )}
 
                     {tabState === "projects" && (
-                        <AnimatedPage>
+                        <AnimateComponent>
                             <ListTab isEmpty={labelProjects?.length === 0} emptyListWarning="There is no any project">
-                                {!!labelProjects && (
-                                    <ShowProjects
-                                        onSortEnd={null}
-                                        projects={labelProjects}
-                                        axis="xy"
-                                        sortable={false}
-                                    />
-                                )}
+                                <LoadingWrapper
+                                    type="dots"
+                                    show={!!labelTasks}
+                                    style={{width: "100%", height: "100%"}}
+                                    size="sm"
+                                >
+                                    {!!labelProjects && (
+                                        <ShowProjects
+                                            onSortEnd={null}
+                                            projects={labelProjects}
+                                            axis="xy"
+                                            sortable={false}
+                                            secondaryColor
+                                        />
+                                    )}
+                                </LoadingWrapper>
                             </ListTab>
-                        </AnimatedPage>
+                        </AnimateComponent>
                     )}
                 </div>
             </div>

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from "prop-types";
+import ReactTooltip from "react-tooltip";
 import "./member.scss";
 
 const Member = ({picture, name, defaultIconSize = "20px", disableHover, style}) => {
+
+    useEffect(() => ReactTooltip.rebuild(), []);
 
     return (
         <div

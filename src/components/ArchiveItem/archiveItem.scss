@@ -1,0 +1,64 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.archive-item {
+  width: 350px;
+  height: 100px;
+  background-color: var(--color-secondary);
+  border-radius: 15px;
+  padding: 0.75rem 1rem 0.35rem 1rem;
+  margin: 0 0 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .archive-item-info {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+
+    .archive-item-info-left {
+      display: flex;
+      justify-content: flex-start;
+      align-content: center;
+
+      span {
+        color: var(--color-primary);
+        font-size: 24px;
+      }
+
+      h4 {
+        margin: 0.2rem 0 0 0.5rem;
+        color: var(--color-text);
+        font-size: 18px;
+      }
+
+    }
+
+    .archive-item-remove-btn {
+      @include reset_input();
+
+      &:hover {
+        span {
+          color: $red;
+        }
+      }
+
+      span {
+        color: var(--color-icon);
+        font-size: 22px;
+        transition: color 0.25s;
+      }
+    }
+
+  }
+
+  .archive-item-date {
+    .archive-item-data-date {
+      color : var(--color-icon);
+      font-size: 12px;
+    }
+  }
+}

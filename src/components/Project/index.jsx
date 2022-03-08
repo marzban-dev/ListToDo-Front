@@ -6,7 +6,7 @@ import Members from "components/Members";
 import ProfileWallpaper from "components/UI/ProfileWallpaper";
 import "./project.scss";
 
-export const Project = ({project: {project, background, color}, dragHandlerIcon = true}) => {
+export const Project = ({project: {project, background, color}, secondaryColor, dragHandlerIcon = true}) => {
     const navigate = useNavigate();
 
     const DragHandle = SortableHandle(() => {
@@ -19,9 +19,9 @@ export const Project = ({project: {project, background, color}, dragHandlerIcon 
         <section
             onClick={() => navigate(`/project/${project.id}/${project.project}`)}
             style={color ? {backgroundColor: `var(--color-${color})`} : null}
-            className={["project", color ? `project-bg-color-${color}` : null].join(' ')}
+            className={["project", color ? `project-bg-color-${color}` : null, secondaryColor ? "project-color-secondary" : null].join(' ')}
         >
-            <div className="project-head">
+            <div className={["project-head", secondaryColor ? "project-color-secondary" : null].join(' ')}>
                 {background && (
                     <ProfileWallpaper
                         wallpaperPicture={background}
@@ -32,26 +32,30 @@ export const Project = ({project: {project, background, color}, dragHandlerIcon 
                 <div className="project-head-top">
                     <div className="project-head-top-info">
                         {dragHandlerIcon && <DragHandle/>}
-                        <div className="project-head-top-sections-count">
-                            <div><span>67</span></div>sections
+                        <div
+                            className={["project-head-top-sections-count", secondaryColor ? "project-badge-color-secondary" : null].join(' ')}>
+                            <div><span>{project.count_section}</span></div>
+                            Sections
                         </div>
-                        <div className="project-head-top-tasks-count">
-                            <div><span>67</span></div>tasks
+                        <div
+                            className={["project-head-top-tasks-count", secondaryColor ? "project-badge-color-secondary" : null].join(' ')}>
+                            <div><span>{project.count_tasks}</span></div>
+                            Tasks
                         </div>
                     </div>
                 </div>
                 <div className="project-head-bottom">
                     <h3 className="project-head-bottom-title">{project.title}</h3>
                     <p className="project-head-bottom-text">
-                        <span>67</span>sub-project
+                        <span>{project.count_subprojects}</span>Sub Projects
                     </p>
                 </div>
             </div>
 
-            <div className="project-body">
-                {project.schedule ? <ScheduleProgressBar createdTime={project.created} deadTime={project.schedule}/> : null}
-                <ScheduleProgressBar width={180} createdTime={project.created} deadTime={'Sun Feb 06 2022 13:59:24 GMT+0330 (Iran Standard Time)'}/>
-                <Members compressed limit={3} members={project.users}/>
+            <div className="project-body" style={{justifyContent: project.schedule ? "space-between" : "flex-end"}}>
+                {project.schedule ?
+                    <ScheduleProgressBar createdTime={project.created} deadTime={project.schedule} width={180}/> : null}
+                <Members compressed limit={3} gap={18} members={project.users}/>
             </div>
         </section>
     );

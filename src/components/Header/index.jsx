@@ -5,8 +5,8 @@ import LoadingWrapper from "components/UI/LoadingWrapper";
 import ProfilePicture from "components/UI/ProfilePicture";
 import {useQueryClient,} from "react-query";
 import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
-import "./header.scss";
 import NetworkStatus from "components/UI/NetworkStatus";
+import "./header.scss";
 
 const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
     const queryClient = useQueryClient();
@@ -46,7 +46,7 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
 
                     <NetworkStatus/>
 
-                    {user === undefined ?
+                    {!user ?
                         <div className="header-auth">
                             <Link to="/login">
                                 <span className="far fa-sign-in"></span>
@@ -59,11 +59,10 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                     }
 
                     <div className="header-profile">
-
                         {user && (
                             <Link to="/settings">
                                 <ProfilePicture
-                                    profilePicture={user ? user.profile_img : null}
+                                    profilePicture={user.profile_img}
                                     preloaderStyle={{width: 40, height: 40}}
                                     style={{
                                         width: "40px",
@@ -74,9 +73,9 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                             </Link>
                         )}
 
-                        {user === undefined && (
+                        {!user && (
                             <ProfilePicture
-                                profilePicture={user ? user.profile_img : null}
+                                profilePicture={null}
                                 preloaderStyle={{width: 40, height: 40}}
                                 style={{
                                     width: "40px",

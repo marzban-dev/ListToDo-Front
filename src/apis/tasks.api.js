@@ -17,13 +17,13 @@ export const createTask = async ({sectionId, data}) => {
     return result.data;
 };
 
-export const updateTask = async ({id, data}) => {
+export const updateTask = async ({taskData, data}) => {
     const copyOfData = {...data};
     copyOfData.assignee = copyOfData.assignee ? copyOfData.assignee.id : null;
-    const result = await axios.patch(`/task/${id}/`, copyOfData);
+    const result = await axios.patch(`/task/${taskData.id}/`, copyOfData);
     return result.data;
 };
 
-export const deleteTask = async (id) => {
-    await axios.delete(`/task/${id}/`);
+export const deleteTask = async (task) => {
+    await axios.delete(`/task/${task.id}/`);
 };

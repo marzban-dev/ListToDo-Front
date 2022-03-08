@@ -7,9 +7,10 @@ export const useTasksQuery = (id, isSubTask, options) => {
         () => fetchTasks({
             section: !isSubTask ? id : null,
             task: isSubTask ? id : null,
-            task__isnull: !isSubTask
+            task__isnull: !isSubTask,
+            completed: false
         }),
-        {initialData: null, ...options}
+        options
     );
 };
 
@@ -28,7 +29,6 @@ export const useCreateTaskQuery = (parentId, isSubTask) => {
     return useMutation(createTask, {
         onSuccess: (createdTask) => {
             queryClient.setQueryData(key, oldTasks => {
-                console.log(oldTasks);
                 return [...oldTasks, createdTask];
             })
         }
@@ -40,14 +40,40 @@ export const useDeleteTaskQuery = (parentId, isSubTask) => {
     const key = [isSubTask ? "sub-tasks" : "section-tasks", Number(parentId)];
 
     return useMutation(deleteTask, {
-        onMutate: async (id) => {
+        onMutate: async (taskData) => {
             await queryClient.cancelQueries(key);
             const previousTasksData = queryClient.getQueryData(key);
-            queryClient.setQueryData(key, oldTasks => oldTasks.filter(task => task.id !== id))
-            return {previousTasksData};
+            const previousLabelsData = [];
+
+            const deleteTaskFromLabels = (task) => {
+                task.label.forEach(lbl => {
+                    const previousLabelData = queryClient.getQueryData(['label-tasks', lbl.id])
+                    previousLabelsData.push({
+                        key: ['label-tasks', lbl.id],
+                        data: previousLabelData
+                    })
+                    queryClient.setQueryData(['label-tasks', lbl.id], oldLabelTasks => {
+                        if (oldLabelTasks) {
+                            return oldLabelTasks.filter(task => task.id !== taskData.id);
+                        } else return oldLabelTasks;
+                    });
+                });
+            }
+
+            queryClient.setQueryData(key, oldTasks => {
+                deleteTaskFromLabels(taskData);
+                if (oldTasks) {
+                    return oldTasks.filter(task => task.id !== taskData.id);
+                } else return oldTasks;
+            });
+
+            return {previousTasksData, previousLabelsData};
         },
         onError: (_error, _newSection, context) => {
             queryClient.setQueryData(key, context.previousTasksData)
+            context.previousLabelsData.forEach(previousLabelData => {
+                queryClient.setQueryData(previousLabelData.key, previousLabelData.data);
+            })
         },
         onSettled: () => {
             queryClient.invalidateQueries(key);
@@ -56,28 +82,52 @@ export const useDeleteTaskQuery = (parentId, isSubTask) => {
 };
 
 
-export const useUpdateTaskQuery = (id, parentId, isSubTask) => {
+export const useUpdateTaskQuery = (parentId, isSubTask) => {
     const queryClient = useQueryClient();
     const key = [isSubTask ? "sub-tasks" : "section-tasks", Number(parentId)];
+    const previousLabelsData = [];
 
     return useMutation(updateTask, {
-        onMutate: async ({data: taskUpdatedData}) => {
-            await queryClient.cancelQueries(["task", Number(id)]);
+        onMutate: async ({taskData, data: taskUpdatedData}) => {
+            await queryClient.cancelQueries(["task", taskData.id]);
             const previousTasksData = queryClient.getQueryData(key);
 
-            queryClient.setQueryData(["task", Number(id)], oldTask => {
-                return {...oldTask, ...taskUpdatedData};
-            })
-            queryClient.setQueryData(key, oldTasks => {
-                return oldTasks.map(task => {
-                    if (task.id === id) return {...task, ...taskUpdatedData};
-                    else return task;
+            const updateTaskInLabels = (task) => {
+                task.label.forEach(lbl => {
+                    const previousLabelData = queryClient.getQueryData(['label-tasks', lbl.id]);
+                    previousLabelsData.push({
+                        key: ['label-tasks', lbl.id],
+                        data: previousLabelData
+                    })
+                    queryClient.setQueryData(['label-tasks', lbl.id], oldLabelTasks => {
+                        if (oldLabelTasks) {
+                            return oldLabelTasks.map(task => {
+                                if (task.id === taskData.id) return {...task, ...taskUpdatedData};
+                                else return task;
+                            });
+                        } else return oldLabelTasks;
+                    });
                 });
+            }
+
+            queryClient.setQueryData(key, oldTasks => {
+                updateTaskInLabels(taskData);
+
+                if (oldTasks) {
+                    return oldTasks.map(task => {
+                        if (task.id === taskData.id) return {...task, ...taskUpdatedData};
+                        else return task;
+                    });
+                } else return oldTasks;
             })
-            return {previousTasksData};
+
+            return {previousTasksData, previousLabelsData};
         },
         onError: (_error, _newSection, context) => {
-            queryClient.setQueryData(key, context.previousTasksData)
+            queryClient.setQueryData(key, context.previousTasksData);
+            context.previousLabelsData.forEach(previousLabelData => {
+                queryClient.setQueryData(previousLabelData.key, previousLabelData.data);
+            });
         },
         onSettled: () => {
             queryClient.invalidateQueries(key);

@@ -28,7 +28,8 @@ const Members =
                 }
 
                 membersList.push(
-                    <Member picture={members[i].owner.profile_img} name={members[i].owner.username} style={memberStyle}/>
+                    <Member picture={members[i].owner.profile_img} name={members[i].owner.username}
+                            style={memberStyle}/>
                 );
             }
 
@@ -45,9 +46,9 @@ const Members =
 
         return (
             <div className="members" style={{flexDirection: axis === "l" ? "row-reverse" : "row"}}>
-                {renderMembers()}
+                {!!members && renderMembers()}
                 {
-                    members.length - limit > 0 && (
+                    !!members && members.length - limit > 0 && (
                         <div className="members-count" style={{
                             zIndex: (members.length - 1) * 10,
                             width: width + "px",

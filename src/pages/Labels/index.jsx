@@ -8,7 +8,6 @@ import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import {useQueryClient} from "react-query";
 import {useCreateLabelQuery} from "hooks/useDetailsData";
 import EmptySign from "components/UI/EmptySign";
-import LoadingWrapper from "components/UI/LoadingWrapper";
 import "./labels.scss";
 
 const Labels = () => {
@@ -45,35 +44,33 @@ const Labels = () => {
     return (
         <React.Fragment>
             <PageContainer>
-                <LoadingWrapper show={labels} type="circle" size="lg">
-                    <div className="labels-container">
-                        <div className="labels">
-                            <CreateInput
-                                onClick={createLabelHandler}
-                                iconClass="far fa-plus-circle"
-                                placeholder="Label name"
-                                isDisabled={isCreateLabelButtonDisabled}
-                            />
-                            <section className="labels-list">
-                                {labels && labels.map(label => (
-                                    <Label
-                                        id={label.id}
-                                        key={label.id}
-                                        title={label.title}
-                                        active={selectedLabelId === label.id}
-                                        onLabelSelected={onLabelSelected}
-                                    />
-                                ))}
-                            </section>
-                        </div>
-
-                        {labels && labels.length !== 0
-                            ? <LabelTabs selectedLabelId={selectedLabelId}/>
-                            : <EmptySign text="There is no any label"/>
-                        }
-
+                <div className="labels-container">
+                    <div className="labels">
+                        <CreateInput
+                            onClick={createLabelHandler}
+                            iconClass="far fa-plus-circle"
+                            placeholder="Label name"
+                            isDisabled={isCreateLabelButtonDisabled}
+                        />
+                        <section className="labels-list">
+                            {labels.map(label => (
+                                <Label
+                                    id={label.id}
+                                    key={label.id}
+                                    title={label.title}
+                                    active={selectedLabelId === label.id}
+                                    onLabelSelected={onLabelSelected}
+                                />
+                            ))}
+                        </section>
                     </div>
-                </LoadingWrapper>
+
+                    {labels.length !== 0
+                        ? <LabelTabs selectedLabelId={selectedLabelId}/>
+                        : <EmptySign text="There is no any label"/>
+                    }
+
+                </div>
             </PageContainer>
             <Outlet/>
         </React.Fragment>

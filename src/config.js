@@ -14,6 +14,11 @@ export const SKELETON_OPTIONS = {
     foregroundColor: getComputedStyle(document.body).getPropertyValue("--color-react-loader-forground"),
 }
 
+export const CHART_JS_OPTIONS = {
+    backgroundColor: getComputedStyle(document.body).getPropertyValue("--color-primary-lighten"),
+    borderColor : getComputedStyle(document.body).getPropertyValue("--color-primary"),
+}
+
 export const REACT_MODAL_OPTIONS = {
     overlayClassName: "react-modal-overlay",
     className: "react-modal-container",

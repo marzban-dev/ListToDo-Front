@@ -2,6 +2,7 @@
 @import "src/assets/scss/mixins";
 
 .float-right {
+  @include box_shadow();
   position: fixed;
   z-index: 800;
   bottom: 1rem;
@@ -9,6 +10,7 @@
 }
 
 .float-left {
+  @include box_shadow();
   position: fixed;
   z-index: 999;
   bottom: 1rem;

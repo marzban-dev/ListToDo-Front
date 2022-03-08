@@ -18,3 +18,8 @@ export const updateSection = async ({id, data}) => {
     const result = await axios.patch(`/section/${id}/`, data);
     return result.data;
 }
+
+export const fetchArchivedSections = async () => {
+    const result = await axios.get("/sections/", {params: {archive: true}});
+    return result.data.results;
+}

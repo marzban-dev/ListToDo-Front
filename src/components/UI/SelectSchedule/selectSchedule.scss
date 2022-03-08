@@ -1,0 +1,45 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.schedule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  transition: background-color 0.25s;
+  background-color: var(--color-modal-input-bg);
+  width: 100%;
+
+  &:focus,
+  &:hover {
+    background-color: var(--color-modal-input-bg-hover);
+  }
+
+  .schedule-input {
+    @include reset_input();
+    color: var(--color-text);
+    cursor: pointer;
+
+    &::placeholder {
+      color: var(--color-icon);
+    }
+  }
+
+  .schedule-clear-icon {
+    @include reset_input();
+    color: $red;
+    font-size: 24px;
+  }
+
+  .schedule-icon {
+    @include reset_input();
+    color: var(--color-primary);
+    font-size: 20px;
+    cursor: default;
+  }
+}
+
+.react-datepicker-popper {
+  z-index: 200 !important;
+}

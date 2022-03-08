@@ -11,8 +11,9 @@ import Header from "./components/Header";
 import {useCheckUserQuery} from "hooks/useAuth";
 import {useLabelsQuery} from "hooks/useDetailsData";
 import {instance} from "axios.instance";
-import {useInboxProjectQuery, useProjectsQuery} from "hooks/useProjectsData";
+import {useInboxProjectQuery} from "hooks/useProjectsData";
 import AppRoutes from "App.routes";
+import ReactTooltip from "react-tooltip";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.min.css";
 import "assets/css/all.css";
@@ -20,14 +21,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.scss";
 import "./assets/scss/theme/themes.scss";
 import "animate.css";
-import ReactTooltip from "react-tooltip";
 
 const App = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
-
-    useEffect(() => ReactTooltip.rebuild());
 
     Modal.setAppElement('body');
     dispatch(setAppTheme());
@@ -37,14 +35,10 @@ const App = () => {
 
     useLabelsQuery({enabled: !!authedUser});
 
-    const {data: inboxProject, isFetchedAfterMount: isInboxFetched} = useInboxProjectQuery({
-        enabled: !!authedUser,
-    })
-
-    useProjectsQuery(inboxProject?.id, {
+    const {isFetchedAfterMount: isInboxFetched} = useInboxProjectQuery({
         enabled: !!authedUser,
         onSuccess: () => navigate(currentPath)
-    });
+    })
 
     useEffect(() => {
         instance.interceptors.request.use(null, error => {
@@ -75,20 +69,30 @@ const App = () => {
     return (
         <div className="App" id="app">
             <ToastContainer/>
-            {checkPathIsAuthPages ? null :
-                <SideMenu isOpen={isMobileSideMenuOpen} setIsOpen={setIsMobileSideMenuOpen}/>
-            }
-            <div className={[checkPathIsAuthPages ? "full-width" : "width-minus-sidebar"].join(' ')}
-                 style={{overflow: 'hidden'}}>
-                {!checkPathIsAuthPages ? <Header
-                    title={location.pathname.split('/')[1]}
-                    isSideMenuOpen={isMobileSideMenuOpen}
-                    setIsSideMenuOpen={setIsMobileSideMenuOpen}
-                /> : null}
-                {authedUser !== null ? (<AppRoutes loadPrivateRoutes={isInboxFetched}/>) :
-                    <LoadingScreen text="Authorizing"/>}
-            </div>
             <ReactTooltip/>
+
+            {!checkPathIsAuthPages && (
+                <SideMenu isOpen={isMobileSideMenuOpen} setIsOpen={setIsMobileSideMenuOpen}/>
+            )}
+
+            <div
+                className={[checkPathIsAuthPages ? "full-width" : "width-minus-sidebar"].join(' ')}
+                style={{overflow: 'hidden'}}
+            >
+                {!checkPathIsAuthPages && (
+                    <Header
+                        title={location.pathname.split('/')[1]}
+                        isSideMenuOpen={isMobileSideMenuOpen}
+                        setIsSideMenuOpen={setIsMobileSideMenuOpen}
+                    />
+                )}
+
+                {authedUser !== null
+                    ? <AppRoutes loadPrivateRoutes={isInboxFetched}/>
+                    : <LoadingScreen text="Authorizing"/>
+                }
+
+            </div>
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
         </div>
     );

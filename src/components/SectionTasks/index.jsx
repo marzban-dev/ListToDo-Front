@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {SortableElement} from "react-sortable-hoc";
 import SkeletonLoader from "components/UI/SkeletonLoader";
@@ -16,6 +16,7 @@ import "./sectionTasks.scss";
 export const SectionTasks = ({section}) => {
         const dispatch = useDispatch();
         const navigate = useNavigate();
+        const location = useLocation();
         const {data: tasks} = useTasksQuery(section.id);
         const {mutateAsync: updateSection} = useUpdateSectionQuery(section.id, section.project.id);
         const {mutateAsync: deleteSection} = useDeleteSectionQuery(section.project.id);
@@ -49,6 +50,14 @@ export const SectionTasks = ({section}) => {
             onError: `Update section ${section.title} failed`
         });
 
+        const archiveSection = catchAsync(async () => {
+            await updateSection({id: section.id, data: {archive: true}});
+        }, {
+            onLoad: `Archiving section ${section.title}`,
+            onSuccess: `Section ${section.title} archived`,
+            onError: `Archive section ${section.title} failed`
+        });
+
         const onSectionTitleEditInputChanged = (e) => setSectionTitle(e.target.value);
 
         const selectMenuOptions = [
@@ -56,6 +65,11 @@ export const SectionTasks = ({section}) => {
                 iconClass: "far fa-pen",
                 text: "Edit",
                 action: () => setIsSectionEditable(!isSectionEditable)
+            },
+            {
+                iconClass: "far fa-archive",
+                text: "Archive",
+                action: archiveSection
             },
             {
                 iconClass: "far fa-trash-alt",
@@ -104,7 +118,7 @@ export const SectionTasks = ({section}) => {
                     <div className="section-tasks-list-add-button">
                         <Button
                             iconClass="far fa-plus"
-                            onClick={() => navigate(`create-task/${section.id}/${section.id}/${section.project.id}?isSubTask=false`)}
+                            onClick={() => navigate(`/create-task/${section.id}/${section.id}/${section.project.id}?isSubTask=false`, {state: {backgroundLocation: location}})}
                             style={{marginTop: '1rem'}}
                             size="sm"
                             circleShape

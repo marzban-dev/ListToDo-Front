@@ -1,0 +1,45 @@
+.activity-section {
+  border-left: 3px solid var(--color-secondary);
+  padding-bottom: 1.5rem;
+
+  &:first-child {
+    .activity-section-title {
+      padding-top: 0.5rem;
+      background-color: var(--color-secondary-complement);
+
+      span {
+        transform: translateY(1.1rem);
+      }
+
+      h1 {
+        transform: translateY(1.1rem);
+      }
+    }
+  }
+
+  .activity-section-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translateX(-7.5px);
+    white-space: nowrap;
+
+    span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+    }
+
+    h1 {
+      color: var(--color-text);
+      margin: 0 0 0 0.75rem;
+    }
+  }
+
+  .activity-section-activities {
+    padding-top: 1.1rem;
+    margin-left: 2rem;
+  }
+}

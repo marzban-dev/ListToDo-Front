@@ -20,6 +20,7 @@
     width: 25px;
     height: 25px;
     margin-right: 0.5rem;
+
     span {
       color: var(--color-text);
     }
@@ -32,9 +33,22 @@
   align-items: center;
   font-size: 12px;
   color: var(--color-icon);
+
   span {
     padding-right: 0.5rem;
     color: var(--color-primary);
+  }
+}
+
+.project-badge-color-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.project-color-secondary {
+  background-color: var(--color-secondary-complement) !important;
+
+  &:hover {
+    background-color: var(--color-project-bg-hover-secondary-complement) !important;
   }
 }
 
@@ -48,6 +62,7 @@
 
   &:hover {
     background-color: var(--color-project-bg-hover-secondary);
+
     .project-head {
       background-color: var(--color-project-bg-hover-secondary);
     }
@@ -63,7 +78,7 @@
       top: 0;
       left: 0;
     }
-    
+
     .project-head-top {
       position: relative;
       display: flex;
@@ -112,7 +127,8 @@
       width: 100%;
       padding: 0 1rem;
       z-index: 200;
-      .project-head-bottom-left-side{
+
+      .project-head-bottom-left-side {
 
       }
 

@@ -6,8 +6,8 @@ import ProfileWallpaper from "components/UI/ProfileWallpaper";
 import ChangeProfileModal from "components/ChangeProfileModal";
 import {useQueryClient} from "react-query";
 import {useUpdateSettingsQuery} from "hooks/useAuth";
-import "./profile.scss";
 import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
+import "./profile.scss";
 
 const Profile = () => {
     const queryClient = useQueryClient();

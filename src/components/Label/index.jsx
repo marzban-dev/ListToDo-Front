@@ -1,13 +1,11 @@
 import React, {useState} from "react";
 import catchAsync from "utils/CatchAsync";
-import {useDeleteLabelQuery, useLabelProjectsQuery, useLabelTasksQuery} from "hooks/useDetailsData";
+import {useDeleteLabelQuery} from "hooks/useDetailsData";
 import "./label.scss";
 import SelectMenu from "components/UI/SelectMenu";
 
 const Label = ({id, title, active, onLabelSelected}) => {
 
-    const {isLoading: isTasksLoading} = useLabelTasksQuery(id);
-    const {isLoading: isProjectsLoading} = useLabelProjectsQuery(id);
     const {mutateAsync: deleteLabel, isLoading} = useDeleteLabelQuery();
 
     const deleteLabelHandler = catchAsync(async () => {
@@ -24,7 +22,8 @@ const Label = ({id, title, active, onLabelSelected}) => {
         {
             text: "Edit",
             iconClass: "far fa-pen",
-            action: () => {},
+            action: () => {
+            },
         },
         {
             text: "Delete",
@@ -55,7 +54,6 @@ const Label = ({id, title, active, onLabelSelected}) => {
                     isMouseInLabel ? "label-hover" : null
                 ].join(" ")}
                 htmlFor={`label-${id}`}
-                onClick={isTasksLoading || isProjectsLoading ? (e) => e.preventDefault() : null}
                 onMouseEnter={(e) => setIsMouseInLabel(true)}
                 onMouseLeave={(e) => setIsMouseInLabel(false)}
             >

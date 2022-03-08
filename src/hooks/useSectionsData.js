@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
-import {createSection, deleteSection, fetchSections, updateSection} from "apis/sections.api";
+import {createSection, deleteSection, fetchArchivedSections, fetchSections, updateSection} from "apis/sections.api";
 
 export const useSectionsQuery = (id, options) => {
     return useQuery(
@@ -51,19 +51,36 @@ export const useUpdateSectionQuery = (id, parentId) => {
         onMutate: async ({data: sectionUpdatedData}) => {
             await queryClient.cancelQueries(["project-sections", parentId]);
             const previousSectionsData = queryClient.getQueryData(["project-sections", parentId]);
+            const previousArchivedSectionsData = queryClient.getQueryData("archived-sections");
+
             queryClient.setQueryData(["project-sections", parentId], oldSections => {
-                return oldSections.map(sec => {
-                    if (sec.id === id) return {...sec, ...sectionUpdatedData};
-                    else return sec;
-                });
+                if (oldSections) {
+                    return oldSections.map(sec => {
+                        if (sec.id === id) return {...sec, ...sectionUpdatedData};
+                        else return sec;
+                    });
+                } else return oldSections;
             })
-            return {previousSectionsData};
+
+            if (sectionUpdatedData.hasOwnProperty('archive')) {
+                queryClient.setQueryData("archived-sections", oldArchivedSections => {
+                    if (oldArchivedSections) return oldArchivedSections.filter(sec => sec.id !== id);
+                    else return oldArchivedSections;
+                })
+            }
+
+            return {previousSectionsData, previousArchivedSectionsData};
         },
         onError: (_error, _newSection, context) => {
             queryClient.setQueryData(["project-sections", parentId], context.previousSectionsData)
+            queryClient.setQueryData("archived-sections", context.previousArchivedSectionsData)
         },
         onSettled: () => {
             queryClient.invalidateQueries(["project-sections", parentId]);
         }
     });
 };
+
+export const useArchivedSections = () => {
+    return useQuery('archived-sections', fetchArchivedSections);
+}

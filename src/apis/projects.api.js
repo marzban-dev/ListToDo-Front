@@ -5,6 +5,21 @@ export const fetchInboxProject = async () => {
     return result.data.results[0].project;
 };
 
+export const fetchAllProjects = async (parentId) => {
+    const user = await axios.get("/myinfo/");
+
+    const allProjects = await axios.get("/projects/");
+    const jointProjects = allProjects.data.results.filter(prj => prj.project.owner.id !== user.data.id);
+
+    const inboxProjects = await axios.get("/projects/", {
+        params: {
+            project__project: parentId
+        }
+    });
+
+    return [...jointProjects, ...inboxProjects.data.results];
+};
+
 export const fetchProjects = async (filter = {}) => {
     const result = await axios.get("/projects/", {params: filter});
     return result.data.results;
@@ -15,12 +30,46 @@ export const fetchProject = async (id) => {
     return result.data;
 }
 
-export const deleteProject = async (id) => {
-    return await axios.delete(`/project/${id}/`);
+export const deleteProject = async (project) => {
+    return await axios.delete(`/project/${project.id}/`);
 }
 
-export const updateProject = async (id) => {
-    const result = await axios.patch(`/project/${id}/`, {});
+export const updateProject = async ({data, personalizeData, projectData}) => {
+    await axios.patch(`/project/${projectData.id}/`, data);
+    const result = await axios.patch(`/project/${projectData.id}/personalize/`, {
+        color: personalizeData.color,
+        label: personalizeData.label
+    });
+
+    if (personalizeData.hasOwnProperty('background')) {
+        const backgroundFormData = new FormData();
+        backgroundFormData.append('background', personalizeData.background, personalizeData.background.name);
+        const result = await axios.patch(`/project/${projectData.id}/personalize/`, backgroundFormData);
+        return result.data;
+    }
+
+    return result.data;
+}
+
+export const createProject = async ({data, personalizeData}) => {
+    const {data: createdProject} = await axios.post(`/project/`, data);
+    const result = await axios.patch(`/project/${createdProject.id}/personalize/`, {
+        color: personalizeData.color,
+        label: personalizeData.label
+    });
+
+    if (personalizeData.hasOwnProperty('background')) {
+        const backgroundFormData = new FormData();
+        backgroundFormData.append('background', personalizeData.background, personalizeData.background.name);
+        const result = await axios.patch(`/project/${createdProject.id}/personalize/`, backgroundFormData);
+        return result.data;
+    }
+
+    return result.data;
+}
+
+export const personalizeProject = async (id) => {
+    const result = await axios.patch(`/project/${id}/personalize/`);
     return result.data;
 }
 
@@ -32,4 +81,9 @@ export const joinToProject = async (inviteSlug) => {
 export const leaveProject = async (id) => {
     const result = await axios.post(`/project/${id}/leave/`);
     return result.data;
+}
+
+export const fetchArchivedProjects = async () => {
+    const result = await axios.get("/projects/", {params: {project__archive: true}});
+    return result.data.results;
 }

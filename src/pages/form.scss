@@ -41,7 +41,7 @@ form {
     align-items: center;
     opacity: 0;
     transition: top 0.5s, opacity 0.5s, transform 0.5s;
-    transform: scale(0.95) translateY(20%);
+    transform: scale(0.95) translateY(100%);
 
     span {
       font-size: 60px;
@@ -70,7 +70,7 @@ form {
         }
 
         span {
-          color: #00adb5;
+          color: var(--color-primary);
         }
       }
 

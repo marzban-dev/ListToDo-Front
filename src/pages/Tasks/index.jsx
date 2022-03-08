@@ -32,7 +32,6 @@ const Tasks = ({project}) => {
     const onSortEnd = ({oldIndex, newIndex}) => {
         catchAsync(async () => {
             const {list, newPosition} = changeListItemPosition(oldIndex, newIndex, sections);
-            console.log(sections, list, newPosition)
             const itemId = sections[oldIndex].id;
             await changePosition({
                 id: itemId,

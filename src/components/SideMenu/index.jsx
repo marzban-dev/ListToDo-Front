@@ -17,7 +17,7 @@ const SideMenu = ({isOpen, setIsOpen}) => {
                             Projects
                         </MenuLink>
 
-                        <MenuLink to="/sections" iconClass="far fa-archive" setIsOpen={setIsOpen}>
+                        <MenuLink to="/archive" iconClass="far fa-archive" setIsOpen={setIsOpen}>
                             Archive
                         </MenuLink>
 
@@ -30,9 +30,9 @@ const SideMenu = ({isOpen, setIsOpen}) => {
                         </MenuLink>
                     </div>
                     <div className="side-menu-links-divider">
-                        <MenuLink to="/notifications" iconClass="far fa-bell" setIsOpen={setIsOpen}>
-                            Notifications
-                        </MenuLink>
+                        {/*<MenuLink to="/notifications" iconClass="far fa-bell" setIsOpen={setIsOpen}>*/}
+                        {/*    Notifications*/}
+                        {/*</MenuLink>*/}
 
                         <MenuLink to="/settings" iconClass="far fa-cog" setIsOpen={setIsOpen}>
                             Settings

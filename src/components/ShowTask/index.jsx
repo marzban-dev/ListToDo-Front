@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "components/UI/Modal";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useDeleteTaskQuery, useTaskQuery, useTasksQuery, useUpdateTaskQuery} from "hooks/useTasksData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import CompleteButton from "components/UI/CompleteButton";
@@ -12,12 +12,13 @@ import LabelItem from "components/LabelItem";
 import {useQueryClient} from "react-query";
 import {ShowTasks} from "components/ShowTasks";
 import Button from "components/UI/Button";
-import "./showTasks.scss";
 import ScheduleProgressBar from "components/ScheduleProgressBar";
+import "./showTasks.scss";
 
 const ShowTask = () => {
     const {taskId} = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const queryClient = useQueryClient();
     const labels = queryClient.getQueryData("labels");
     const [isTaskChecked, setIsTaskChecked] = useState(false);
@@ -26,7 +27,7 @@ const ShowTask = () => {
         onError: () => navigate('/404')
     });
 
-    const {mutateAsync: updateTask} = useUpdateTaskQuery(task?.id, task?.task ? task?.task : task?.section.id, !!task?.task);
+    const {mutateAsync: updateTask} = useUpdateTaskQuery(task?.task ? task?.task : task?.section.id, !!task?.task);
 
     const {mutateAsync: deleteTask} = useDeleteTaskQuery(task?.task ? task?.task : task?.section.id, !!task?.task);
 
@@ -35,7 +36,7 @@ const ShowTask = () => {
     });
 
     const deleteTaskHandler = catchAsync(async () => {
-        await deleteTask(task?.id);
+        await deleteTask(task);
     }, {
         onLoad: `Deleting task ${task?.title}`,
         onSuccess: `Task ${task?.title} deleted`,
@@ -44,7 +45,7 @@ const ShowTask = () => {
 
     const completeTaskHandler = catchAsync(async () => {
         setIsTaskChecked(true);
-        await updateTask({id: task?.id, data: {completed: true}});
+        await updateTask({taskData : task, data: {completed: true}});
         closeModal();
     }, {
         onLoad: `Completing task ${task?.title}`,
@@ -54,7 +55,10 @@ const ShowTask = () => {
 
     const selectMenuOptions = [{
         iconClass: "far fa-pen", text: "Edit", action: () => {
-            navigate(`/tasks/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`)
+            navigate(
+                `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`,
+                {state: {backgroundLocation: location.state?.backgroundLocation}}
+            )
         }
     }, {
         iconClass: "far fa-trash-alt",
@@ -75,8 +79,15 @@ const ShowTask = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(true);
     const closeModal = () => {
-        setIsModalOpen(false)
-        setTimeout(() => navigate("/tasks"), REACT_MODAL_OPTIONS.closeTimeoutMS)
+        if (location.state?.prevPath && location.state.prevPath.includes("/task/")) {
+            navigate(-1, {state: {backgroundLocation: location.state?.backgroundLocation}})
+        } else {
+            setIsModalOpen(false)
+            setTimeout(
+                () => navigate(-1, {state: {backgroundLocation: location.state?.backgroundLocation}}),
+                REACT_MODAL_OPTIONS.closeTimeoutMS
+            );
+        }
     }
 
     return (
@@ -122,7 +133,7 @@ const ShowTask = () => {
                                 {renderLabels()}
                             </ul>
                             {task && task.schedule &&
-                                <ScheduleProgressBar width={150} deadTime={task.schedule} createdTime={task.created}/>
+                                <ScheduleProgressBar width={190} deadTime={task.schedule} createdTime={task.created}/>
                             }
                         </div>
                         <div className="show-task-modal-footer">
@@ -135,13 +146,19 @@ const ShowTask = () => {
                                                 tasks={subTasks}
                                                 onSortEnd={null}
                                                 axis="y"
+                                                backgroundLocation={location.state?.backgroundLocation}
                                             />
                                         )}
                                         <div className="show-task-subtasks-add-button">
                                             <Button
                                                 style={{marginTop: subTasks?.length !== 0 ? "1rem" : null}}
                                                 iconClass="far fa-plus"
-                                                onClick={() => navigate(`/tasks/create-task/${task?.section.id}/${task?.id}/${task?.section.project.id}?isSubTask=true`)}
+                                                onClick={() => {
+                                                    navigate(
+                                                        `/create-task/${task?.section.id}/${task?.id}/${task?.section.project.id}?isSubTask=true`,
+                                                        {state: {backgroundLocation: location.state?.backgroundLocation}}
+                                                    )
+                                                }}
                                                 size="sm"
                                                 circleShape
                                             />

@@ -3,19 +3,17 @@ import {
     changePosition,
     createLabel,
     deleteLabel,
-    fetchActivity,
     fetchLabelProjects,
     fetchLabels,
     fetchLabelTasks
 } from "apis/details.api";
+import {fetchActivity, fetchActivityByRange} from "apis/activity.api";
 
 export const useLabelsQuery = (options) => {
     return useQuery(
         "labels",
         fetchLabels,
-        {
-            ...options
-        }
+        options
     );
 };
 
@@ -23,9 +21,6 @@ export const useLabelTasksQuery = (labelId) => {
     return useQuery(
         ["label-tasks", labelId],
         () => fetchLabelTasks(labelId),
-        {
-            initialData: null
-        }
     );
 };
 
@@ -33,9 +28,6 @@ export const useLabelProjectsQuery = (labelId) => {
     return useQuery(
         ["label-projects", labelId],
         () => fetchLabelProjects(labelId),
-        {
-            initialData: null
-        }
     );
 };
 
@@ -130,4 +122,13 @@ export const useActivityQuery = (page) => {
             return pages.length + 1;
         }
     });
+}
+
+export const useChartActivityQuery = (gte, lte, options) => {
+
+    return useQuery(
+        ['chart-activities', `${new Date(gte).toLocaleDateString()}-${new Date(lte).toLocaleDateString()}`],
+        () => fetchActivityByRange(lte, gte),
+        options
+    );
 }

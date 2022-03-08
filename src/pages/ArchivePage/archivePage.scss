@@ -1,0 +1,45 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
+.archive-page-container {
+  .archive-tab-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-left: 0.5rem;
+    height: 80px;
+
+    .archive-tab-bar-item {
+      @include reset_input();
+      color: var(--color-text);
+      padding: 0.5rem 1.5rem;
+      font-size: 22px;
+      cursor: pointer;
+      margin: 1rem 0.5rem;
+      border-radius: 25px;
+      transition: background-color 0.2s;
+      background-color: var(--color-secondary);
+
+      &:hover, &:focus {
+        background-color: var(--color-primary-transparentize);
+      }
+    }
+
+    .archive-tab-bar-item-active {
+      background-color: var(--color-primary-transparentize);
+    }
+  }
+
+  .archive-list-container {
+    height: calc(100vh - 150px);
+
+    .archive-list {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+  }
+}

@@ -6,7 +6,12 @@ export const fetchLabels = async () => {
 };
 
 export const fetchLabelTasks = async (id) => {
-    const tasksResult = await axios.get("/tasks/", {params: {label: id}});
+    const tasksResult = await axios.get("/tasks/", {
+        params: {
+            label: id,
+            completed: false,
+        }
+    });
     return tasksResult.data.results
 };
 
@@ -58,9 +63,4 @@ export const deleteComment = async (id) => {
 export const updateComment = async (id) => {
     const result = await axios.patch(`/comment/${id}`);
     return result.data;
-}
-
-export const fetchActivity = async ({pageParam = 1}) => {
-    const result = await axios.get(`/activity/?page=${pageParam}&ordering=-created`);
-    return result.data.results;
 }

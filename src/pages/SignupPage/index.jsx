@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {signupUser} from "store/actions/Auth.actions";
 import {Link, useNavigate} from "react-router-dom";
+import AnimateComponent from "components/UI/AnimateComponent";
 
 const signup = () => {
     const dispatch = useDispatch();
@@ -67,123 +68,127 @@ const signup = () => {
         return <p>ServerErrorMessage</p>;
     }
 
-    return (<main className="auth-form">
-        <form
-            onSubmit={handleSubmit(handleSignup, handleErrors)}
-            className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
-        >
-            <div
-                className={["form-success-request-layer", isSignedUp === 1 ? "form-success-request-layer-active" : null,].join(" ")}
-            >
-                <span className="fa fa-check-circle"></span>
-            </div>
-            <legend>Sign Up</legend>
-            <div className="form-input-container">
-                <div className="form-input">
-                    <div className="form-input-box col-12">
-                        <input
-                            type="text"
-                            placeholder="Name"
-                            {...register("username", signupFormOptions.username)}
-                            name="username"
-                            className="col-11"
-                            autoComplete="off"
-                        />
-                        <span className="fa fa-envelope col-1"></span>
-                    </div>
-                    <div
-                        className={["form-input-line", errors.username ? "form-input-error-line-active" : null,].join(" ")}
-                    ></div>
-                </div>
-                <div
-                    className={["form-input-box-error", errors.username ? "form-input-error-box-active" : null,].join(" ")}
+    return (
+        <AnimateComponent>
+            <main className="auth-form">
+                <form
+                    onSubmit={handleSubmit(handleSignup, handleErrors)}
+                    className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
                 >
-                    {errors.username && errors.username.message}
-                </div>
-            </div>
-
-            <div className="form-input-container">
-                <div className="form-input">
-                    <div className="form-input-box col-12">
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            {...register("email", signupFormOptions.email)}
-                            name="email"
-                            className="col-11"
-                            autoComplete="off"
-                        />
-                        <span className="fa fa-envelope col-1"></span>
-                    </div>
                     <div
-                        className={["form-input-line", errors.email ? "form-input-error-line-active" : null,].join(" ")}
-                    ></div>
-                </div>
-                <div
-                    className={["form-input-box-error", errors.email ? "form-input-error-box-active" : null,].join(" ")}
-                >
-                    {errors.email && errors.email.message}
-                </div>
-            </div>
-
-            <div className="form-input-container">
-                <div className="form-input">
-                    <div className="form-input-box col-12">
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            {...register("password", signupFormOptions.password)}
-                            name="password"
-                            className="col-11"
-                            autoComplete="off"
-                        />
-                        <span className="fa fa-lock col-1"></span>
+                        className={["form-success-request-layer", isSignedUp === 1 ? "form-success-request-layer-active" : null,].join(" ")}
+                    >
+                        <span className="fa fa-check-circle"></span>
                     </div>
-                    <div
-                        className={["form-input-line", errors.password ? "form-input-error-line-active" : null,].join(" ")}
-                    ></div>
-                </div>
-                <div
-                    className={["form-input-box-error", errors.password ? "form-input-error-box-active" : null,].join(" ")}
-                >
-                    {errors.password && errors.password.message}
-                </div>
-            </div>
-            <div className="form-request-error-box">
+                    <legend>Sign Up</legend>
+                    <div className="form-input-container">
+                        <div className="form-input">
+                            <div className="form-input-box col-12">
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    {...register("username", signupFormOptions.username)}
+                                    name="username"
+                                    className="col-11"
+                                    autoComplete="off"
+                                />
+                                <span className="fa fa-envelope col-1"></span>
+                            </div>
+                            <div
+                                className={["form-input-line", errors.username ? "form-input-error-line-active" : null,].join(" ")}
+                            ></div>
+                        </div>
+                        <div
+                            className={["form-input-box-error", errors.username ? "form-input-error-box-active" : null,].join(" ")}
+                        >
+                            {errors.username && errors.username.message}
+                        </div>
+                    </div>
 
-                {isSignedUp === -1 ? showServerErrors() : null}
+                    <div className="form-input-container">
+                        <div className="form-input">
+                            <div className="form-input-box col-12">
+                                <input
+                                    type="email"
+                                    placeholder="Email"
+                                    {...register("email", signupFormOptions.email)}
+                                    name="email"
+                                    className="col-11"
+                                    autoComplete="off"
+                                />
+                                <span className="fa fa-envelope col-1"></span>
+                            </div>
+                            <div
+                                className={["form-input-line", errors.email ? "form-input-error-line-active" : null,].join(" ")}
+                            ></div>
+                        </div>
+                        <div
+                            className={["form-input-box-error", errors.email ? "form-input-error-box-active" : null,].join(" ")}
+                        >
+                            {errors.email && errors.email.message}
+                        </div>
+                    </div>
 
-            </div>
+                    <div className="form-input-container">
+                        <div className="form-input">
+                            <div className="form-input-box col-12">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    {...register("password", signupFormOptions.password)}
+                                    name="password"
+                                    className="col-11"
+                                    autoComplete="off"
+                                />
+                                <span className="fa fa-lock col-1"></span>
+                            </div>
+                            <div
+                                className={["form-input-line", errors.password ? "form-input-error-line-active" : null,].join(" ")}
+                            ></div>
+                        </div>
+                        <div
+                            className={["form-input-box-error", errors.password ? "form-input-error-box-active" : null,].join(" ")}
+                        >
+                            {errors.password && errors.password.message}
+                        </div>
+                    </div>
+                    <div className="form-request-error-box">
 
-            <button type="submit" className="col-12" disabled={isLoading}>
-                {isLoading ? <span className="fa fa-spinner"></span> : "Sign Up"}
-            </button>
+                        {isSignedUp === -1 ? showServerErrors() : null}
 
-            <div className="form-auth-with-accounts">
-                <div className="form-auth-with-accounts-separator ">
-                    <div></div>
-                    <span>or</span>
-                    <div></div>
-                </div>
-                <ul className="form-auth-with-accounts-list col-8">
-                    <li>
-                        <span className="fab fa-github"></span>
-                    </li>
-                    <li>
-                        <span className="fab fa-google"></span>
-                    </li>
-                    <li>
-                        <span className="fab fa-linkedin"></span>
-                    </li>
-                </ul>
-            </div>
-            <div className="form-helper-text">
-                <p>
-                    Already have an account ? <Link to="/login">Login</Link>
-                </p>
-            </div>
-        </form>
-    </main>);
+                    </div>
+
+                    <button type="submit" className="col-12" disabled={isLoading}>
+                        {isLoading ? <span className="fa fa-spinner"></span> : "Sign Up"}
+                    </button>
+
+                    <div className="form-auth-with-accounts">
+                        <div className="form-auth-with-accounts-separator ">
+                            <div></div>
+                            <span>or</span>
+                            <div></div>
+                        </div>
+                        <ul className="form-auth-with-accounts-list col-8">
+                            <li>
+                                <span className="fab fa-github"></span>
+                            </li>
+                            <li>
+                                <span className="fab fa-google"></span>
+                            </li>
+                            <li>
+                                <span className="fab fa-linkedin"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="form-helper-text">
+                        <p>
+                            Already have an account ? <Link to="/login">Login</Link>
+                        </p>
+                    </div>
+                </form>
+            </main>
+        </AnimateComponent>
+    )
 };
 
 export default signup;

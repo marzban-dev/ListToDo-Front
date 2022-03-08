@@ -4,13 +4,16 @@ import Tasks from "pages/Tasks";
 import ShowProjects from "components/ShowProjects";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import FloatButton from "components/UI/FloatButton";
-import AnimatedPage from "components/UI/AnimatedPage";
+import AnimateComponent from "components/UI/AnimateComponent";
 import ShowComments from "components/ShowComments";
-import "./projectBody.scss";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import EmptySign from "components/UI/EmptySign";
+import {useLocation, useNavigate} from "react-router-dom";
+import "./projectBody.scss";
 
 const ProjectBody = ({project}) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [tabState, setTabState] = useState("p");
     const {data: subProjects} = useProjectsQuery(project.id);
 
@@ -42,7 +45,7 @@ const ProjectBody = ({project}) => {
                 {tabState === "s" && <Tasks project={project} subProject/>}
                 {tabState === "p" && (
                     <React.Fragment>
-                        <AnimatedPage>
+                        <AnimateComponent>
                             <LoadingWrapper
                                 show={!!subProjects} customLoadingComponent={
                                 <SkeletonLoader
@@ -67,14 +70,16 @@ const ProjectBody = ({project}) => {
                                     )
                                 )}
                             </LoadingWrapper>
-                        </AnimatedPage>
-                        <FloatButton float="r" iconClass="far fa-plus" onClick={() => alert('New Project')}/>
+                        </AnimateComponent>
+                        <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
+                            navigate(`/create-project/${project.id}`, {state: {backgroundLocation: location}})
+                        }}/>
                     </React.Fragment>
                 )}
                 {tabState === "c" && (
-                    <AnimatedPage>
+                    <AnimateComponent>
                         <ShowComments id={project.id}/>
-                    </AnimatedPage>
+                    </AnimateComponent>
                 )}
             </div>
         </div>

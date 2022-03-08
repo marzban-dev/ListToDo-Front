@@ -1,12 +1,13 @@
 .activity-page-container {
   width: 100%;
-  height: 100%;
-  margin-left: 2.5rem;
+  padding: 0 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 
-  .activity-sections {
-    display: flex;
-    justify-content: flex-start;
+  @media screen and (max-width: 1410px) {
     align-items: flex-start;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: column-reverse;
   }
 }
