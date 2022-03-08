@@ -18,7 +18,8 @@ export const fetchActivityByRange = async (lteDate, gteDate) => {
             ordering: "-created",
             created__gte: gteDate,
             created__lte: lteDate,
-            pagination: false
+            pagination: false,
+            lite: true
         }
     });
     return result.data;

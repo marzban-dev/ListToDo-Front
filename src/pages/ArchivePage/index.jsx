@@ -55,7 +55,7 @@ const ArchivePage = () => {
                                     archivedProjects.length !== 0 ? (
                                         <div className="archive-list">
                                             {archivedProjects.map(prj => {
-                                                return <ArchiveItem type="project" data={prj.project} key={prj.id}/>;
+                                                return <ArchiveItem type="project" data={prj} key={prj.id}/>;
                                             })}
                                         </div>
                                     ) : (

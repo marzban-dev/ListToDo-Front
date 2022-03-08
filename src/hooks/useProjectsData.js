@@ -153,13 +153,13 @@ export const useUpdateProjectQuery = (parentId, options) => {
             });
 
             queryClient.setQueryData(["project", Number(projectData.id)], oldProject => {
-                const userToUpdateIndex = oldProject.users.findIndex(usr => usr.owner.id === user.id);
-                const copyOfUsersData = [...oldProject.users];
-                copyOfUsersData[userToUpdateIndex] = {
-                    ...copyOfUsersData[userToUpdateIndex],
-                    ...newPersonalData
-                }
                 if (oldProject) {
+                    const userToUpdateIndex = oldProject.users.findIndex(usr => usr.owner.id === user.id);
+                    const copyOfUsersData = [...oldProject.users];
+                    copyOfUsersData[userToUpdateIndex] = {
+                        ...copyOfUsersData[userToUpdateIndex],
+                        ...newPersonalData
+                    }
                     return {
                         ...oldProject,
                         ...projectUpdatedData,
@@ -167,9 +167,7 @@ export const useUpdateProjectQuery = (parentId, options) => {
                     };
                 } else return oldProject;
             });
-
-
-            if (projectUpdatedData.hasOwnProperty('archive') && previousProjectData.archive) {
+            if (projectUpdatedData.hasOwnProperty('archive')) {
                 queryClient.setQueryData("archived-projects", oldArchivedProjects => {
                     if (oldArchivedProjects) return oldArchivedProjects.filter(prj => prj.project.id !== projectData.id)
                     else return oldArchivedProjects;

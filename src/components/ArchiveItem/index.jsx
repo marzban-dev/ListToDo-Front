@@ -6,7 +6,7 @@ import {useUpdateProjectQuery} from "hooks/useProjectsData";
 
 const ArchiveItem = ({type, data}) => {
     const {mutateAsync: updateSection} = useUpdateSectionQuery(data.id, data.project.id);
-    const {mutateAsync: updateProject} = useUpdateProjectQuery(data?.project);
+    const {mutateAsync: updateProject} = useUpdateProjectQuery(data?.project?.project);
 
     const unArchiveSection = catchAsync(async () => {
         await updateSection({id: data.id, data: {archive: false}});
@@ -17,11 +17,18 @@ const ArchiveItem = ({type, data}) => {
     });
 
     const unArchiveProject = catchAsync(async () => {
-        await updateProject({projectData: data.id, data: {archive: false}});
+        await updateProject({
+            data: {archive: false},
+            personalizeData: {
+                label: data.label,
+                color: data.color,
+            },
+            projectData: data.project
+        });
     }, {
-        onLoad: `Un archiving project ${data.title}`,
-        onSuccess: `Project ${data.title} un archived`,
-        onError: `Un archive project ${data.title} failed`
+        onLoad: `Un archiving project ${data.project.title}`,
+        onSuccess: `Project ${data.project.title} un archived`,
+        onError: `Un archive project ${data.project.title} failed`
     });
 
     return (
@@ -29,7 +36,7 @@ const ArchiveItem = ({type, data}) => {
             <div className="archive-item-info">
                 <div className="archive-item-info-left">
                     <span className={["far", type === "project" ? "fa-briefcase" : "fa-tasks"].join(' ')}></span>
-                    <h4>{data.title}</h4>
+                    <h4>{type === "project" ? data.project.title : data.title}</h4>
                 </div>
                 <button
                     className="archive-item-remove-btn"
