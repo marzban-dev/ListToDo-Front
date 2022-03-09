@@ -39,7 +39,7 @@ body {
   justify-content: center;
 }
 
-.infinite-scroll-component  {
+.infinite-scroll-component {
   overflow: visible !important;
 }
 
@@ -87,6 +87,10 @@ body {
   border-radius: 15px !important;
   z-index: 888;
   cursor: default;
+
+  @media screen and (max-width: 768px) {
+    margin: 0 1rem;
+  }
 }
 
 .react-modal-overlay {

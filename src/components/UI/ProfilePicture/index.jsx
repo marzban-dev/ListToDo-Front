@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import xImg from "assets/img/MEBIB.gif";
+import profilePlaceholder from "assets/img/user-profile-placeholder.jpeg";
 import Button from "components/UI/Button";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import "./profilePicture.scss";
@@ -23,7 +23,7 @@ const ProfilePicture =
             setIsProfileLoaded(false);
 
             if (profilePicture !== null) profileImageElement.current.src = null;
-            else profileImageElement.current.src = xImg;
+            else profileImageElement.current.src = profilePlaceholder;
 
             const preloadImage = new Image();
 

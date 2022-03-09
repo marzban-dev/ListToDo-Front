@@ -90,7 +90,9 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
                                 {user ? user.username : null}
                             </Link>
                             :
-                            <span>Please login</span>
+                            <Link to="/login">
+                               Tap to login
+                            </Link>
                         }
                     </div>
                 </div>

@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
 
+
   &:hover,
   &:focus {
     background-color: var(--color-primary);
@@ -60,5 +61,12 @@ $listOfSizes: (
     width: map-get($properties, "w");
     height: map-get($properties, "w");
     border-radius: 50%;
+
+    @if($size == 'xs') {
+      @media screen and (max-width: 768px) {
+        width: 25px;
+        height: 25px;
+      }
+    }
   }
 }

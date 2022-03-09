@@ -67,7 +67,7 @@ const signup = () => {
             <main className="auth-form">
                 <form
                     onSubmit={handleSubmit(handleSignup)}
-                    className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
+                    className="col-10 col-sm-7 col-md-5 col-lg-4 col-xl-3"
                 >
                     <div
                         className={["form-success-request-layer", isSignedUp === 1 ? "form-success-request-layer-active" : null,].join(" ")}
@@ -86,7 +86,7 @@ const signup = () => {
                                     className="col-11"
                                     autoComplete="off"
                                 />
-                                <span className="fa fa-envelope col-1"></span>
+                                <span className="fa fa-user col-1"></span>
                             </div>
                             <div
                                 className={["form-input-line", errors.username ? "form-input-error-line-active" : null,].join(" ")}

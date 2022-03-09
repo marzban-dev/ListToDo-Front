@@ -130,16 +130,16 @@ const ProjectHeader = ({project}) => {
                 darkLayerOpacity={0.5}
             />
             <div className="project-head-details">
-                <div className="project-head-top">
+                <div className="project-head-top-section">
                     <h3>{project.title}</h3>
                     <SelectMenu buttonAxis="v" options={selectMenuOptions} type="executable-options"/>
                 </div>
-                <div className="project-head-bottom">
+                <div className="project-head-bottom-section">
                     <div className="project-head-bottom-left-side">
                         {project.schedule && (
                             <ScheduleProgressBar
                                 createdTime={project.created}
-                                deadTime={'Sun Feb 06 2022 13:59:24 GMT+0330 (Iran Standard Time)'}
+                                deadTime={project.schedule}
                                 width={180}
                             />
                         )}

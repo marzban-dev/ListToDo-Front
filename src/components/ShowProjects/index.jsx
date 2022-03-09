@@ -1,8 +1,8 @@
 import React from "react";
 import SortableProject, {Project} from "components/Project";
 import {SortableContainer} from "react-sortable-hoc";
-import "./showProjects.scss";
 import sortListItems from "utils/SortListItems";
+import "./showProjects.scss";
 
 export const ShowProjects = ({projects, secondaryColor, sortable = true}) => {
     return (

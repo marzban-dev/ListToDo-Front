@@ -18,6 +18,15 @@
     background-color: var(--color-input-bg-hover);
   }
 
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    z-index: 900;
+  }
+
   textarea {
     @include reset_input();
     color: var(--color-input-text);

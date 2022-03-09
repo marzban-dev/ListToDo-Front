@@ -7,6 +7,11 @@
     transform: translateY(1.5px);
     margin-right: 0.5rem;
     transition: color 0.25s;
+
+    @media screen and (max-width: 500px) {
+      font-size: 18px;
+      margin-right: 0.25rem;
+    }
   }
 }
 

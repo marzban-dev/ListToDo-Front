@@ -66,7 +66,7 @@ const login = () => {
             <main className="auth-form">
                 <form
                     onSubmit={handleSubmit(handleLogin)}
-                    className="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3"
+                    className="col-10 col-sm-7 col-md-5 col-lg-4 col-xl-3"
                 >
                     <div
                         className={[
@@ -88,7 +88,7 @@ const login = () => {
                                     className="col-11"
                                     autoComplete="off"
                                 />
-                                <span className="fa fa-envelope col-1"></span>
+                                <span className="fa fa-user col-1"></span>
                             </div>
                             <div
                                 className={[

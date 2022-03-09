@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import Member from "components/Member";
-import "./activity.scss";
 import ReactTooltip from "react-tooltip";
+import "./activity.scss";
 
 const Activity = ({activity}) => {
 

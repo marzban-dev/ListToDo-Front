@@ -8,13 +8,8 @@ import {useLabelProjectsQuery, useLabelTasksQuery} from "hooks/useDetailsData";
 import "./labelTabs.scss";
 
 const LabelTabs = ({selectedLabelId}) => {
-    // const queryClient = useQueryClient();
     const {data: labelTasks} = useLabelTasksQuery(selectedLabelId);
     const {data: labelProjects} = useLabelProjectsQuery(selectedLabelId);
-    // const labelTasks = queryClient.getQueryData(['label-tasks', selectedLabelId]);
-    // const labelProjects = queryClient.getQueryData(['label-projects', selectedLabelId]);
-
-    console.log(labelTasks);
 
     const [tabState, setTabState] = useState("tasks");
 

@@ -14,12 +14,13 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    width: 100%;
 
     .head-wrapper-separator {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-right: 1.25rem;
+      width: min-content;
     }
 
     .title-input {
@@ -29,6 +30,7 @@
       transition: background-color 0.25s;
       color: var(--color-text);
       font-size: 20px;
+      width: 200px;
 
       &::placeholder {
         color: var(--color-icon);

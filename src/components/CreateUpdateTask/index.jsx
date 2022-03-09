@@ -96,15 +96,15 @@ export const CreateUpdateTask = ({mode}) => {
 
     const modalContent = (
         <React.Fragment>
-            <div className="create-new-task-head-wrapper col-12">
+            <div className="create-new-task-head-wrapper">
                 <input
                     type="text"
                     placeholder="Title"
-                    className="title-input col-7"
+                    className="title-input"
                     onChange={onTitleChanged}
                     value={taskTitle}
                 />
-                <div className="head-wrapper-separator col-3">
+                <div className="head-wrapper-separator">
                     <SelectAssignee
                         taskAssignee={taskAssignee}
                         setTaskAssignee={setTaskAssignee}

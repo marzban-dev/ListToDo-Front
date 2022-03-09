@@ -20,6 +20,7 @@ const ArchiveItem = ({type, data}) => {
         await updateProject({
             data: {archive: false},
             personalizeData: {
+                id: data.id,
                 label: data.label,
                 color: data.color,
             },

@@ -189,9 +189,17 @@ form {
     justify-content: center;
     align-items: center;
 
+    @media screen and (max-width: 500px){
+      padding-top: 1.25rem;
+    }
+
     p {
       font-size: 14px;
       color: var(--color-text);
+
+      @media screen and (max-width: 500px){
+        font-size: 12px;
+      }
 
       a {
         text-decoration: none;

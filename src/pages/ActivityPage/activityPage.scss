@@ -5,6 +5,14 @@
   justify-content: space-between;
   align-items: flex-start;
 
+  @media screen and (max-width: 768px) {
+    padding: 0 1.75rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 0 1rem;
+  }
+
   @media screen and (max-width: 1410px) {
     align-items: flex-start;
     justify-content: flex-start;

@@ -93,7 +93,7 @@ const App = () => {
                 }
 
             </div>
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right"/>
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-left"/>
         </div>
     );
 };

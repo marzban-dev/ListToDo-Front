@@ -2,12 +2,14 @@
 @import "src/assets/scss/mixins";
 
 .labels-container {
+  @include reset_scrollbar();
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 
   .labels {
     @include reset_scrollbar();
@@ -15,11 +17,20 @@
     justify-content: flex-start;
     align-items: flex-start;
     overflow-x: scroll;
-    margin-top: 2rem;
-    height: 100px;
+    margin-top: 1.75rem;
+    min-height: 68px;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 1.25rem;
+    }
 
     .create-input-container {
       margin: 0 2.5rem 0 2rem;
+      padding:0;
+
+      @media screen and (max-width: 768px) {
+        margin: 0 2.5rem 0 1rem;
+      }
     }
 
     .labels-list {

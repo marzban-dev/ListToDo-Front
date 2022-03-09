@@ -71,6 +71,7 @@ const CreateUpdateProject = ({mode}) => {
         const personalizeDataToUpdate = {
             label: projectLabels,
             color: projectColor,
+            id: project && project.users.find(usr => usr.owner.id === user.id).id
         };
 
         if (newProjectWallpaper) personalizeDataToUpdate['background'] = newProjectWallpaper;

@@ -28,12 +28,22 @@
       font-size: 50px;
       color: var(--color-loading-screen-spinner);
       margin-bottom: 0.75rem;
+
+      @media screen and (max-width: 500px) {
+        margin-bottom: 0.5rem;
+        font-size: 40px;
+      }
     }
 
     p {
       color: var(--color-text);
       font-size: 22px;
       margin-top: 0.75rem;
+
+      @media screen and (max-width: 500px) {
+        font-size: 18px;
+        margin-top: 0.5rem;
+      }
     }
   }
 }

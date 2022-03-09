@@ -20,9 +20,17 @@ header {
       @include reset_input();
       padding-right: 1rem;
 
+      @media screen and (max-width: 500px) {
+        padding-right:0.75rem;
+      }
+
       span {
         color: var(--color-icon);
         font-size: 25px;
+        transform: translateY(1px);
+        @media screen and (max-width: 500px) {
+          font-size: 22px;
+        }
       }
 
       @media screen and (min-width: 768px) {
@@ -34,6 +42,9 @@ header {
       margin: 0;
       color: var(--color-text);
 
+      @media screen and (max-width: 500px) {
+        font-size: 18px;
+      }
     }
   }
 
@@ -53,6 +64,10 @@ header {
 
       span {
         color: var(--color-icon);
+
+        @media screen and (max-width: 500px) {
+          font-size: 18px;
+        }
       }
     }
 
@@ -62,9 +77,16 @@ header {
       align-items: center;
       padding: 0 2rem 0 1rem;
 
-      a, span {
+      @media screen and (max-width: 500px) {
+        padding: 0 1rem 0 0.75rem;
+      }
 
+      a, span {
         color: var(--color-text);
+        white-space: nowrap;
+        @media screen and (max-width: 500px) {
+          font-size: 14px;
+        }
       }
 
       a {

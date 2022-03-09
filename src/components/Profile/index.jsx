@@ -58,7 +58,11 @@ const Profile = () => {
 
     return (
         <div className="profile">
-            <ProfileWallpaper wallpaperPicture={wallpaper} className="profile-background-image-loader"/>
+            <ProfileWallpaper
+                wallpaperPicture={wallpaper}
+                className="profile-background-image-loader"
+                darkLayerOpacity={0.5}
+            />
             <div className="profile-picture-container">
                 <ProfilePicture
                     shadow

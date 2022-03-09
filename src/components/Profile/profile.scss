@@ -9,6 +9,10 @@
   justify-content: flex-start;
   align-items: flex-end;
 
+  @media screen and (max-width: 768px) {
+    height: 140px;
+  }
+
   .profile-background-image-loader {
     position: absolute;
     z-index: 100;
@@ -24,6 +28,13 @@
     transform: translateY(35px);
     margin-left: 1rem;
     z-index: 200;
+
+    .profile-picture {
+      @media screen and (max-width: 768px) {
+        width: 65px;
+        height: 65px;
+      }
+    }
 
     .profile-name {
       font-size: 18px;

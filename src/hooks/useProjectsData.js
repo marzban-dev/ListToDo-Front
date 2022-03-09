@@ -134,11 +134,11 @@ export const useUpdateProjectQuery = (parentId, options) => {
                 });
             });
 
-
             queryClient.setQueryData(["projects", Number(parentId)], oldProjects => {
+                console.log(oldProjects,projectData);
                 if (oldProjects) {
                     return oldProjects.map(project => {
-                        if (project.id === projectData.id) {
+                        if (project.project.id === projectData.id) {
                             return {
                                 ...project,
                                 ...newPersonalData,

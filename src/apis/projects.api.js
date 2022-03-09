@@ -36,7 +36,7 @@ export const deleteProject = async (project) => {
 
 export const updateProject = async ({data, personalizeData, projectData}) => {
     await axios.patch(`/project/${projectData.id}/`, data);
-    const result = await axios.patch(`/project/${projectData.id}/personalize/`, {
+    const result = await axios.patch(`/project/${personalizeData.id}/personalize/`, {
         color: personalizeData.color,
         label: personalizeData.label
     });
@@ -44,7 +44,7 @@ export const updateProject = async ({data, personalizeData, projectData}) => {
     if (personalizeData.hasOwnProperty('background')) {
         const backgroundFormData = new FormData();
         backgroundFormData.append('background', personalizeData.background, personalizeData.background.name);
-        const result = await axios.patch(`/project/${projectData.id}/personalize/`, backgroundFormData);
+        const result = await axios.patch(`/project/${personalizeData.id}/personalize/`, backgroundFormData);
         return result.data;
     }
 
@@ -53,15 +53,23 @@ export const updateProject = async ({data, personalizeData, projectData}) => {
 
 export const createProject = async ({data, personalizeData}) => {
     const {data: createdProject} = await axios.post(`/project/`, data);
-    const result = await axios.patch(`/project/${createdProject.id}/personalize/`, {
-        color: personalizeData.color,
-        label: personalizeData.label
-    });
+    const {data: user} = await axios.get("/myinfo/");
+    console.log(user);
+    const result = await axios.patch(
+        `/project/${createdProject.users.find(usr => usr.owner.id === user.id).id}/personalize/`,
+        {
+            color: personalizeData.color,
+            label: personalizeData.label
+        }
+    );
 
     if (personalizeData.hasOwnProperty('background')) {
         const backgroundFormData = new FormData();
         backgroundFormData.append('background', personalizeData.background, personalizeData.background.name);
-        const result = await axios.patch(`/project/${createdProject.id}/personalize/`, backgroundFormData);
+        const result = await axios.patch(
+            `/project/${createdProject.users.find(usr => usr.owner.id === user.id).id}/personalize/`,
+            backgroundFormData
+        );
         return result.data;
     }
 
