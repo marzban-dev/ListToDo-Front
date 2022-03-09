@@ -13,6 +13,7 @@ const Member = ({picture, name, defaultIconSize = "20px", disableHover, style}) 
             data-tip={name}
             data-effect="solid"
             style={style}
+            onClick={(e) => e.stopPropagation()}
         >
             {picture ? <img src={picture} alt={name}/> :
                 <span style={{fontSize: defaultIconSize}} className="far fa-user-circle"></span>}
