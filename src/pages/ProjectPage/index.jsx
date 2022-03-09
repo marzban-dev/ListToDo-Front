@@ -31,7 +31,12 @@ const ProjectPage = () => {
     return (
         <PageContainer>
             <div className="project-page-container">
-                <LoadingWrapper show={!isProjectLoading} type="circle" size="lg" onLoaded={renderProject}/>
+                <LoadingWrapper
+                    show={!isProjectLoading}
+                    type="circle" size="lg"
+                    onLoaded={renderProject}
+                    style={{width: "100%",height: "100%"}}
+                />
             </div>
         </PageContainer>
     );

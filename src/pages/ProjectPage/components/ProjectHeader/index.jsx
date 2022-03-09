@@ -75,6 +75,7 @@ const ProjectHeader = ({project}) => {
             personalizeData: {
                 label: project.users.find(usr => usr.owner.id === user.id).label,
                 color: project.users.find(usr => usr.owner.id === user.id).color,
+                id: project.users.find(usr => usr.owner.id === user.id).id
             },
             projectData: project
         });
@@ -111,11 +112,19 @@ const ProjectHeader = ({project}) => {
         const projectLabels = project.users.find(usr => usr.owner.id === user.id).label;
         const labelsToShow = labels.filter(label => projectLabels.includes(label.id));
 
-        return labelsToShow.map((label) => {
-            return (
-                <LabelItem key={label.id} title={label.title} onClick={() => navigate("/labels/" + label.id)}/>
-            );
-        });
+        return labelsToShow.length !== 0 && (
+            <div className="project-labels">
+                {labelsToShow.map((label) => {
+                    return (
+                        <LabelItem
+                            key={label.id}
+                            title={label.title}
+                            onClick={() => navigate("/labels/" + label.id)}
+                        />
+                    );
+                })}
+            </div>
+        );
     }
 
     return (
@@ -143,9 +152,7 @@ const ProjectHeader = ({project}) => {
                                 width={180}
                             />
                         )}
-                        <div className="project-labels">
-                            {renderLabels()}
-                        </div>
+                        {renderLabels()}
                     </div>
                     <div className="project-head-bottom-right-side">
                         {!!project.users && (

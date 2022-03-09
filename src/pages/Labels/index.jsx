@@ -18,7 +18,9 @@ const Labels = () => {
     const labels = queryClient.getQueryData('labels');
     const {mutateAsync: createLabel} = useCreateLabelQuery();
 
-    const [selectedLabelId, setSelectedLabelId] = useState(id ? Number(id) : labels[0].id);
+    const [selectedLabelId, setSelectedLabelId] = useState(
+        id ? Number(id) : (labels.length !== 0 ? labels[0].id : 0)
+    );
 
     useEffect(() => {
         if (id) {

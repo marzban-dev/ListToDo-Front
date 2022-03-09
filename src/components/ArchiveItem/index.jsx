@@ -48,7 +48,7 @@ const ArchiveItem = ({type, data}) => {
             </div>
             <div className="archive-item-date">
                 <span className="archive-item-data-date">
-                  {new Date(data.created).toLocaleDateString()} {new Date(data.created).toLocaleTimeString()}
+                  {new Date(data.project.created).toLocaleDateString()} {new Date(data.project.created).toLocaleTimeString()}
                 </span>
             </div>
         </div>

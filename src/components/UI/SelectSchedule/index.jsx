@@ -6,9 +6,7 @@ const SelectSchedule = ({scheduleDate, setSchedule}) => {
     return (
         <div className="schedule">
             <DatePicker
-                calendarClassName=""
                 className="schedule-input"
-                dayClassName=""
                 showTime={{use12Hours: true, format: "hh:mm a"}}
                 dateFormat="yyyy-MM-dd hh:mm a"
                 closeOnScroll={false}

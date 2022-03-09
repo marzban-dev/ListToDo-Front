@@ -44,12 +44,18 @@ const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
         <div className="schedule-progress-container">
             <div className="schedule-progress-bar-container">
                 <div className="schedule-progress-bar-date-icons">
-                    <div className="schedule-progress-bar-date-icon"
-                         data-tip={(new Date(createdTime).toLocaleString())}>
+                    <div
+                        className="schedule-progress-bar-date-icon"
+                        data-tip={(new Date(createdTime).toLocaleString())}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <span className="far fa-calendar-plus"></span>
                     </div>
-                    <div className="schedule-progress-bar-date-icon"
-                         data-tip={(new Date(deadTime).toLocaleString())}>
+                    <div
+                        className="schedule-progress-bar-date-icon"
+                        data-tip={(new Date(deadTime).toLocaleString())}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <span className="far fa-calendar-check"></span>
                     </div>
                 </div>
@@ -63,6 +69,7 @@ const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
                     data-tip={passedTime}
                     data-delay-update={1000}
                     data-effect="solid"
+                    onClick={(e) => e.stopPropagation()}
                 >
                     <div className="schedule-progress-bar-text">{remainingTime}</div>
                     <div

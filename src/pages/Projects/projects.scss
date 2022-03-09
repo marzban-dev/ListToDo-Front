@@ -4,4 +4,8 @@
 .projects {
   height: 100%;
   padding: 1rem;
+
+  @media screen and (max-width: 600px) {
+    padding: 1rem 0 0 0;
+  }
 }
