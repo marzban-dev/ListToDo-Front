@@ -30,6 +30,7 @@ const AppRoutes = () => {
             <AnimatePresence exitBeforeEnter>
                 <Routes key={location.pathname.split("/")[0]} location={location.state?.backgroundLocation || location}>
                     <Route path="/" element={<LayoutsContainer/>}>
+                        <Route index element={<Home/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="signup" element={<Signup/>}/>
                         <Route path="404" element={<NotFoundPage/>}/>
@@ -44,7 +45,7 @@ const AppRoutes = () => {
                         <Route path="join-to-project/:inviteSlug" element={<RequireAuth><JoinToProjectPage/></RequireAuth>}/>
                         <Route path="activity" element={<RequireAuth><ActivityPage/></RequireAuth>}/>
                         <Route path="archive" element={<RequireAuth><ArchivePage/></RequireAuth>}/>
-                        <Route index element={<Home/>}/>
+                        <Route path="/*" element={<Navigate to="/404" replace/>}/>
                     </Route>
                 </Routes>
             </AnimatePresence>
@@ -60,7 +61,6 @@ const AppRoutes = () => {
                         <Route path="/update-project/:parentId/:projectId"
                                element={<RequireAuth><CreateUpdateProject mode="modify"/></RequireAuth>}/>
                         <Route path="/task/:taskId" element={<RequireAuth><ShowTask/></RequireAuth>}/>
-                        <Route path="/*" element={<Navigate to="/404" replace/>}/>
                     </Routes>
                 </AnimatePresence>
             )}
