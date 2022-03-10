@@ -110,6 +110,9 @@
   button {
     width: 40px;
     border-radius: 5px;
+    @media screen and (max-width: 480px) {
+      width: 40px;
+    }
   }
 
   div {
@@ -120,5 +123,13 @@
     overflow-x: scroll;
     white-space: nowrap;
     width: 225px;
+
+    @media screen and (max-width: 480px) {
+      width: 300px;
+    }
+
+    @media screen and (max-width: 390px) {
+      width: 280px;
+    }
   }
 }

@@ -1,12 +1,21 @@
 import {toast} from "react-toastify";
 
+window.addEventListener('resize', () => {
+    if (window.innerWidth < 768) {
+        TOASTIFY_OPTIONS.position = "bottom-center";
+    } else {
+        TOASTIFY_OPTIONS.position = "top-center";
+    }
+});
+
 export const TOASTIFY_OPTIONS = {
     autoClose: 1100,
     closeOnClick: true,
-    position: "top-center",
+    position: window.innerWidth < 768 ? "bottom-center" : "top-center",
     pauseOnHover: false,
     hideProgressBar: true,
-    theme: localStorage.getItem("APP_THEME") ? localStorage.getItem("APP_THEME") : 'light'
+    theme: localStorage.getItem("APP_THEME") ? localStorage.getItem("APP_THEME") : 'light',
+    draggable : false
 };
 
 export const SKELETON_OPTIONS = {
@@ -16,7 +25,7 @@ export const SKELETON_OPTIONS = {
 
 export const CHART_JS_OPTIONS = {
     backgroundColor: getComputedStyle(document.body).getPropertyValue("--color-primary-lighten"),
-    borderColor : getComputedStyle(document.body).getPropertyValue("--color-primary"),
+    borderColor: getComputedStyle(document.body).getPropertyValue("--color-primary"),
 }
 
 export const REACT_MODAL_OPTIONS = {
