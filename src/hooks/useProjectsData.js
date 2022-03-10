@@ -135,7 +135,6 @@ export const useUpdateProjectQuery = (parentId, options) => {
             });
 
             queryClient.setQueryData(["projects", Number(parentId)], oldProjects => {
-                console.log(oldProjects,projectData);
                 if (oldProjects) {
                     return oldProjects.map(project => {
                         if (project.project.id === projectData.id) {

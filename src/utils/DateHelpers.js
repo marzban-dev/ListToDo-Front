@@ -21,9 +21,9 @@ export const ConvertToHumanReadableDate = (dateTime) => {
 
     let readableDate = "";
     if (duration.days !== 0) readableDate += `${Math.abs(duration.days)} day and `;
-    if (duration.hours !== 0) readableDate += `${Math.abs(duration.hours)} : `;
-    if (duration.minutes !== 0) readableDate += `${Math.abs(duration.minutes)} : `;
-    readableDate += `${Math.abs(duration.seconds)}`;
+    if (duration.hours !== 0) readableDate += `${Math.abs(duration.hours)}h : `;
+    if (duration.minutes !== 0) readableDate += `${Math.abs(duration.minutes)}m : `;
+    readableDate += `${Math.abs(duration.seconds)}s`;
 
     return {readableDate, isLeft: !(duration.seconds < 0)};
 }

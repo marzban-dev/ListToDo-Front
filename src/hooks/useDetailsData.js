@@ -114,9 +114,7 @@ export const useChangePositionQuery = (key) => {
     });
 }
 
-export const useActivityQuery = (page) => {
-    const queryClient = useQueryClient();
-
+export const useActivityQuery = () => {
     return useInfiniteQuery(['activities'], fetchActivity, {
         getNextPageParam: (_lastPage, pages) => {
             return pages.length + 1;
@@ -125,7 +123,6 @@ export const useActivityQuery = (page) => {
 }
 
 export const useChartActivityQuery = (gte, lte, options) => {
-
     return useQuery(
         ['chart-activities', `${new Date(gte).toLocaleDateString()}-${new Date(lte).toLocaleDateString()}`],
         () => fetchActivityByRange(lte, gte),

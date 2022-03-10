@@ -10,7 +10,10 @@ export const fetchActivity = async ({pageParam = 1}) => {
             lite: false
         }
     });
-    return result.data.results;
+    return {
+        list: result.data.results,
+        count: result.data.count
+    };
 }
 
 export const fetchActivityByRange = async (lteDate, gteDate) => {

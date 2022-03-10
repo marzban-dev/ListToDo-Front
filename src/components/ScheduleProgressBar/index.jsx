@@ -71,7 +71,7 @@ const ScheduleProgressBar = ({createdTime, deadTime, width = 120}) => {
                     data-effect="solid"
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="schedule-progress-bar-text">{remainingTime}</div>
+                    <div className="schedule-progress-bar-text">{progressPercent === 100 ? "Finished" : remainingTime}</div>
                     <div
                         className="schedule-progress-bar-bar"
                         style={{width: progressPercent + "%"}}

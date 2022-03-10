@@ -6,15 +6,21 @@ import {useActivityQuery} from "hooks/useDetailsData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import "./activityTree.scss";
+import EmptySign from "components/UI/EmptySign";
 
 const ActivityTree = () => {
-    const {data: activities, hasNextPage, fetchNextPage} = useActivityQuery();
+    const {data: activities, fetchNextPage} = useActivityQuery();
 
     const renderActivities = () => {
 
         const groupedActivities = {};
         const allActivities = [];
-        activities.pages.forEach(page => page.forEach(activity => allActivities.push(activity)));
+        const activitiesCount = activities.pages[0].count;
+        let fetchedActivitiesCount = 0;
+        activities.pages.forEach(page => page.list.forEach(activity => {
+            fetchedActivitiesCount += 1;
+            allActivities.push(activity);
+        }));
 
         allActivities.forEach(activity => {
             const activityDate = new Date(activity.created).toDateString();
@@ -25,12 +31,10 @@ const ActivityTree = () => {
             }
         });
 
-
-        return (
-
+        return activitiesCount !== 0 ? (
             <InfiniteScroll
                 next={fetchNextPage}
-                hasMore={hasNextPage}
+                hasMore={fetchedActivitiesCount < activitiesCount}
                 scrollThreshold={1}
                 loader={<Spinner type="circle" style={{width: "100%", padding: "3rem 0"}}/>}
                 dataLength={
@@ -41,7 +45,7 @@ const ActivityTree = () => {
                             .reduce((oldL, newL) => oldL + newL)
                     ) : 0
                 }
-                endMessage={"No More Result"}
+                endMessage={<div className="activity-end-of-list">No more activities</div>}
                 scrollableTarget="scrollable-container"
             >
                 <div className="activity-sections">
@@ -56,8 +60,7 @@ const ActivityTree = () => {
                     })}
                 </div>
             </InfiniteScroll>
-
-        )
+        ) : <EmptySign text="There are no any activities" style={{height : "calc(100vh - 70px)"}}/>
     }
 
     return (
