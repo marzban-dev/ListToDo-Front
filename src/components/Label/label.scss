@@ -6,9 +6,19 @@
   align-items: center;
   background-color: var(--color-secondary);
   position: relative;
-  border-radius: 0 15px 15px 0;
+  border-radius: 0 8px 8px 0;
   cursor: pointer;
-  transition: background-color 0.2s;
+
+  .label-border {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 0 25px 25px 0;
+    background-color: var(--color-secondary);
+    transition: background-color 0.2s;
+  }
 
   .label-text-wrapper {
     padding-left: 22px;
@@ -31,7 +41,6 @@
     position: absolute;
     left: -20px;
     background-color: var(--color-secondary);
-    transition: background-color 0.2s;
 
     div {
       width: 13px;
@@ -47,17 +56,13 @@
 }
 
 .label-active {
-  background-color: var(--color-labels-tab-bg-active);
-
-  .label-shape {
-    background-color: var(--color-labels-tab-bg-active);
+  .label-border {
+    background-color: var(--color-labels-tab-active);
   }
 }
 
 .label-hover {
-  background-color: var(--color-labels-tab-bg-hover);
-
-  .label-shape {
-    background-color: var(--color-labels-tab-bg-hover);
+  .label-border {
+    background-color: var(--color-labels-tab-hover);
   }
 }

@@ -25,6 +25,8 @@ export const refreshToken = async () => {
             refresh: oldRefreshToken,
         });
 
+        // refresh token worked and user fetched
+
         const accessToken = newToken.data.access;
         const refreshToken = newToken.data.refresh;
 
@@ -35,10 +37,11 @@ export const refreshToken = async () => {
         localStorage.setItem("AUTH_REFRESH_TOKEN", refreshToken);
 
         // Again, checking the user to login.
-        const user = await axios.get("/myinfo/");
-        return user.data;
+        const response = await axios.get("/myinfo/");
+        return response.data;
 
     } else {
+        // access token is not exist and we are throwing an error
         throw new Error("refresh_token_not_found");
     }
 }
@@ -50,8 +53,10 @@ export const check = async () => {
         if (accessToken) {
             // Get user from server if access token is exists.
             const user = await axios.get("/myinfo/");
+            // access token worked and user fetched
             return user.data;
         } else {
+            // access token is not exist and we are going to try refresh
             return await refreshToken();
         }
     } catch (error) {
@@ -59,14 +64,16 @@ export const check = async () => {
         // then refreshToken() function is going to run to refreshing the tokens.
 
         if (error.response && error.response.data.messages[0].token_type === "access") {
-            refreshToken().then(user => {
-                return user;
-            }).catch(error => {
+            // the error from access token
+            return refreshToken().then(user => user).catch(error => {
+                // all tokens are not valid
                 console.log(error);
                 localStorage.removeItem("AUTH_ACCESS_TOKEN");
                 localStorage.removeItem("AUTH_REFRESH_TOKEN");
+                return undefined;
             });
         } else {
+            // the error from other reason
             localStorage.removeItem("AUTH_ACCESS_TOKEN");
             localStorage.removeItem("AUTH_REFRESH_TOKEN");
             throw error;

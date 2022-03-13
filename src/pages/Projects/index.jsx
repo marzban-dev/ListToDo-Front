@@ -27,12 +27,10 @@ const Projects = () => {
     //     dispatch(setProjects(returnedItems));
     // };
 
-    console.log(projects);
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         catchAsync(async () => {
             const {list, newPosition} = changeListItemPosition(oldIndex, newIndex, projects);
-            console.log(projects, list, newPosition)
             const itemId = projects[oldIndex].id;
             await changePosition({
                 id: itemId,

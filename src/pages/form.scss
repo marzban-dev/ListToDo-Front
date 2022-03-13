@@ -23,7 +23,7 @@ form {
   overflow: hidden;
 
   legend {
-    color: var(--color-text);
+    color: var(--color-auth-page-text);
     font-size: 36px;
     margin-bottom: 1rem;
   }
@@ -45,7 +45,7 @@ form {
 
     span {
       font-size: 60px;
-      color: var(--color-text);
+      color: var(--color-auth-page-text);
     }
   }
 
@@ -65,8 +65,12 @@ form {
 
         input {
           @include reset_input();
-          color: var(--color-text);
+          color: var(--color-auth-page-text);
           padding: 0.5rem 0;
+
+          &::placeholder {
+            color : var(--color-icon);
+          }
         }
 
         span {
@@ -130,7 +134,7 @@ form {
     @include reset_input();
     margin-top: 2rem;
     background-color: var(--color-primary-lighten);
-    color: var(--color-text);
+    color: var(--color-auth-page-text);
     padding: 1rem;
     border-radius: 30px;
     transition: background-color 0.25s;
@@ -157,7 +161,7 @@ form {
       padding: 2rem 0 1.5rem 0;
 
       span {
-        color: var(--color-text);
+        color: var(--color-auth-page-text);
         padding: 0 0.5rem;
       }
 
@@ -165,7 +169,7 @@ form {
         margin-top: 2px;
         width: 120px;
         height: 1px;
-        background-color: var(--color-text);
+        background-color: var(--color-auth-page-text);
       }
     }
 
@@ -178,7 +182,7 @@ form {
 
       li span {
         font-size: 25px;
-        color: var(--color-text);
+        color: var(--color-auth-page-text);
       }
     }
   }
@@ -195,7 +199,7 @@ form {
 
     p {
       font-size: 14px;
-      color: var(--color-text);
+      color: var(--color-auth-page-text);
 
       @media screen and (max-width: 500px){
         font-size: 12px;

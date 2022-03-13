@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import SelectMenu from "components/UI/SelectMenu";
 import Member from "components/Member";
-import "./selectAssignee.scss";
 
 const SelectAssignee = ({taskAssignee, setTaskAssignee, members}) => {
 

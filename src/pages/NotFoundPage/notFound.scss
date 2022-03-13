@@ -13,7 +13,7 @@
     font-size: 150px;
     font-weight: 700;
     font-family: 'Advent Pro', 'sans-serif';
-    color: $red;
+    color: var(--color-red);
     margin-right: 1.5rem;
 
     @media screen and (max-width: 500px) {

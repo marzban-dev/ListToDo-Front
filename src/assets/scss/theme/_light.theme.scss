@@ -1,14 +1,25 @@
 body[theme="light"] {
   --color-primary: #00aab3;
-  --color-primary-lighten: #00c2cc;
+  --color-primary-lighten: #06d0da;
   --color-primary-transparentize: rgba(0, 170, 179, 0.7);
   --color-secondary: #ffffff;
-  --color-secondary-complement: #efefef;
+  --color-secondary-complement: #e3e3e3;
+  --color-secondary-complement-light: #d9d9d9;
+  --color-secondary-complement-transparentize: rgba(217, 217, 217, 0.5);
   --color-icon: #8c979b;
   --color-icon-lighten: #a7b3b9;
+  --color-icon-complement: #677073;
   --color-page-container-bg: #dfdede;
   --color-text: #171717;
   --color-shadow: rgba(14, 15, 16, 0.3);
+
+  --auth-page-bg: url("../../img/form-background-light.jpg");
+  --color-auth-page-text: #ffffff;
+  --color-auth-form-input-line: #eeeeee3d;
+  --color-auth-form-input-line-error: #bd2d2d;
+  --color-auth-form-input-line-error-shadow: rgba(211, 51, 51, 0.534);
+  --color-auth-form-box-error: #cb3535;
+  --color-auth-form-box-text-error: #bd6868;
 
   --color-loading-screen-bg: #dfdede;
   --color-loading-screen-spinner: #00aab3;
@@ -20,16 +31,53 @@ body[theme="light"] {
   --color-input-bg-hover: #ffffff;
   --color-input-text: #8c979b;
 
-  --color-task-checkbox: rgba(140, 151, 155, 0.2);
-  --color-task-checkbox-border: rgba(167, 179, 185, 0.5);
-  --color-task-checkbox-hover: rgba(0, 170, 179, 0.6);
+  --color-task-checkbox: rgba(179, 198, 204, 0.26);
+  --color-task-checkbox-border: rgba(171, 187, 194, 0.5);
+  --color-task-checkbox-hover: rgba(136, 153, 159, 0.29);
   --color-task-deadline-warning-color: #ff9a7f;
+  --color-task-bg-hover: #f6f6f6;
+
+  --color-label-chackbox-active: rgba(78, 204, 163, 0.2);
+  --color-label-chackbox-hover: rgba(78, 204, 163, 0.1);
+
+  --color-labels-tab-bg: #efefef;
+  --color-labels-tab-active: #00c2cc;
+  --color-labels-tab-hover: #8fe1e5;
+
+  --color-project-bg: #ffffff;
+  --color-project-bg-secondary: #e3e3e3;
+  --color-project-bg-hover-secondary: #f1f1f1;
+  --color-project-bg-hover-secondary-complement: #d7d7d7;
+
+  --color-select-menu-bg: #f5f5f5;
+  --color-select-menu-item-hover-bg: rgba(0, 194, 204, 0.18);
+  --color-select-menu-item-hover-icon: #00c2cc;
+  --color-select-menu-item-active-bg: rgba(0, 170, 179, 0.18);
+  --color-select-menu-item-active-icon: #00aab3;
 
   --color-react-modal-container: #232931;
   --color-react-modal-overlay: #17171796;
 
   --color-modal-input-bg: #efefef;
   --color-modal-input-bg-hover: #e8e8e8;
+  --color-modal-label-box-bg: #e7e7e7;
+
+  --color-schedule-progress-warning: #c94c3c;
+  --color-schedule-progress-warning-hover: #ce5a4b;
+  --color-schedule-progress: #00aab3;
+  --color-schedule-progress-hover: #00c2cc;
+
+  --color-comment-client-bg: #23c1c9;
+  --color-comment-client-text: #ffffff;
+  --color-comment-client-date: #f3f3f3;
+  --color-comment-client-attach: #049198;
+
+  --color-activity-status-delete: #dc3545;
+  --color-activity-status-delete-icon: #eaa9b0;
+  --color-activity-status-create: #198754;
+  --color-activity-status-create-icon: #8bd9b5;
+  --color-activity-status-update: #0d6efd;
+  --color-activity-status-update-icon: #93b8ef;
 
   --color-priority-1: #ce81ef;
   --color-priority-2: #dc3545;
@@ -37,26 +85,29 @@ body[theme="light"] {
   --color-priority-4: #0d6efd;
   --color-priority-5: #fd7e14;
 
+  --color-1: #c46beb;
+  --color-2: #df4957;
+  --color-3: #198754;
+  --color-4: #0d6efd;
+  --color-5: #fd7e14;
+
+  --color-hover-1: #cc7cef;
+  --color-hover-2: #e35764;
+  --color-hover-3: #279b65;
+  --color-hover-4: #237bfc;
+  --color-hover-5: #fc8828;
+
   --color-react-loader-background: #d8d7d7;
-  --color-react-loader-forground: #e2e1e1; 
+  --color-react-loader-forground: #e2e1e1;
 
   --toastify-color-light: #ffffff;
+  --toastify-spinner-color: #616161;
+  --toastify-spinner-color-empty-area: #e0e0e0;
+
+  --color-scrollbar-track: #b4b4b4;
+  --color-scrollbar-handle: #868686;
+  --color-scrollbar-handle-hover: rgb(143, 143, 143);
+
+  --color-red: #c93e4b;
+  --color-white: #ffffff;
 }
-
-// $blue: #0d6efd;
-// $indigo: #6610f2;
-// $purple: #6f42c1;
-// $pink: #d63384;
-// $red: #dc3545;
-// $orange: #fd7e14;
-// $yellow: #ffc107;
-// $green: #198754;
-// $teal: #20c997;
-// $cyan: #0dcaf0;
-
-// $primary: #00adb5;
-// $secondary: #171717;
-// $icon: #8c979c;
-// $white: #dfdede;
-// $second-white: #ffffff;
-// $text: #171717;

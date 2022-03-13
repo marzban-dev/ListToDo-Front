@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import catchAsync from "utils/CatchAsync";
 import {useDeleteLabelQuery} from "hooks/useDetailsData";
-import "./label.scss";
 import SelectMenu from "components/UI/SelectMenu";
+import "./label.scss";
 
 const Label = ({id, title, active, onLabelSelected}) => {
 
@@ -51,12 +51,13 @@ const Label = ({id, title, active, onLabelSelected}) => {
                 className={[
                     "label",
                     active ? "label-active" : null,
-                    isMouseInLabel ? "label-hover" : null
+                    !active ? (isMouseInLabel ? "label-hover" : null ) : null
                 ].join(" ")}
                 htmlFor={`label-${id}`}
                 onMouseEnter={(e) => setIsMouseInLabel(true)}
                 onMouseLeave={(e) => setIsMouseInLabel(false)}
             >
+                <div className="label-border"></div>
                 <div className="label-text-wrapper">
                     <span className="label-text">{title}</span>
                     <SelectMenu options={selectMenuOptions} type="executable-options" buttonAxis="v"/>

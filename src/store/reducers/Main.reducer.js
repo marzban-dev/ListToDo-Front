@@ -18,7 +18,7 @@ const setAppThemeReducer = (state, action) => {
     if (action.themeName) {
         theme = action.themeName;
     } else {
-        theme = localStorage.getItem('APP_THEME') ? localStorage.getItem('APP_THEME') : 'light';
+        theme = localStorage.getItem('APP_THEME') ? localStorage.getItem('APP_THEME') : 'dark';
     }
 
     document.getElementsByTagName('body')[0].setAttribute('theme', theme);

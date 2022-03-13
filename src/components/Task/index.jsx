@@ -8,8 +8,8 @@ import {useDeleteTaskQuery, useUpdateTaskQuery} from "hooks/useTasksData";
 import SelectMenu from "components/UI/SelectMenu";
 import Member from "components/Member";
 import CompleteButton from "components/UI/CompleteButton";
-import "./task.scss";
 import ReactTooltip from "react-tooltip";
+import "./task.scss";
 
 export const Task =
     ({

@@ -70,6 +70,21 @@
           flex-direction: column;
         }
 
+        .schedule-progress-container {
+          .schedule-progress-bar-container {
+            .schedule-progress-bar {
+              .schedule-progress-bar-text {
+                color: var(--color-white);
+              }
+            }
+            .schedule-progress-bar-date-icons {
+              .schedule-progress-bar-date-icon {
+                color: var(--color-white);
+              }
+            }
+          }
+        }
+
         .project-labels {
           display: flex;
           justify-content: flex-start;

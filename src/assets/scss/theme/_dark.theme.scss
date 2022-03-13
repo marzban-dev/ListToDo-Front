@@ -14,6 +14,7 @@ body[theme="dark"] {
   --color-shadow: rgba(18, 20, 21, 0.5);
 
   --auth-page-bg: url("../../img/form-background-dark.jpg");
+  --color-auth-page-text: #EEEEEE;
   --color-auth-form-input-line: #eeeeee3d;
   --color-auth-form-input-line-error: #bd1616;
   --color-auth-form-input-line-error-shadow: rgba(211, 51, 51, 0.534);
@@ -40,10 +41,11 @@ body[theme="dark"] {
   --color-label-chackbox-hover: rgba(78, 204, 163, 0.1);
 
   --color-labels-tab-bg: rgba(65, 71, 80, 0.37);
-  --color-labels-tab-bg-active: #3E5B59;
-  --color-labels-tab-bg-hover: #3B4D50;
+  --color-labels-tab-active: #4ECCA3;
+  --color-labels-tab-hover: rgba(66, 171, 137, 0.52);
 
   --color-project-bg: #232931;
+  --color-project-bg-secondary: #31363d;
   --color-project-bg-hover-secondary: #282f38;
   --color-project-bg-hover-secondary-complement: #434850;
 
@@ -63,10 +65,16 @@ body[theme="dark"] {
   --color-schedule-progress-hover: #30d789;
 
   --color-comment-client-bg : #416f64;
+  --color-comment-client-text : #EEEEEE;
+  --color-comment-client-date : #a7b3b9;
+  --color-comment-client-attach : #4ECCA3;
 
   --color-activity-status-delete : #d03f4e;
+  --color-activity-status-delete-icon: #eaa9b0;
   --color-activity-status-create : #1c8858;
+  --color-activity-status-create-icon: #8bd9b5;
   --color-activity-status-update : #2675e8;
+  --color-activity-status-update-icon: #93b8ef;
 
   --color-priority-1: #BE79DE;
   --color-priority-2: #d03f4e;
@@ -99,4 +107,7 @@ body[theme="dark"] {
   --color-scrollbar-track: #232931;
   --color-scrollbar-handle: #4e555e;
   --color-scrollbar-handle-hover: #5b626b;
+
+  --color-red: #dc3545;
+  --color-white: #ffffff;
 }

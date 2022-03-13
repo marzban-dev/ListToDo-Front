@@ -69,7 +69,7 @@
 
         &:hover {
           span {
-            color: $red;
+            color: var(--color-red);
           }
         }
 
@@ -93,12 +93,27 @@
     background-color: var(--color-comment-client-bg);
 
     p {
+      color: var(--color-comment-client-text);
       padding-right: 1rem;
       padding-left: 0;
     }
 
     .comment-box-data {
       align-self: flex-start;
+
+      .comment-box-data-date{
+        color: var(--color-comment-client-date);
+      }
+
+      .comment-box-data-attachment-link{
+        color: var(--color-comment-client-attach);
+      }
+
+      .comment-box-data-delete-btn {
+        span {
+          color: var(--color-comment-client-attach);
+        }
+      }
     }
   }
 }

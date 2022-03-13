@@ -9,13 +9,16 @@ import ShowComments from "components/ShowComments";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import EmptySign from "components/UI/EmptySign";
 import {useLocation, useNavigate} from "react-router-dom";
+import {useQueryClient} from "react-query";
 import "./projectBody.scss";
 
 const ProjectBody = ({project}) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const queryClient = useQueryClient();
     const [tabState, setTabState] = useState("p");
     const {data: subProjects} = useProjectsQuery(project.id);
+    const user = queryClient.getQueryData('user');
 
     return (
         <div className="project-body-container">
@@ -71,9 +74,11 @@ const ProjectBody = ({project}) => {
                                 )}
                             </LoadingWrapper>
                         </AnimateComponent>
-                        <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
-                            navigate(`/create-project/${project.id}`, {state: {backgroundLocation: location}})
-                        }}/>
+                        {user.id === project.owner.id && (
+                            <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
+                                navigate(`/create-project/${project.id}`, {state: {backgroundLocation: location}})
+                            }}/>
+                        )}
                     </React.Fragment>
                 )}
                 {tabState === "c" && (

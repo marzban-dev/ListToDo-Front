@@ -6,11 +6,10 @@
   border-radius: 15px;
   background-color: var(--color-primary-lighten);
   transition: background-color 0.25s;
-  color: $second-white;
+  color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
-
 
   &:hover,
   &:focus {
@@ -20,10 +19,12 @@
   .button-icon {
     font-size: 20px;
     transform: translate(0.5px, 0.5px);
+    color: var(--color-white);
   }
 
   .button-text {
     padding-left: 0.5rem;
+    color: var(--color-white);
   }
 }
 

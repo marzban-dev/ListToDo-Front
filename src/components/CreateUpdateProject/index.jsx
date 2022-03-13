@@ -11,20 +11,24 @@ import Button from "components/UI/Button";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import {useQueryClient} from "react-query";
 import ProfileWallpaper from "components/UI/ProfileWallpaper";
+import DefaultWallpaperLight from "assets/img/wallpaper-placeholder-light.jpg";
+import DefaultWallpaperDark from "assets/img/wallpaper-placeholder-dark.jpg";
 import "./createUpdateProject.scss"
-import DefaultWallpaper from "assets/img/wallpaper-placeholder.jpg";
 
 const CreateUpdateProject = ({mode}) => {
     const {projectId, parentId} = useParams();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const user = queryClient.getQueryData('user');
+    const appTheme = localStorage.getItem("APP_THEME");
 
     const [projectTitle, setProjectTitle] = useState("");
     const [projectLabels, setProjectLabels] = useState([]);
     const [projectColor, setProjectColor] = useState(null);
     const [projectSchedule, setProjectSchedule] = useState(null);
-    const [projectWallpaper, setProjectWallpaper] = useState(DefaultWallpaper);
+    const [projectWallpaper, setProjectWallpaper] = useState(
+        appTheme === "light" ? DefaultWallpaperLight : DefaultWallpaperDark
+    );
     const [newProjectWallpaper, setNewProjectWallpaper] = useState(null);
     const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(false);
 
@@ -45,7 +49,7 @@ const CreateUpdateProject = ({mode}) => {
         setProjectWallpaper(
             project.users.find(usr => usr.owner.id === user.id).background
                 ? project.users.find(usr => usr.owner.id === user.id).background
-                : DefaultWallpaper
+                : appTheme === "light" ? DefaultWallpaperLight : DefaultWallpaperDark
         );
     }
 
@@ -113,7 +117,7 @@ const CreateUpdateProject = ({mode}) => {
             <ProfileWallpaper
                 wallpaperPicture={projectWallpaper}
                 className="create-project-head-wallpaper"
-                darkLayerOpacity={0.5}
+                darkLayerOpacity={appTheme === "light" ? 0.7 : 0.5}
             />
             <input
                 type="file"

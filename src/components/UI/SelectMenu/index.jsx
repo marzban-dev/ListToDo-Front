@@ -26,8 +26,6 @@ const SelectMenu =
             if (isOut) {
                 if (isOut.right) selectMenuElement.current.style.right = 0;
                 if (isOut.left) selectMenuElement.current.style.left = 0;
-                // if (isOut.top) selectMenuElement.current.style.top = "110%";
-                // if (isOut.bottom) selectMenuElement.current.style.bottom = "110%";
             }
         }
 
@@ -73,7 +71,7 @@ const SelectMenu =
                             style={{
                                 transform: buttonAxis === "h" ? "rotate(90deg)" : "none",
                                 fontSize: buttonSize,
-                                color: customButtonIconColor ? customButtonIconColor : 'var(--color-icon)'
+                                color: customButtonIconColor ? customButtonIconColor : 'var(--color-icon-lighten)'
                             }}
                             className={customButtonIcon ? customButtonIcon : "far fa-ellipsis-v"}
                         ></span>

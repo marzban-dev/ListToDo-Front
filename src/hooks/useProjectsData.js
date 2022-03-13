@@ -1,5 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {
+    changeProjectInviteSlug,
     createProject,
     deleteProject,
     fetchAllProjects,
@@ -210,9 +211,19 @@ export const useLeaveProjectQuery = (id) => {
     return useMutation(() => leaveProject(id));
 }
 
-// export const useChangeProjectInviteQuery = (id) => {
-//     return useMutation(() => leaveProject(id));
-// }
+export const useChangeProjectInviteQuery = (id) => {
+    const queryClient = useQueryClient();
+
+    return useMutation(() => changeProjectInviteSlug(id), {
+
+        onSuccess: (newInviteSlug) => {
+            console.log(id);
+            queryClient.setQueryData(["project", Number(id)], oldProject => {
+                return {...oldProject, inviteSlug: newInviteSlug};
+            });
+        }
+    });
+}
 
 export const useArchivedProjects = () => {
     return useQuery('archived-projects', fetchArchivedProjects);

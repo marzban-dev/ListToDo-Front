@@ -7,7 +7,7 @@ export const useCheckUserQuery = () => {
     return useQuery("user", check, {
         cacheTime: 36000000,
         initialData: null,
-        refetchInterval: 30000,
+        refetchInterval: 30000000,
         refetchIntervalInBackground: true,
         retry: false,
         retryOnMount: false,

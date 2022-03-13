@@ -91,6 +91,11 @@ export const leaveProject = async (id) => {
     return result.data;
 }
 
+export const changeProjectInviteSlug = async (id) => {
+    const result = await axios.get(`/project/${id}/inviteslug/`);
+    return result.data.inviteSlug;
+}
+
 export const fetchArchivedProjects = async () => {
     const result = await axios.get("/projects/", {params: {project__archive: true}});
     return result.data.results;

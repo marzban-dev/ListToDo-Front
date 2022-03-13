@@ -28,7 +28,7 @@
 
   .schedule-clear-icon {
     @include reset_input();
-    color: $red;
+    color: var(--color-red);
     font-size: 24px;
   }
 

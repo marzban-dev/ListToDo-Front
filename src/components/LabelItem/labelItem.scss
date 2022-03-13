@@ -8,6 +8,10 @@
   cursor: pointer;
   transition: background-color 0.2s;
 
+  &:before {
+    content : "" !important;
+  }
+
   .label-item-title {
     display: flex;
     justify-content: center;
@@ -114,28 +118,3 @@
     }
   }
 }
-
-//.label-item-size-lg {
-//  height: 28px;
-//  border-radius: 2px 8px 8px 2px;
-//
-//  .label-item-title {
-//    padding: 2px 2px 0 16px;
-//
-//    span {
-//      font-size: 14px;
-//    }
-//  }
-//
-//  .label-item-shape {
-//    width: 24px;
-//    height: 24px;
-//    border-radius: 7px;
-//    left: -11px;
-//
-//    div {
-//      width: 8px;
-//      height: 8px;
-//    }
-//  }
-//}

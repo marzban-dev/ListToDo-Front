@@ -1,6 +1,11 @@
 import React from 'react';
 import SelectMenu from "components/UI/SelectMenu";
-import {useDeleteProjectQuery, useUpdateProjectQuery} from "hooks/useProjectsData";
+import {
+    useChangeProjectInviteQuery,
+    useDeleteProjectQuery,
+    useLeaveProjectQuery,
+    useUpdateProjectQuery
+} from "hooks/useProjectsData";
 import catchAsync from "utils/CatchAsync";
 import Members from "components/Members";
 import ScheduleProgressBar from "components/ScheduleProgressBar";
@@ -11,7 +16,8 @@ import {useQueryClient} from "react-query";
 import {toast} from "react-toastify";
 import {TOASTIFY_OPTIONS} from "config";
 import ProfileWallpaper from "components/UI/ProfileWallpaper";
-import DefaultWallpaper from "assets/img/wallpaper-placeholder.jpg";
+import DefaultWallpaperLight from "assets/img/wallpaper-placeholder-light.jpg";
+import DefaultWallpaperDark from "assets/img/wallpaper-placeholder-dark.jpg";
 import "./projectHeader.scss";
 
 const ProjectHeader = ({project}) => {
@@ -20,6 +26,8 @@ const ProjectHeader = ({project}) => {
     const queryClient = useQueryClient();
     const user = queryClient.getQueryData("user");
     const labels = queryClient.getQueryData("labels");
+    const appTheme = localStorage.getItem("APP_THEME");
+
     const {mutateAsync: deleteProject} = useDeleteProjectQuery(project.project, {
         onSuccess: () => redirectToPreviousRoute(),
     });
@@ -28,11 +36,16 @@ const ProjectHeader = ({project}) => {
         onSuccess: () => redirectToPreviousRoute()
     });
 
+    const {mutateAsync: changeInviteSlug} = useChangeProjectInviteQuery(project.id);
+
+    const {mutateAsync: leaveProject} = useLeaveProjectQuery(project.id, {
+        onSuccess: () => redirectToPreviousRoute()
+    });
+
     const redirectToPreviousRoute = () => {
         if (queryClient.getQueryData('inbox-project').id === project.project) {
             navigate("/projects")
         } else {
-            console.log(404)
             navigate(-1);
         }
     }
@@ -85,6 +98,22 @@ const ProjectHeader = ({project}) => {
         onError: `Archive project ${project.title} failed`
     });
 
+    const leaveProjectHandler = catchAsync(async () => {
+        await leaveProject();
+    }, {
+        onLoad: `Leaving project ${project.title}`,
+        onSuccess: `You leaved Project ${project.title}`,
+        onError: `Leave project ${project.title} failed`
+    });
+
+    const changeInviteSlugHandler = catchAsync(async () => {
+        await changeInviteSlug();
+    }, {
+        onLoad: `Changing project invite link`,
+        onSuccess: `Invite link changed`,
+        onError: `Change project invite link failed`
+    });
+
     const selectMenuOptions = [
         {
             iconClass: "far fa-pen",
@@ -97,16 +126,33 @@ const ProjectHeader = ({project}) => {
         },
         {
             iconClass: "far fa-user",
-            text: "Invite Link", action: showProjectInviteSlug
+            text: "Invite",
+            action: showProjectInviteSlug
         },
-        {
+    ];
+
+    if (user.id === project.owner.id) {
+        selectMenuOptions.push({
+            iconClass: "far fa-user-edit",
+            text: "Refresh Invite",
+            action: changeInviteSlugHandler
+        });
+        selectMenuOptions.push({
             iconClass: "far fa-trash-alt",
             text: "Delete",
             action: deleteProjectHandler,
             yesNoQAlert: "Are you sure to delete this project ?",
             color: "danger"
-        }
-    ];
+        });
+    } else {
+        selectMenuOptions.push({
+            iconClass: "far fa-sign-out",
+            text: "Leave",
+            action: leaveProjectHandler,
+            yesNoQAlert: "Are you sure to leave this project ?",
+            color: "warning"
+        });
+    }
 
     const renderLabels = () => {
         const projectLabels = project.users.find(usr => usr.owner.id === user.id).label;
@@ -117,6 +163,7 @@ const ProjectHeader = ({project}) => {
                 {labelsToShow.map((label) => {
                     return (
                         <LabelItem
+                            className="fa-sign-out"
                             key={label.id}
                             title={label.title}
                             onClick={() => navigate("/labels/" + label.id)}
@@ -133,10 +180,10 @@ const ProjectHeader = ({project}) => {
                 wallpaperPicture={
                     project.users.find(usr => usr.owner.id === user.id).background
                         ? project.users.find(usr => usr.owner.id === user.id).background
-                        : DefaultWallpaper
+                        : appTheme === "light" ? DefaultWallpaperLight : DefaultWallpaperDark
                 }
                 className="project-wallpaper"
-                darkLayerOpacity={0.5}
+                darkLayerOpacity={appTheme === "light" ? 0.7 : 0.5}
             />
             <div className="project-head-details">
                 <div className="project-head-top-section">
