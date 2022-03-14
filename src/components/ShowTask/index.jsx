@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "components/UI/Modal";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {useDeleteTaskQuery, useTaskQuery, useTasksQuery, useUpdateTaskQuery} from "hooks/useTasksData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import CompleteButton from "components/UI/CompleteButton";
@@ -18,10 +18,13 @@ import "./showTasks.scss";
 const ShowTask = () => {
     const {taskId} = useParams();
     const navigate = useNavigate();
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const queryClient = useQueryClient();
     const labels = queryClient.getQueryData("labels");
     const [isTaskChecked, setIsTaskChecked] = useState(false);
+
+    const backgroundLocation = JSON.parse(searchParams.get('bl'));
+    const prevPath = searchParams.get('p');
 
     const {data: task} = useTaskQuery(taskId, {
         onError: () => navigate('/404')
@@ -45,7 +48,7 @@ const ShowTask = () => {
 
     const completeTaskHandler = catchAsync(async () => {
         setIsTaskChecked(true);
-        await updateTask({taskData : task, data: {completed: true}});
+        await updateTask({taskData: task, data: {completed: true}});
         closeModal();
     }, {
         onLoad: `Completing task ${task?.title}`,
@@ -55,10 +58,10 @@ const ShowTask = () => {
 
     const selectMenuOptions = [{
         iconClass: "far fa-pen", text: "Edit", action: () => {
-            navigate(
-                `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`,
-                {state: {backgroundLocation: location.state?.backgroundLocation}}
-            )
+            navigate({
+                pathname: `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}`,
+                search: `?bl=${JSON.stringify(backgroundLocation)}&isSubTask=${!!task.task}`
+            });
         }
     }, {
         iconClass: "far fa-trash-alt",
@@ -79,12 +82,12 @@ const ShowTask = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(true);
     const closeModal = () => {
-        if (location.state?.prevPath && location.state.prevPath.includes("/task/")) {
-            navigate(-1, {state: {backgroundLocation: location.state?.backgroundLocation}})
+        if (prevPath && prevPath.includes("/task/")) {
+            navigate(-1);
         } else {
             setIsModalOpen(false)
             setTimeout(
-                () => navigate(-1, {state: {backgroundLocation: location.state?.backgroundLocation}}),
+                () => navigate(-1),
                 REACT_MODAL_OPTIONS.closeTimeoutMS
             );
         }
@@ -117,7 +120,7 @@ const ShowTask = () => {
                             <div className="show-task-modal-head-right">
                                 {task?.assignee && (<Member
                                     picture={task.assignee.profile_img}
-                                    name={task.assignee.username}
+                                    name={task.assignee.first_name}
                                     style={{width: "26px", height: "26px"}}
                                 />)}
                                 <SelectMenu
@@ -146,7 +149,7 @@ const ShowTask = () => {
                                                 tasks={subTasks}
                                                 onSortEnd={null}
                                                 axis="y"
-                                                backgroundLocation={location.state?.backgroundLocation}
+                                                backgroundLocation={backgroundLocation}
                                             />
                                         )}
                                         <div className="show-task-subtasks-add-button">
@@ -154,10 +157,10 @@ const ShowTask = () => {
                                                 style={{marginTop: subTasks?.length !== 0 ? "1rem" : null}}
                                                 iconClass="far fa-plus"
                                                 onClick={() => {
-                                                    navigate(
-                                                        `/create-task/${task?.section.id}/${task?.id}/${task?.section.project.id}?isSubTask=true`,
-                                                        {state: {backgroundLocation: location.state?.backgroundLocation}}
-                                                    )
+                                                    navigate({
+                                                        pathname: `/create-task/${task?.section.id}/${task?.id}/${task?.section.project.id}`,
+                                                        search: `?bl=${JSON.stringify(backgroundLocation)}&isSubTask=true`
+                                                    });
                                                 }}
                                                 size="sm"
                                                 circleShape

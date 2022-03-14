@@ -40,6 +40,7 @@
 
   .description-input {
     @include reset_input();
+    @include reset_scrollbar();
     margin-top: 1rem;
     background-color: var(--color-modal-input-bg);
     padding: 0.5rem 0.5rem 0.5rem 1rem;

@@ -76,7 +76,10 @@ const ProjectBody = ({project}) => {
                         </AnimateComponent>
                         {user.id === project.owner.id && (
                             <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
-                                navigate(`/create-project/${project.id}`, {state: {backgroundLocation: location}})
+                                navigate({
+                                    pathname: `/create-project/${project.id}`,
+                                    search: `?bl=${JSON.stringify(location)}`
+                                });
                             }}/>
                         )}
                     </React.Fragment>

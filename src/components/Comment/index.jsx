@@ -1,7 +1,6 @@
 import React from "react";
 import Member from "components/Member";
 import {useQueryClient} from "react-query";
-import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
 import {useDeleteCommentQuery} from "hooks/useComments";
 import catchAsync from "utils/CatchAsync";
 import "./comment.scss";
@@ -11,7 +10,7 @@ const Comment = ({comment}) => {
     const user = queryClient.getQueryData('user');
     const {mutateAsync: deleteComment} = useDeleteCommentQuery(comment.project.id, !!comment.task);
 
-    const isOwnerIsCurrentUser = user.username === comment.owner.username;
+    const isOwnerIsCurrentUser = user.id === comment.owner.id;
 
     const deleteCommentHandler = catchAsync(async () => {
         await deleteComment(comment.id);
@@ -26,13 +25,13 @@ const Comment = ({comment}) => {
             {!isOwnerIsCurrentUser && (
                 <Member
                     picture={comment.owner.profile_img}
-                    name={comment.owner.username}
+                    name={comment.owner.first_name}
                     style={{width: "40px", height: "40px"}}
                     disableHover
                 />
             )}
             <div className="comment-box">
-                {!isOwnerIsCurrentUser && <h4>{UpperCaseFirstLetter(comment.owner.username)}</h4>}
+                {!isOwnerIsCurrentUser && <h4>{comment.owner.first_name}</h4>}
                 <p>{comment.description}</p>
                 <div className="comment-box-data">
                     <span className="comment-box-data-date">
@@ -60,7 +59,7 @@ const Comment = ({comment}) => {
             {isOwnerIsCurrentUser && (
                 <Member
                     picture={comment.owner.profile_img}
-                    name={comment.owner.username}
+                    name={comment.owner.first_name}
                     style={{width: "40px", height: "40px"}}
                     disableHover
                 />

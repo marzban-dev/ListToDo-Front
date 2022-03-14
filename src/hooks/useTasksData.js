@@ -10,7 +10,10 @@ export const useTasksQuery = (id, isSubTask, options) => {
             task__isnull: !isSubTask,
             completed: false
         }),
-        options
+        {
+            refetchOnWindowFocus: false,
+            ...options
+        }
     );
 };
 
@@ -18,7 +21,10 @@ export const useTaskQuery = (id, options) => {
     return useQuery(
         ["task", Number(id)],
         () => fetchTask(Number(id)),
-        options
+        {
+            refetchOnWindowFocus: false,
+            ...options
+        }
     );
 };
 

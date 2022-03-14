@@ -71,9 +71,7 @@ const App = () => {
             <ToastContainer/>
             <ReactTooltip/>
 
-            {!checkPathIsAuthPages && (
-                <SideMenu isOpen={isMobileSideMenuOpen} setIsOpen={setIsMobileSideMenuOpen}/>
-            )}
+            {!checkPathIsAuthPages && <SideMenu isOpen={isMobileSideMenuOpen} setIsOpen={setIsMobileSideMenuOpen}/>}
 
             <div
                 className={[checkPathIsAuthPages ? "full-width" : "width-minus-sidebar"].join(' ')}

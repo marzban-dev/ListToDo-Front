@@ -118,7 +118,10 @@ const ProjectHeader = ({project}) => {
         {
             iconClass: "far fa-pen",
             text: "Edit",
-            action: () => navigate(`/update-project/${project.project}/${project.id}`, {state: {backgroundLocation: location}})
+            action: () => navigate({
+                pathname: `/update-project/${project.project}/${project.id}`,
+                search: `?bl=${JSON.stringify(location)}`
+            })
         },
         {
             iconClass: "far fa-archive",

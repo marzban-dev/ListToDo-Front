@@ -1,6 +1,5 @@
 import React from "react";
 import FloatButton from "components/UI/FloatButton";
-import PageContainer from "components/UI/PageContainer";
 import {useQueryClient} from "react-query";
 import ShowProjects from "components/ShowProjects";
 import LoadingWrapper from "components/UI/LoadingWrapper";
@@ -10,8 +9,8 @@ import {useChangePositionQuery} from "hooks/useDetailsData";
 import EmptySign from "components/UI/EmptySign";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
-import "./projects.scss";
 import {useAllProjectsQuery} from "hooks/useProjectsData";
+import "./projects.scss";
 
 const Projects = () => {
     const queryClient = useQueryClient();
@@ -26,7 +25,6 @@ const Projects = () => {
     //     dispatch(updateProjectPosition(projects[oldIndex].id, newIndex + 1));
     //     dispatch(setProjects(returnedItems));
     // };
-
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         catchAsync(async () => {
@@ -44,35 +42,36 @@ const Projects = () => {
     const renderProjects = () => {
         return (
             <React.Fragment>
-                <PageContainer widthPadding>
-                    <div className="projects col-12">
-                        <LoadingWrapper show={!!projects} customLoadingComponent={
-                            <SkeletonLoader
-                                type={"projects"}
-                                width={1250}
-                                height={250}
-                                viewBox="0 0 1250 250"
-                            />
-                        }>
-                            {!!projects && (
-                                projects.length !== 0 ? (
-                                    <ShowProjects
-                                        onSortEnd={onSortEnd}
-                                        projects={projects}
-                                        useDragHandle
-                                        axis="xy"
-                                        sortable
-                                    />
-                                ) : (
-                                    <EmptySign text="Yoy doesn't have any project"/>
-                                )
-                            )}
-                        </LoadingWrapper>
-                        <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
-                            navigate(`/create-project/${inboxProject.id}`, {state: {backgroundLocation: location}})
-                        }}/>
-                    </div>
-                </PageContainer>
+                <div className="projects col-12">
+                    <LoadingWrapper show={!!projects} customLoadingComponent={
+                        <SkeletonLoader
+                            type={"projects"}
+                            width={1250}
+                            height={250}
+                            viewBox="0 0 1250 250"
+                        />
+                    }>
+                        {!!projects && (
+                            projects.length !== 0 ? (
+                                <ShowProjects
+                                    onSortEnd={onSortEnd}
+                                    projects={projects}
+                                    useDragHandle
+                                    axis="xy"
+                                    sortable
+                                />
+                            ) : (
+                                <EmptySign text="Yoy doesn't have any project"/>
+                            )
+                        )}
+                    </LoadingWrapper>
+                    <FloatButton float="r" iconClass="far fa-plus" onClick={() => {
+                        navigate({
+                            pathname: `/create-project/${inboxProject.id}`,
+                            search: `?bl=${JSON.stringify(location)}`
+                        });
+                    }}/>
+                </div>
                 <Outlet/>
             </React.Fragment>
         );

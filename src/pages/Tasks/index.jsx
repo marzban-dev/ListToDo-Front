@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Outlet} from "react-router-dom";
 import {useCreateSectionQuery, useSectionsQuery} from "hooks/useSectionsData";
 import catchAsync from "utils/CatchAsync";
-import PageContainer from "components/UI/PageContainer";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import CreateInput from "components/CreateInput";
@@ -44,33 +43,32 @@ const Tasks = ({project}) => {
 
     return (
         <React.Fragment>
-            <PageContainer>
-                <LoadingWrapper
-                    show={!!project && !!sections}
-                    customLoadingComponent={
-                        <SkeletonLoader
-                            type={'sections'}
-                            speed={1}
-                            width={1200}
-                            height={66}
-                            viewBox="0 0 1200 66"
-                            style={{marginTop: "3rem"}}
-                        />
-                    }
-                >
-                    <div className="sections-container col-12">
-                        <CreateInput
-                            onClick={createSectionHandler}
-                            isDisabled={isCreateButtonDisabled}
-                            placeholder="Section name"
-                            iconClass="far fa-plus-circle"
-                        />
-                        {!!sections && (
-                            <ShowSections onSortEnd={onSortEnd} useDragHandle axis="x" sections={sections}/>
-                        )}
-                    </div>
-                </LoadingWrapper>
-            </PageContainer>
+
+            <LoadingWrapper
+                show={!!project && !!sections}
+                customLoadingComponent={
+                    <SkeletonLoader
+                        type={'sections'}
+                        speed={1}
+                        width={1200}
+                        height={66}
+                        viewBox="0 0 1200 66"
+                        style={{marginTop: "3rem"}}
+                    />
+                }
+            >
+                <div className="sections-container col-12">
+                    <CreateInput
+                        onClick={createSectionHandler}
+                        isDisabled={isCreateButtonDisabled}
+                        placeholder="Section name"
+                        iconClass="far fa-plus-circle"
+                    />
+                    {!!sections && (
+                        <ShowSections onSortEnd={onSortEnd} useDragHandle axis="x" sections={sections}/>
+                    )}
+                </div>
+            </LoadingWrapper>
             <Outlet/>
         </React.Fragment>
     );

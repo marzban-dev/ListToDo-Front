@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import PageContainer from "components/UI/PageContainer";
 import ActivityChart from "components/ActivityChart";
 import ActivityTree from "components/ActivityTree";
 import "./activityPage.scss";
@@ -15,12 +14,10 @@ const ActivityPage = () => {
     });
 
     return (
-        <PageContainer>
-            <div className="activity-page-container">
-                <ActivityTree />
-                <ActivityChart gte={testDate.oneMonthAgo} lte={testDate.today}/>
-            </div>
-        </PageContainer>
+        <div className="activity-page-container">
+            <ActivityTree/>
+            <ActivityChart gte={testDate.oneMonthAgo} lte={testDate.today}/>
+        </div>
     );
 }
 

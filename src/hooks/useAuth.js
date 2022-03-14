@@ -15,16 +15,15 @@ export const useCheckUserQuery = () => {
     });
 };
 
-export const useUpdateSettingsQuery = (options) => {
+export const useUpdateSettingsQuery = () => {
     const queryClient = useQueryClient();
 
     return useMutation(updateSettings, {
-        onSuccess: (updatedSettings) => {
-            queryClient.setQueryData("settings", (oldSettings => {
-                return {...oldSettings, ...updatedSettings};
+        onSuccess: (updatedUserSettings) => {
+            queryClient.setQueryData("user", (oldUser => {
+                return {...oldUser, ...updatedUserSettings};
             }));
-        },
-        ...options
+        }
     });
 };
 

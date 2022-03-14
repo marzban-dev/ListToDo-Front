@@ -67,17 +67,10 @@ export const Task =
 
         const selectMenuOptions = [{
             iconClass: "far fa-pen", text: "Edit", action: () => {
-                if (!!task.task) {
-                    navigate(
-                        `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`,
-                        {state: {backgroundLocation: backgroundLocation ? backgroundLocation : location}}
-                    )
-                } else {
-                    navigate(
-                        `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}?isSubTask=${!!task.task}`,
-                        {state: {backgroundLocation: backgroundLocation ? backgroundLocation : location}}
-                    );
-                }
+                navigate({
+                    pathname: `/update-task/${task.id}/${task.task ? task.task : task.section.id}/${task.section.project.id}`,
+                    search: `?bl=${JSON.stringify(backgroundLocation ? backgroundLocation : location)}&isSubTask=${!!task.task}`
+                })
             }
         }, {
             iconClass: "far fa-trash-alt",
@@ -106,15 +99,16 @@ export const Task =
                                 data-tip={`Task : ${parentTask.title}`}
                                 data-effect="solid"
                                 onClick={() => {
-                                    navigate('/task/' + parentTask.id, {
-                                        state: {
-                                            backgroundLocation: backgroundLocation ? backgroundLocation : location,
-                                            prevPath: location.pathname
-                                        }
+                                    navigate({
+                                        pathname: '/task/' + parentTask.id,
+                                        search: (
+                                            `?bl=${JSON.stringify(backgroundLocation ? backgroundLocation : location)}
+                                             &p=${location.pathname}`
+                                        )
                                     })
                                 }}
                             >
-                                {parentTask.title} >
+                                {parentTask.title} > <span></span>
                             </span>
                         )).reverse()}
                     </div>
@@ -128,11 +122,9 @@ export const Task =
                         task.color ? `task-bg-color-${task.color}` : null
                     ].join(' ')}
                     onClick={() => {
-                        navigate('/task/' + task.id, {
-                            state: {
-                                backgroundLocation: backgroundLocation ? backgroundLocation : location,
-                                prevPath: location.pathname
-                            }
+                        navigate({
+                            pathname: '/task/' + task.id,
+                            search: `?bl=${JSON.stringify(backgroundLocation ? backgroundLocation : location)}&p=${location.pathname}`
                         });
                     }}
                 >
@@ -155,7 +147,7 @@ export const Task =
                         {task.assignee && (
                             <Member
                                 picture={task.assignee.profile_img}
-                                name={task.assignee.username}
+                                name={task.assignee.first_name}
                                 style={{marginLeft: "14px", width: "26px", height: "26px"}}
                             />
                         )}

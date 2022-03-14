@@ -70,6 +70,8 @@
         width: 100%;
         min-height: 100px;
         border-radius: 15px;
+        white-space: normal;
+        word-break: break-all;
       }
 
       & > ul {

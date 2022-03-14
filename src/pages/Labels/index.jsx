@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import PageContainer from "components/UI/PageContainer";
 import CreateInput from "components/CreateInput";
 import Label from "components/Label";
 import catchAsync from "utils/CatchAsync";
@@ -45,35 +44,34 @@ const Labels = () => {
 
     return (
         <React.Fragment>
-            <PageContainer>
-                <div className="labels-container">
-                    <div className="labels">
-                        <CreateInput
-                            onClick={createLabelHandler}
-                            iconClass="far fa-plus-circle"
-                            placeholder="Label name"
-                            isDisabled={isCreateLabelButtonDisabled}
-                        />
-                        <section className="labels-list">
-                            {labels.map(label => (
-                                <Label
-                                    id={label.id}
-                                    key={label.id}
-                                    title={label.title}
-                                    active={selectedLabelId === label.id}
-                                    onLabelSelected={onLabelSelected}
-                                />
-                            ))}
-                        </section>
-                    </div>
 
-                    {labels.length !== 0
-                        ? <LabelTabs selectedLabelId={selectedLabelId}/>
-                        : <EmptySign text="There is no any label"/>
-                    }
-
+            <div className="labels-container">
+                <div className="labels">
+                    <CreateInput
+                        onClick={createLabelHandler}
+                        iconClass="far fa-plus-circle"
+                        placeholder="Label name"
+                        isDisabled={isCreateLabelButtonDisabled}
+                    />
+                    <section className="labels-list">
+                        {labels.map(label => (
+                            <Label
+                                id={label.id}
+                                key={label.id}
+                                title={label.title}
+                                active={selectedLabelId === label.id}
+                                onLabelSelected={onLabelSelected}
+                            />
+                        ))}
+                    </section>
                 </div>
-            </PageContainer>
+
+                {labels.length !== 0
+                    ? <LabelTabs selectedLabelId={selectedLabelId}/>
+                    : <EmptySign text="There is no any label"/>
+                }
+
+            </div>
             <Outlet/>
         </React.Fragment>
     )

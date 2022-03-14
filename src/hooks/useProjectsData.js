@@ -17,21 +17,30 @@ export const useInboxProjectQuery = (options) => {
     return useQuery(
         "inbox-project",
         fetchInboxProject,
-        options
+        {
+            refetchOnWindowFocus: false,
+            ...options
+        }
     );
 }
 
 export const useAllProjectsQuery = (id) => {
     return useQuery(
         ["projects", id],
-        () => fetchAllProjects(id)
+        () => fetchAllProjects(id),
+        {
+            refetchOnWindowFocus: false,
+        }
     );
 };
 
 export const useProjectsQuery = (id) => {
     return useQuery(
         ["projects", id],
-        () => fetchProjects({project__project: id})
+        () => fetchProjects({project__project: id}),
+        {
+            refetchOnWindowFocus: false,
+        }
     );
 };
 
@@ -39,7 +48,10 @@ export const useProjectQuery = (id, parentId, options) => {
     return useQuery(
         ["project", id],
         () => fetchProject(id),
-        options
+        {
+            refetchOnWindowFocus: false,
+            ...options
+        }
     );
 };
 
@@ -217,7 +229,6 @@ export const useChangeProjectInviteQuery = (id) => {
     return useMutation(() => changeProjectInviteSlug(id), {
 
         onSuccess: (newInviteSlug) => {
-            console.log(id);
             queryClient.setQueryData(["project", Number(id)], oldProject => {
                 return {...oldProject, inviteSlug: newInviteSlug};
             });

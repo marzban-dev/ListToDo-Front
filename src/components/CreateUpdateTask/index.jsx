@@ -16,9 +16,9 @@ import "./createUpdateTask.scss";
 
 export const CreateUpdateTask = ({mode}) => {
     const {taskId, sectionId, projectId, parentId} = useParams();
-    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [searchParams] = useSearchParams();
 
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");

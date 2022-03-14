@@ -54,7 +54,6 @@ export const updateProject = async ({data, personalizeData, projectData}) => {
 export const createProject = async ({data, personalizeData}) => {
     const {data: createdProject} = await axios.post(`/project/`, data);
     const {data: user} = await axios.get("/myinfo/");
-    console.log(user);
     const result = await axios.patch(
         `/project/${createdProject.users.find(usr => usr.owner.id === user.id).id}/personalize/`,
         {

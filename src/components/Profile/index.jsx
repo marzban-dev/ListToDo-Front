@@ -6,50 +6,61 @@ import ProfileWallpaper from "components/UI/ProfileWallpaper";
 import ChangeProfileModal from "components/ChangeProfileModal";
 import {useQueryClient} from "react-query";
 import {useUpdateSettingsQuery} from "hooks/useAuth";
-import UpperCaseFirstLetter from "utils/UpperCaseFirstLetter";
 import "./profile.scss";
 
 const Profile = () => {
     const queryClient = useQueryClient();
-    const {username, header_img: wallpaper, profile_img: profile} = queryClient.getQueryData('user');
+    const {username,first_name, header_img: wallpaper, profile_img: profile} = queryClient.getQueryData('user');
     const {mutateAsync: updateSettings} = useUpdateSettingsQuery();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userWallpaper, setUserWallpaper] = useState(null);
     const [userPicture, setUserPicture] = useState(null);
-    const [userName, setUserName] = useState(username);
+    const [userName, setUserName] = useState(first_name);
 
     const saveChanges = async () => {
-        const alertId = toast.loading("Updating Profile", {
-            ...TOASTIFY_OPTIONS,
-            hideProgressBar: false,
-            progressStyle: {backgroundColor: "var(--color-primary)"},
-        });
+        let alertId;
 
         try {
             const settingsToUpdate = new FormData();
 
             if (userPicture) settingsToUpdate.append('profile_img', userPicture, userPicture.name);
             if (userWallpaper) settingsToUpdate.append('header_img', userWallpaper, userWallpaper.name);
-            if (userName !== username) settingsToUpdate.append("first_name", userName)
-            if (!userPicture && !userWallpaper && userName === username) {
-                toast.info("All things are the same.", {...TOASTIFY_OPTIONS, autoClose: 2000})
+            if (userName !== first_name) settingsToUpdate.append("first_name", userName)
+            if (!userPicture && !userWallpaper && userName === first_name) {
+                toast.info("All things are the same", {...TOASTIFY_OPTIONS, autoClose: 2000})
             } else {
 
                 const uploadProgressHandler = (progressEvent) => {
                     const percentCompleted = progressEvent.loaded / progressEvent.total;
-                    toast.update(alertId, {
-                        progress: percentCompleted,
-                    });
+                    toast.update(alertId, {progress: percentCompleted, isLoading: true});
                 }
 
-                await updateSettings({
-                    properties: settingsToUpdate, uploadProgressHandler
-                });
+                if(userName.length >= 6) {
+                    alertId = toast.loading("Updating profile", {
+                        ...TOASTIFY_OPTIONS,
+                        hideProgressBar: false,
+                        progressStyle: {backgroundColor: "var(--color-primary)"},
+                        autoClose: 3000
+                    });
+
+                    await updateSettings({
+                        properties: settingsToUpdate, uploadProgressHandler
+                    });
+
+                    toast.update(alertId, {
+                        type:"success",
+                        render: "Update profile completed",
+                        progress : 100,
+                        isLoading: false,
+                    });
+                } else {
+                    toast.info("user name is empty", {...TOASTIFY_OPTIONS, autoClose: 2000})
+                }
             }
         } catch (error) {
             toast.update(alertId, {
-                render: "Update Profile Failed",
+                render: "Update profile failed",
                 type: "error",
                 isLoading: false,
             });
@@ -72,7 +83,7 @@ const Profile = () => {
                 />
 
                 <div className="profile-name">
-                    {username ? UpperCaseFirstLetter(username) : 'Please Login'}
+                    {username ? first_name : 'Please Login'}
                 </div>
             </div>
 

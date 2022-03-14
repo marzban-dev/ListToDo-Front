@@ -87,7 +87,7 @@ const Header = ({title, isSideMenuOpen, setIsSideMenuOpen}) => {
 
                         {user ?
                             <Link to="/settings">
-                                {user ? user.username : null}
+                                {user ? user.first_name : null}
                             </Link>
                             :
                             <Link to="/login">

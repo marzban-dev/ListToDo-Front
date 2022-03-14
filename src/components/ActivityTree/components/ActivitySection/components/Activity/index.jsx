@@ -12,7 +12,7 @@ const Activity = ({activity}) => {
             <div className="activity-details">
                 <Member
                     picture={activity.assignee.profile_img}
-                    name={activity.assignee.username}
+                    name={activity.assignee.first_name}
                     style={{width: "40px", height: "40px"}}
                     disableHover
                 />

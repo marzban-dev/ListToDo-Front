@@ -67,7 +67,6 @@ export const check = async () => {
             // the error from access token
             return refreshToken().then(user => user).catch(error => {
                 // all tokens are not valid
-                console.log(error);
                 localStorage.removeItem("AUTH_ACCESS_TOKEN");
                 localStorage.removeItem("AUTH_REFRESH_TOKEN");
                 return undefined;

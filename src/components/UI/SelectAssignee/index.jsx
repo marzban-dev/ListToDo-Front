@@ -21,12 +21,12 @@ const SelectAssignee = ({taskAssignee, setTaskAssignee, members}) => {
                 iconCustomComponent: (
                     <Member
                         picture={member.owner.profile_img}
-                        name={member.owner.username}
+                        name={member.owner.first_name}
                         style={{width : "20px",height: "20px"}}
                         disableHover
                     />
                 ),
-                text: member.owner.username,
+                text: member.owner.first_name,
                 value: member.owner
             })
         })
@@ -41,7 +41,7 @@ const SelectAssignee = ({taskAssignee, setTaskAssignee, members}) => {
             CustomButtonComponent={(
                 <Member
                     picture={taskAssignee ? taskAssignee.profile_img : null}
-                    name={taskAssignee ? taskAssignee.username : "No Assignee"}
+                    name={taskAssignee ? taskAssignee.first_name : "No Assignee"}
                     style={{width : "24px",height: "24px"}}
                     defaultIconSize="22px"
                     disableHover

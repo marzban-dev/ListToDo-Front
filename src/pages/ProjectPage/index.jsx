@@ -2,7 +2,6 @@ import React from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useProjectQuery} from "hooks/useProjectsData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
-import PageContainer from "components/UI/PageContainer";
 import ProjectHeader from "./components/ProjectHeader";
 import ProjectBody from "./components/ProjectBody";
 import "./projectPage.scss";
@@ -29,16 +28,14 @@ const ProjectPage = () => {
     }
 
     return (
-        <PageContainer>
-            <div className="project-page-container">
-                <LoadingWrapper
-                    show={!isProjectLoading}
-                    type="circle" size="lg"
-                    onLoaded={renderProject}
-                    style={{width: "100%",height: "100%"}}
-                />
-            </div>
-        </PageContainer>
+        <div className="project-page-container">
+            <LoadingWrapper
+                show={!isProjectLoading}
+                type="circle" size="lg"
+                onLoaded={renderProject}
+                style={{width: "100%", height: "100%"}}
+            />
+        </div>
     );
 }
 
