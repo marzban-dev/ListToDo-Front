@@ -3,10 +3,16 @@
 
 .projects {
   height: 100%;
-  padding: 1rem;
+  padding: 1rem 0 0 3rem;
 
   @media screen and (max-width: 600px) {
     height: 110%;
-    padding: 1rem 0 0 0;
+    padding: 1rem 0 0 1rem;
+    width: 100%;
+    .show-projects-container {
+      .projects-list-wrapper {
+        justify-content: center !important;
+      }
+    }
   }
 }

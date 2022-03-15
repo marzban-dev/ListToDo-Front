@@ -2,7 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 import PropTypes from "prop-types";
 
-const SkeletonLoader = ({type, speed = 1, width, height, viewBox, style,className}) => {
+const SkeletonLoader = ({type, speed = 1, width, height, viewBox, style, className}) => {
 
     let backgroundColor = "";
     let foregroundColor = "";
@@ -14,6 +14,10 @@ const SkeletonLoader = ({type, speed = 1, width, height, viewBox, style,classNam
             foregroundColor = "#e2e1e1";
             break;
         case 'dark' :
+            backgroundColor = "#363b43";
+            foregroundColor = "#3f454e";
+            break;
+        default :
             backgroundColor = "#363b43";
             foregroundColor = "#3f454e";
             break;
@@ -104,27 +108,29 @@ const SkeletonLoader = ({type, speed = 1, width, height, viewBox, style,classNam
         case "chart" :
             return (
                 <ContentLoader {...skeletonSettings}>
-                    <rect x="748" y="0" rx="15" ry="15" width="350" height="137" />
-                    <rect x="0" y="26" rx="0" ry="0" width="7" height="589" />
-                    <rect x="0" y="493" rx="0" ry="0" width="600" height="7" />
-                    <rect x="165" y="526" rx="0" ry="0" width="380" height="7" />
-                    <rect x="45" y="253" rx="5" ry="5" width="42" height="216" />
-                    <rect x="115" y="176" rx="5" ry="5" width="42" height="291" />
-                    <rect x="185" y="208" rx="5" ry="5" width="42" height="262" />
-                    <rect x="255" y="61" rx="5" ry="5" width="42" height="408" />
-                    <rect x="325" y="383" rx="5" ry="5" width="42" height="86" />
-                    <rect x="395" y="167" rx="5" ry="5" width="42" height="304" />
-                    <rect x="465" y="292" rx="5" ry="5" width="42" height="179" />
+                    <rect x="748" y="0" rx="15" ry="15" width="350" height="137"/>
+                    <rect x="0" y="26" rx="0" ry="0" width="7" height="589"/>
+                    <rect x="0" y="493" rx="0" ry="0" width="600" height="7"/>
+                    <rect x="165" y="526" rx="0" ry="0" width="380" height="7"/>
+                    <rect x="45" y="253" rx="5" ry="5" width="42" height="216"/>
+                    <rect x="115" y="176" rx="5" ry="5" width="42" height="291"/>
+                    <rect x="185" y="208" rx="5" ry="5" width="42" height="262"/>
+                    <rect x="255" y="61" rx="5" ry="5" width="42" height="408"/>
+                    <rect x="325" y="383" rx="5" ry="5" width="42" height="86"/>
+                    <rect x="395" y="167" rx="5" ry="5" width="42" height="304"/>
+                    <rect x="465" y="292" rx="5" ry="5" width="42" height="179"/>
                 </ContentLoader>
             )
         case "archive" :
             return (
                 <ContentLoader {...skeletonSettings}>
-                    <rect x="0" y="0" rx="15" ry="15" width="350" height="100" />
-                    <rect x="366" y="0" rx="15" ry="15" width="350" height="100" />
-                    <rect x="732" y="0" rx="15" ry="15" width="350" height="100" />
+                    <rect x="0" y="0" rx="15" ry="15" width="350" height="100"/>
+                    <rect x="366" y="0" rx="15" ry="15" width="350" height="100"/>
+                    <rect x="732" y="0" rx="15" ry="15" width="350" height="100"/>
                 </ContentLoader>
             )
+        default :
+            return null;
     }
 }
 

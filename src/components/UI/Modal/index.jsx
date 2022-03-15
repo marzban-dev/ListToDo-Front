@@ -27,9 +27,9 @@ const Modal = ({isOpen, onClose, children}) => {
 
     window.addEventListener('resize', setModalStyle)
 
-    useEffect(() => setModalStyle(), [
-        document.getElementsByClassName('ReactModal__Content')[0]?.clientHeight
-    ]);
+    const modalHeight =  document.getElementsByClassName('ReactModal__Content')[0]?.clientHeight;
+
+    useEffect(() => setModalStyle(), [modalHeight]);
 
     return ReactDOM.createPortal((
         <ReactModal

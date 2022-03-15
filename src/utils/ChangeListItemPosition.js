@@ -4,7 +4,6 @@ export const changeListItemPosition = (oldIndex, newIndex, list) => {
     let copyOfList = [...list];
     const oldPosition = copyOfList[oldIndex].position;
     const newPosition = copyOfList[newIndex].position;
-    // const itemId = copyOfList[oldIndex].id;
 
     if (oldPosition > newPosition) {
         const start = newPosition;

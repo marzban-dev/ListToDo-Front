@@ -1,9 +1,3 @@
-/*!
- * Check if an element is out of the viewport
- * @param {Node} elem The element to check
- * @return {Object} A set of booleans for each side of the element
- */
-
 const isOutOfViewport = (elem) => {
     if (elem) {
         const bounding = elem.getBoundingClientRect();

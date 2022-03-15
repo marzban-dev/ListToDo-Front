@@ -10,7 +10,7 @@ const ActivitySection = ({activities, dateTitle}) => {
                <h1>{dateTitle}</h1>
            </div>
             <div className="activity-section-activities">
-                {activities.map(activity => <Activity activity={activity}/>)}
+                {activities.map((activity,index) => <Activity key={index} activity={activity}/>)}
             </div>
         </div>
     );

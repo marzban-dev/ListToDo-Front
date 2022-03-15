@@ -2,7 +2,8 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "./selectSchedule.scss";
 
-const SelectSchedule = ({scheduleDate, setSchedule}) => {
+const SelectSchedule = ({schedule,setSchedule}) => {
+
     return (
         <div className="schedule">
             <DatePicker
@@ -10,7 +11,7 @@ const SelectSchedule = ({scheduleDate, setSchedule}) => {
                 showTime={{use12Hours: true, format: "hh:mm a"}}
                 dateFormat="yyyy-MM-dd hh:mm a"
                 closeOnScroll={false}
-                selected={scheduleDate}
+                selected={schedule}
                 onChange={(date) => setSchedule(date)}
                 placeholderText="Select deadline"
                 shouldCloseOnSelect={true}
@@ -19,11 +20,11 @@ const SelectSchedule = ({scheduleDate, setSchedule}) => {
             />
             <button
                 className={[
-                    scheduleDate
+                    schedule
                         ? "schedule-clear-icon far fa-times"
                         : "schedule-icon far fa-calendar",
                 ].join(" ")}
-                onClick={scheduleDate ? () => setSchedule(null) : null}
+                onClick={schedule ? () => setSchedule(null) : null}
             ></button>
         </div>
     );

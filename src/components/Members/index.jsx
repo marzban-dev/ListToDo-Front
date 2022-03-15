@@ -28,8 +28,11 @@ const Members =
                 }
 
                 membersList.push(
-                    <Member picture={members[i].owner.profile_img} name={members[i].owner.first_name}
-                            style={memberStyle}/>
+                    <Member
+                        picture={members[i].owner.profile_img}
+                        name={members[i].owner.first_name}
+                        style={memberStyle}
+                    />
                 );
             }
 

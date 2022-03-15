@@ -45,6 +45,7 @@ const Comment = ({comment}) => {
                             data-effect="solid"
                             download
                             target="_blank"
+                            rel="noreferrer"
                         >
                             <span className="far fa-paperclip"></span>
                         </a>

@@ -9,12 +9,10 @@ const JoinToProjectPage = () => {
     const {inviteSlug} = useParams();
     const navigate = useNavigate();
     const {mutateAsync: joinToProject, isLoading} = useJoinToProjectQuery(inviteSlug);
-    const [isJoined, setIsJoined] = useState(false);
     const [joinMsg, setJoinMsg] = useState("Joining");
 
     const joinToProjectHandler = catchAsync(async () => {
         await joinToProject();
-        setIsJoined(true);
         setJoinMsg("You are successfully joined, and you will redirect to home page")
         setTimeout(() => {
             navigate('/')
