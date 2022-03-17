@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import Spinner from "components/UI/Spinner";
 import "./createCommentInput.scss";
 
 const CreateCommentInput =
@@ -8,7 +9,8 @@ const CreateCommentInput =
          setAttachment,
          description,
          setDescription,
-         onClick
+         onClick,
+         isCreating
      }) => {
         const descriptionInput = useRef(null);
         const uploadAttachInput = useRef(null);
@@ -56,9 +58,12 @@ const CreateCommentInput =
                             <span className="far fa-paperclip"></span>
                         </label>
                     )}
-
-                    <button onClick={!isDisabled ? onClickHandler : null}>
-                        <span className="far fa-paper-plane"></span>
+                    <button onClick={isDisabled ? null : onClickHandler}>
+                        {isCreating ? (
+                            <Spinner type="dots" size="xs" />
+                        ) : (
+                            <span className="far fa-paper-plane"></span>
+                        )}
                     </button>
                 </div>
             </div>

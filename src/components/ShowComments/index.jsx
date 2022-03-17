@@ -7,63 +7,34 @@ import {toast} from "react-toastify";
 import {TOASTIFY_OPTIONS} from "config";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import "./comments.scss";
+import catchAsync from "utils/CatchAsync";
 
 const ShowComments = ({id, task}) => {
     const {data: comments} = useCommentsQuery(id, task);
-    const {mutateAsync: createComment} = useCreateCommentQuery(id, task);
+    const {mutateAsync: createComment,isLoading} = useCreateCommentQuery(id, task);
     const [isInputDisabled, setIsInputDisabled] = useState(false);
     const [attachment, setAttachment] = useState(null);
     const [description, setDescription] = useState('');
 
-    const createCommentHandler = async () => {
+    const createCommentHandler = catchAsync(async () => {
         setIsInputDisabled(true);
 
-        const alertId = toast.loading("Creating comment", {
-            ...TOASTIFY_OPTIONS,
-            hideProgressBar: false,
-            progressStyle: {backgroundColor: "var(--color-primary)"},
-        });
+        const commentData = new FormData();
 
-        try {
-            const commentData = new FormData();
-
-            if (description.length !== 0) {
-
-                commentData.append('description', description)
-                if (attachment) commentData.append('file', attachment, attachment.name);
-
-                const uploadProgressHandler = (progressEvent) => {
-                    if (attachment) {
-                        const percentCompleted = progressEvent.loaded / progressEvent.total;
-                        toast.update(alertId, {
-                            progress: percentCompleted,
-                        });
-                    } else {
-                        toast.update(alertId, {
-                            render: "Comment created",
-                            type: "success",
-                            isLoading: false,
-                            hideProgressBar: true,
-                            autoClose: 2000
-                        });
-                    }
-                }
-
-                await createComment({id, data: commentData, uploadProgressHandler});
-            } else {
-                toast.info("Description is empty", {...TOASTIFY_OPTIONS, autoClose: 2000})
-            }
-        } catch (error) {
-            toast.update(alertId, {
-                render: "Create comment failed",
-                type: "error",
-                isLoading: false,
-                progress: 100
-            });
-        } finally {
+        if (description.length !== 0) {
+            commentData.append('description', description)
+            if (attachment) commentData.append('file', attachment, attachment.name);
+            setDescription("");
+            await createComment({id, data: commentData});
             setIsInputDisabled(false);
+        } else {
+            setIsInputDisabled(false);
+            toast.info(
+                "Description is empty",
+                {...TOASTIFY_OPTIONS, autoClose: 2000, position: "top-center"}
+            )
         }
-    }
+    }, null, () => setIsInputDisabled(false));
 
     return (
         <div className="show-comments-container">
@@ -74,6 +45,7 @@ const ShowComments = ({id, task}) => {
                 setDescription={setDescription}
                 onClick={createCommentHandler}
                 isDisabled={isInputDisabled}
+                isCreating={isLoading}
             />
             <LoadingWrapper show={!!comments} customLoadingComponent={
                 <SkeletonLoader
@@ -81,12 +53,12 @@ const ShowComments = ({id, task}) => {
                     width={500}
                     height={450}
                     viewBox="0 0 500 450"
-                    style={{marginTop:"2.5rem"}}
+                    style={{marginTop: "2.5rem"}}
                 />
             }>
-               <div className="comments-list">
-                   {comments && comments.map(comment => <Comment comment={comment}/>)}
-               </div>
+                <div className="comments-list">
+                    {comments && comments.map(comment => <Comment comment={comment}/>)}
+                </div>
             </LoadingWrapper>
         </div>
     );

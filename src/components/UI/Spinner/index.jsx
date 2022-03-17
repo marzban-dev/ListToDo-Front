@@ -40,7 +40,7 @@ const Spinner = ({size = 'md', type = "circle", className, style = {}}) => {
 
 Spinner.propTypes = {
     type: PropTypes.oneOf(['dots', 'circle']),
-    size: PropTypes.oneOf(['sm', 'md', 'lg']),
+    size: PropTypes.oneOf(['xs','sm', 'md', 'lg']),
     className: PropTypes.string,
     style: PropTypes.object
 }

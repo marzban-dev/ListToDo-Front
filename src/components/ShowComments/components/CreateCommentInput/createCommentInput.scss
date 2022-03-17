@@ -45,7 +45,8 @@
 
     button, label {
       @include reset_input();
-      padding: 0.5rem 0.5rem 0.25rem 0.5rem;
+      padding: 0.5rem 0 0.25rem 0;
+      width: 38px;
       display: flex;
       justify-content: center;
       align-items: center;
