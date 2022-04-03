@@ -63,14 +63,14 @@ const ProjectHeader = ({project}) => {
 
         const copyInviteSlug = async (e) => {
             e.stopPropagation();
-            await navigator.clipboard.writeText(`http://localhost:3000/join-to-project/${project.inviteSlug}`);
+            await navigator.clipboard.writeText(`https://listtodo2030.pythonanywhere.com/${project.inviteSlug}`);
             alert('copied');
         }
 
         const msg = (
             <div className="show-project-invite-slug-msg-box">
                 <Button onClick={copyInviteSlug} iconClass="far fa-copy" size="md"/>
-                <div>{`http://localhost:3000/join-to-project/${project.inviteSlug}`}</div>
+                <div>{`https://listtodo2030.pythonanywhere.com/${project.inviteSlug}`}</div>
             </div>
         )
 
