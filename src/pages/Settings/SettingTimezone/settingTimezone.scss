@@ -1,3 +1,6 @@
+@import "src/assets/scss/variables";
+@import "src/assets/scss/mixins";
+
 .setting-timezone {
     display: flex;
     justify-content: flex-start;
@@ -15,7 +18,10 @@
     }
 
     .selected-timezone-name {
+        @include reset_scrollbar();
         color: var(--color-text);
-        padding-right: 1rem;
+        margin-right: 1rem;
+        max-width: 170px;
+        overflow-x: scroll;
     }
 }

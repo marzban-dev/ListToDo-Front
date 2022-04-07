@@ -78,7 +78,7 @@ const SettingTimezone = () => {
                     {selectedTimezone ? selectedTimezone.timezone : "No timezone selected"}
                 </span>
 
-                <Button iconClass="far fa-save" text="Update" onClick={updateTimezone} />
+                <Button iconClass="far fa-save" onClick={updateTimezone} />
             </div>
         </Setting>
     );
