@@ -35,6 +35,7 @@
 
   .select-menu-box {
     @include box_shadow();
+    @include reset_scrollbar();
     position: absolute;
     z-index: 999;
     top: 110%;
@@ -43,6 +44,9 @@
     border-radius: 15px;
     min-width: 130px;
     max-width: 220px;
+    max-height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     ul {
       @include reset_list();

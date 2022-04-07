@@ -9,7 +9,7 @@ import LoadingScreen from "components/UI/LoadingScreen";
 import {setAppTheme} from "store/actions/Main.actions";
 import Header from "./components/Header";
 import {useCheckUserQuery} from "hooks/useAuth";
-import {useLabelsQuery} from "hooks/useDetailsData";
+import {useLabelsQuery, useTimezonesQuery} from "hooks/useDetailsData";
 import {instance} from "axios.instance";
 import {useInboxProjectQuery} from "hooks/useProjectsData";
 import AppRoutes from "App.routes";

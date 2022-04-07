@@ -5,7 +5,8 @@ import {
     deleteLabel,
     fetchLabelProjects,
     fetchLabels,
-    fetchLabelTasks
+    fetchLabelTasks,
+    fetchTimezones
 } from "apis/details.api";
 import {fetchActivity, fetchActivityByRange} from "apis/activity.api";
 
@@ -128,4 +129,8 @@ export const useChartActivityQuery = (gte, lte, options) => {
         () => fetchActivityByRange(lte, gte),
         options
     );
+}
+
+export const useTimezonesQuery = () => {
+    return useQuery("chart-activities", fetchTimezones);
 }

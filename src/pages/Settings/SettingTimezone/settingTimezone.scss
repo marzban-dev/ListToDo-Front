@@ -1,0 +1,21 @@
+.setting-timezone {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+
+    .timezones-list {
+        .select-menu-button span {
+            border-radius: 0 !important;
+        }
+        span {
+            color: var(--color-text);
+        }
+        padding-right: 0.75rem;
+    }
+
+    .selected-timezone-name {
+        color: var(--color-text);
+        padding-right: 1rem;
+    }
+}
