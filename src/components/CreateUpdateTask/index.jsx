@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
+import Modal from "components/UI/Modal";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { REACT_MODAL_OPTIONS } from "config";
 import Button from "components/UI/Button";
@@ -157,7 +157,7 @@ export const CreateUpdateTask = ({ mode }) => {
     );
 
     return (
-        <Modal isOpen={isModalOpen} onRequestClose={closeModal} {...REACT_MODAL_OPTIONS}>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
             <div
                 className="create-new-task-modal"
                 onKeyPress={(e) => (!isSubmitButtonDisabled ? onEnterKeyPressed(e) : null)}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "components/UI/Modal";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
@@ -35,6 +35,12 @@ const ShowTask = () => {
         onError: () => navigate("/404"),
     });
 
+    useEffect(() => {
+        if (!!task) {
+            setIsTaskChecked(Boolean(task.completed));
+        }
+    }, [task]);
+
     const { mutateAsync: updateTask } = useUpdateTaskQuery(
         task?.task ? task?.task : task?.section.id,
         !!task?.task
@@ -62,8 +68,8 @@ const ShowTask = () => {
 
     const completeTaskHandler = catchAsync(
         async () => {
-            setIsTaskChecked(true);
-            await updateTask({ taskData: task, data: { completed: true } });
+            setIsTaskChecked(!Boolean(task.completed));
+            await updateTask({ taskData: task, data: { completed: !Boolean(task.completed) } });
             closeModal();
         },
         {
@@ -71,7 +77,7 @@ const ShowTask = () => {
             onSuccess: `Task ${task?.title} Completed`,
             onError: `Completing task ${task?.title} failed`,
         },
-        () => setIsTaskChecked(false)
+        () => setIsTaskChecked(Boolean(task.completed))
     );
 
     const selectMenuOptions = [

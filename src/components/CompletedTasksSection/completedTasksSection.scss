@@ -1,0 +1,71 @@
+.completed-tasks-section {
+    border-left: 3px solid var(--color-secondary);
+    padding-bottom: 1.5rem;
+
+    &:first-child {
+        .completed-tasks-section-title {
+            padding-top: 0.5rem;
+            background-color: var(--color-secondary-complement);
+
+            span {
+                transform: translateY(1.1rem);
+            }
+
+            h1 {
+                transform: translateY(1.1rem);
+            }
+        }
+    }
+
+    &:last-child {
+        min-height: 100vh;
+    }
+
+    .completed-tasks-section-title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        transform: translateX(-7.5px);
+        white-space: nowrap;
+
+        @media screen and (max-width: 768px) {
+            transform: translateX(-6.5px);
+        }
+
+        span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+
+            @media screen and (max-width: 768px) {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        h1 {
+            color: var(--color-text);
+            margin: 0 0 0 0.75rem;
+
+            @media screen and (max-width: 768px) {
+                font-size: 24px;
+            }
+        }
+    }
+
+    .completed-tasks-section-tasks {
+        margin-left: 2rem;
+
+        @media screen and (max-width: 768px) {
+            margin-left: 1rem;
+        }
+    }
+
+    &:first-child {
+        .completed-tasks-section-tasks {
+            padding-top: 1.1rem;
+        }
+    }
+}

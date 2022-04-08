@@ -15,7 +15,7 @@ const CompleteButton = ({onChange, isCompleted, priorityColor}) => {
                 onMouseDown={() => setIsMouseDown(true)}
                 onMouseUp={() => setIsMouseDown(false)}
                 onMouseLeave={() => setIsMouseDown(false)}
-                onClick={isCompleted ? null : (e) => {
+                onClick={(e) => {
                     e.stopPropagation();
                     onChange();
                 }}
