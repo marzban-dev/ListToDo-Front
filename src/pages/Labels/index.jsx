@@ -23,8 +23,8 @@ const Labels = () => {
 
     useEffect(() => {
         if (id) {
-            if (!Number(id)) navigate('/404')
-            if (!labels.find(lbl => lbl.id === Number(id))) navigate('/404')
+            if (!Number(id)) navigate('/labels')
+            if (!labels.find(lbl => lbl.id === Number(id))) navigate('/labels')
             setSelectedLabelId(Number(id))
         }
     }, [pathname]);

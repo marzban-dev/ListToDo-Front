@@ -1,68 +1,79 @@
 .label {
-  padding: 1rem 0.5rem 1rem 0.5rem;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-secondary);
-  position: relative;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-
-  .label-border {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 5px;
-    height: 100%;
-    border-radius: 0 25px 25px 0;
-    background-color: var(--color-secondary);
-    transition: background-color 0.2s;
-  }
-
-  .label-text-wrapper {
-    padding-left: 22px;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .label-text {
-      color: var(--color-text);
-      font-size: 18px;
-      white-space: nowrap;
-    }
-  }
-
-  .label-shape {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    transform: rotateZ(45deg);
-    position: absolute;
-    left: -20px;
     background-color: var(--color-secondary);
+    position: relative;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
 
-    div {
-      width: 13px;
-      height: 13px;
-      background-color: var(--color-page-container-bg);
-      border-radius: 50%;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+    .label-border {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 5px;
+        height: 100%;
+        border-radius: 0 25px 25px 0;
+        background-color: var(--color-secondary);
+        transition: background-color 0.2s;
     }
-  }
+
+    .label-text-wrapper {
+        padding-left: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .label-text {
+            color: var(--color-text);
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
+        .far {
+            color: var(--color-icon);
+            font-size: 18px;
+            padding: 0 0.30rem 0 0.75rem;
+            transition: color 0.25s;
+
+            &:hover {
+                color: var(--color-red);
+            }
+        }
+    }
+
+    .label-shape {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        transform: rotateZ(45deg);
+        position: absolute;
+        left: -20px;
+        background-color: var(--color-secondary);
+
+        div {
+            width: 13px;
+            height: 13px;
+            background-color: var(--color-page-container-bg);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 }
 
 .label-active {
-  .label-border {
-    background-color: var(--color-labels-tab-active);
-  }
+    .label-border {
+        background-color: var(--color-labels-tab-active);
+    }
 }
 
 .label-hover {
-  .label-border {
-    background-color: var(--color-labels-tab-hover);
-  }
+    .label-border {
+        background-color: var(--color-labels-tab-hover);
+    }
 }

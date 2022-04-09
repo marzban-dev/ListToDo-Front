@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import catchAsync from "utils/CatchAsync";
 import { useDeleteLabelQuery } from "hooks/useDetailsData";
+import {useNavigate} from "react-router-dom";
 import "./label.scss";
 
 const Label = ({ id, title, active, onLabelSelected }) => {
+    const navigate = useNavigate();
     const { mutateAsync: deleteLabel } = useDeleteLabelQuery();
 
     const deleteLabelHandler = catchAsync(
         async () => {
             await deleteLabel(id);
+            navigate("/labels");
         },
         {
             onLoad: "Deleting label",
