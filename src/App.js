@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {ReactQueryDevtools} from "react-query/devtools";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
@@ -9,7 +8,7 @@ import LoadingScreen from "components/UI/LoadingScreen";
 import {setAppTheme} from "store/actions/Main.actions";
 import Header from "./components/Header";
 import {useCheckUserQuery} from "hooks/useAuth";
-import {useLabelsQuery, useTimezonesQuery} from "hooks/useDetailsData";
+import {useLabelsQuery} from "hooks/useDetailsData";
 import {instance} from "axios.instance";
 import {useInboxProjectQuery} from "hooks/useProjectsData";
 import AppRoutes from "App.routes";
@@ -21,6 +20,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.scss";
 import "./assets/scss/theme/themes.scss";
 import "animate.css";
+import {ReactQueryDevtools} from "react-query/devtools";
 
 const App = () => {
     const dispatch = useDispatch();

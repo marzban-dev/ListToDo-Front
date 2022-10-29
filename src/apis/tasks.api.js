@@ -1,7 +1,7 @@
 import axios from "axios.instance";
 
 export const fetchTasks = async (filter = {}) => {
-    const result = await axios.get("/tasks/", {params: filter});
+    const result = await axios.get("/task/", {params: filter});
     return result.data.results;
 };
 
@@ -11,9 +11,12 @@ export const fetchTask = async (id, filter = {}) => {
 };
 
 export const createTask = async ({sectionId, data}) => {
-    const copyOfData = {...data};
-    copyOfData.assignee = copyOfData.assignee ? copyOfData.assignee.id : null;
-    const result = await axios.post(`/section/${sectionId}/task/`, copyOfData);
+    const copyOfData = {
+        ...data,
+        section : sectionId,
+        assignee : data.assignee ? data.assignee.id : null
+    };
+    const result = await axios.post(`/task/`, copyOfData);
     return result.data;
 };
 

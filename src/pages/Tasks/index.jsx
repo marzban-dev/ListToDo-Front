@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import { useCreateSectionQuery, useSectionsQuery } from "hooks/useSectionsData";
+import React, {useState} from "react";
+import {Outlet} from "react-router-dom";
+import {useCreateSectionQuery, useSectionsQuery} from "hooks/useSectionsData";
 import catchAsync from "utils/CatchAsync";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import SkeletonLoader from "components/UI/SkeletonLoader";
 import CreateInput from "components/CreateInput";
 import ShowSections from "components/ShowSections";
-import { changeListItemPosition } from "utils/ChangeListItemPosition";
-import { useChangePositionQuery } from "hooks/useDetailsData";
+import {changeListItemPosition} from "utils/ChangeListItemPosition";
+import {useChangePositionQuery} from "hooks/useDetailsData";
 import "./tasks.scss";
 
-const Tasks = ({ project }) => {
-    const { data: sections } = useSectionsQuery(project?.id, { enabled: !!project });
-    const { mutateAsync: createSection } = useCreateSectionQuery(project?.id);
-    const { mutateAsync: changePosition } = useChangePositionQuery([
+const Tasks = ({project}) => {
+    const {data: sections} = useSectionsQuery(project?.id, {enabled: !!project});
+    const {mutateAsync: createSection} = useCreateSectionQuery(project?.id);
+    const {mutateAsync: changePosition} = useChangePositionQuery([
         "project-sections",
         project.id,
     ]);
@@ -23,7 +23,7 @@ const Tasks = ({ project }) => {
         catchAsync(
             async () => {
                 setIsCreateButtonDisabled(true);
-                await createSection({ projectId: project?.id, data: { title } });
+                await createSection({project: project?.id, title});
                 setIsCreateButtonDisabled(false);
             },
             {
@@ -35,9 +35,9 @@ const Tasks = ({ project }) => {
         )();
     };
 
-    const onSortEnd = ({ oldIndex, newIndex }) => {
+    const onSortEnd = ({oldIndex, newIndex}) => {
         catchAsync(async () => {
-            const { list, newPosition } = changeListItemPosition(oldIndex, newIndex, sections);
+            const {list, newPosition} = changeListItemPosition(oldIndex, newIndex, sections);
             const itemId = sections[oldIndex].id;
             await changePosition({
                 id: itemId,
@@ -59,7 +59,7 @@ const Tasks = ({ project }) => {
                         width={1200}
                         height={66}
                         viewBox="0 0 1200 66"
-                        style={{ marginTop: "3rem" }}
+                        style={{marginTop: "3rem"}}
                     />
                 }
             >
@@ -80,7 +80,7 @@ const Tasks = ({ project }) => {
                     />
                 </div>
             </LoadingWrapper>
-            <Outlet />
+            <Outlet/>
         </React.Fragment>
     );
 };

@@ -1,12 +1,12 @@
 import axios from "axios.instance";
 
 export const fetchSections = async (filter = {}) => {
-    const result = await axios.get("/sections/", {params: filter});
+    const result = await axios.get("/section/", {params: filter});
     return result.data.results;
 };
 
-export const createSection = async ({projectId, data}) => {
-    const result = await axios.post(`/project/${projectId}/section/`, data);
+export const createSection = async (data) => {
+    const result = await axios.post(`/section/`, {...data});
     return result.data;
 };
 
@@ -20,6 +20,6 @@ export const updateSection = async ({id, data}) => {
 }
 
 export const fetchArchivedSections = async () => {
-    const result = await axios.get("/sections/", {params: {archive: true}});
+    const result = await axios.get("/section/", {params: {archive: true}});
     return result.data.results;
 }

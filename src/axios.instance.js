@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-    baseURL: "https://listtodo2030.pythonanywhere.com/",
+    baseURL: "https://listtodo1234.pythonanywhere.com/",
 });
 
 instance.interceptors.request.use((config) => {

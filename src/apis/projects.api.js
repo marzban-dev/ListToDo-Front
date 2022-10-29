@@ -1,17 +1,17 @@
 import axios from "axios.instance";
 
 export const fetchInboxProject = async () => {
-    const result = await axios.get("/projects/", {params: {project__project__isnull: true}});
+    const result = await axios.get("/project/", {params: {project__project__isnull: true}});
     return result.data.results[0].project;
 };
 
 export const fetchAllProjects = async (parentId) => {
     const user = await axios.get("/myinfo/");
 
-    const allProjects = await axios.get("/projects/");
+    const allProjects = await axios.get("/project/");
     const jointProjects = allProjects.data.results.filter(prj => prj.project.owner.id !== user.data.id);
 
-    const inboxProjects = await axios.get("/projects/", {
+    const inboxProjects = await axios.get("/project/", {
         params: {
             project__project: parentId
         }
@@ -21,7 +21,7 @@ export const fetchAllProjects = async (parentId) => {
 };
 
 export const fetchProjects = async (filter = {}) => {
-    const result = await axios.get("/projects/", {params: filter});
+    const result = await axios.get("/project/", {params: filter});
     return result.data.results;
 };
 
@@ -96,6 +96,6 @@ export const changeProjectInviteSlug = async (id) => {
 }
 
 export const fetchArchivedProjects = async () => {
-    const result = await axios.get("/projects/", {params: {project__archive: true}});
+    const result = await axios.get("/project/", {params: {project__archive: true}});
     return result.data.results;
 }

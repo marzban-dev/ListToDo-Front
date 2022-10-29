@@ -22,10 +22,11 @@ const ShowComments = ({id, task}) => {
         const commentData = new FormData();
 
         if (description.length !== 0) {
-            commentData.append('description', description)
+            commentData.append('description', description);
+            commentData.append('project', id);
             if (attachment) commentData.append('file', attachment, attachment.name);
             setDescription("");
-            await createComment({id, data: commentData});
+            await createComment({data: commentData});
             setIsInputDisabled(false);
         } else {
             setIsInputDisabled(false);

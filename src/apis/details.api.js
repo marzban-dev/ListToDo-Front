@@ -1,12 +1,12 @@
 import axios from "axios.instance";
 
 export const fetchLabels = async () => {
-    const result = await axios.get("/labels/");
+    const result = await axios.get("/label/");
     return result.data.results;
 };
 
 export const fetchLabelTasks = async (id) => {
-    const tasksResult = await axios.get("/tasks/", {
+    const tasksResult = await axios.get("/task/", {
         params: {
             label: id,
             completed: false,
@@ -16,7 +16,7 @@ export const fetchLabelTasks = async (id) => {
 };
 
 export const fetchLabelProjects = async (id) => {
-    const projectsResult = await axios.get("/projects/", { params: { label: id } });
+    const projectsResult = await axios.get("/project/", { params: { label: id } });
     return projectsResult.data.results;
 };
 
@@ -25,7 +25,7 @@ export const deleteLabel = async (id) => {
 };
 
 export const updateLabel = async ({ id, title }) => {
-    const result = await axios.patch("/labels/", { title });
+    const result = await axios.patch("/label/", { title });
     return result.data;
 };
 
@@ -49,13 +49,13 @@ export const changePosition = async ({ id, newPosition, type }) => {
 
 export const fetchComments = async (id, task) => {
     const result = await axios.get(
-        `/comments/?project=${id}${task ? "&task=" + task : ""}&ordering=-created`
+        `/comment/?project=${id}${task ? "&task=" + task : ""}&ordering=-created`
     );
     return result.data.results;
 };
 
-export const createComment = async ({ id, data, uploadProgressHandler }) => {
-    const result = await axios.post(`/project/${id}/comment/`, data, {
+export const createComment = async ({data, uploadProgressHandler }) => {
+    const result = await axios.post(`/comment/`, data, {
         onUploadProgress: uploadProgressHandler,
     });
     return result.data;

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Modal from "components/UI/Modal";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { REACT_MODAL_OPTIONS } from "config";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {REACT_MODAL_OPTIONS} from "config";
 import Button from "components/UI/Button";
 import catchAsync from "utils/CatchAsync";
-import { useCreateTaskQuery, useTaskQuery, useUpdateTaskQuery } from "hooks/useTasksData";
+import {useCreateTaskQuery, useTaskQuery, useUpdateTaskQuery} from "hooks/useTasksData";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import SelectAssignee from "components/UI/SelectAssignee";
 import SelectLabels from "components/UI/SelectLabels";
@@ -12,7 +12,7 @@ import SelectPriority from "components/UI/SelectPriority";
 import SelectSchedule from "components/UI/SelectSchedule";
 import SelectColor from "components/UI/SelectColor";
 import SelectEvery from "components/UI/SelectEvery";
-import { useQueryClient } from "react-query";
+import {useQueryClient} from "react-query";
 import "./createUpdateTask.scss";
 
 export const CreateUpdateTask = ({ mode }) => {
@@ -80,7 +80,7 @@ export const CreateUpdateTask = ({ mode }) => {
             };
 
             if (mode === "create") {
-                await createTask({ sectionId: sectionId, data: dataObject });
+                await createTask({ sectionId, data: dataObject });
                 setIsSubmitButtonDisabled(false);
             } else {
                 await updateTask({ taskData: task, data: dataObject });
