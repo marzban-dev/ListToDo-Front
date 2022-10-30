@@ -1,14 +1,6 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "react-query";
-import {
-    changePosition,
-    createLabel,
-    deleteLabel,
-    fetchLabelProjects,
-    fetchLabels,
-    fetchLabelTasks,
-    fetchTimezones,
-} from "apis/details.api";
-import { fetchActivity, fetchActivityByRange } from "apis/activity.api";
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from "react-query";
+import {changePosition, createLabel, deleteLabel, fetchLabelProjects, fetchLabels, fetchLabelTasks, fetchTimezones,} from "apis/details.api";
+import {fetchActivity, fetchActivityByRange} from "apis/activity.api";
 
 export const useLabelsQuery = (options) => {
     return useQuery("labels", fetchLabels, options);
@@ -85,7 +77,6 @@ export const useDeleteLabelQuery = () => {
 
 export const useChangePositionQuery = (key) => {
     const queryClient = useQueryClient();
-
     return useMutation(changePosition, {
         onMutate: async ({ list }) => {
             await queryClient.cancelQueries(key);
