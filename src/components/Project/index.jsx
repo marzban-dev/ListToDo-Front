@@ -1,5 +1,5 @@
 import React from "react";
-import {SortableElement, SortableHandle} from "react-sortable-hoc";
+import {SortableElement} from "react-sortable-hoc";
 import ScheduleProgressBar from "components/ScheduleProgressBar";
 import {useNavigate} from "react-router-dom";
 import Members from "components/Members";
@@ -9,11 +9,7 @@ import "./project.scss";
 export const Project = ({project: {project, background, color}, secondaryColor, dragHandlerIcon = true}) => {
     const navigate = useNavigate();
 
-    const DragHandle = SortableHandle(() => {
-        return (
-            <span className="project-head-top-draggable-icon far fa-arrows"></span>
-        );
-    });
+    const DragHandle = () => <span className="project-head-top-draggable-icon far fa-arrows"></span>;
 
     return (
         <section
